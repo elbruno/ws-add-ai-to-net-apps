@@ -1,5 +1,5 @@
 ﻿
-namespace sk_chat_demo.ChatForm
+namespace sk_chat_winform.ChatForm
 {
 	partial class ChatItem
 	{

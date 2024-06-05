@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace sk_chat_demo.Redis;
+namespace sk_chat_winform.Redis;
 
 public static class Utility 
 {

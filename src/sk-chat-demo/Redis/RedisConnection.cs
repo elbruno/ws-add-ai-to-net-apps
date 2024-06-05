@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace sk_chat_demo.Redis;
+namespace sk_chat_winform.Redis;
 
 public class RedisConnection : IDisposable
 {

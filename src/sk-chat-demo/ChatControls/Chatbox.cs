@@ -13,7 +13,7 @@ using System.Linq;
 #pragma warning disable SKEXP0027
 #pragma warning disable SKEXP0050
 
-namespace sk_chat_demo.ChatForm
+namespace sk_chat_winform.ChatForm
 {
     public partial class Chatbox : UserControl
     {

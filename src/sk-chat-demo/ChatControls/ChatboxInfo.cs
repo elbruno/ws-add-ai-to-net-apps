@@ -1,4 +1,4 @@
-﻿namespace sk_chat_demo.ChatForm
+﻿namespace sk_chat_winform.ChatForm
 {
     public class ChatboxInfo
     {

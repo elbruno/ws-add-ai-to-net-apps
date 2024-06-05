@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 #pragma warning disable SKEXP0027
 #pragma warning disable SKEXP0050
 
-namespace sk_chat_demo
+namespace sk_chat_winform
 {
     public partial class frmChat : Form
 	{

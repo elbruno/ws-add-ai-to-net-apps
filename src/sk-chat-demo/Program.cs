@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace sk_chat_demo
+namespace sk_chat_winform
 {
 	static class Program
 	{
