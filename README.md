@@ -1,10 +1,10 @@
-# Labs using Phi-3 and Phi-3-Vision
+# Semantic Kernel Winform Chat
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](/LICENSE)
 [![Twitter: elbruno](https://img.shields.io/twitter/follow/elbruno.svg?style=social)](https://twitter.com/elbruno)
 ![GitHub: elbruno](https://img.shields.io/github/followers/elbruno?style=social)
 
-Welcome to the Phi-3 samples using C#. This repository contains a set of demo projects that showcases how to integrate the powerful different versions of Phi-3 models in a .NET environment.
+Welcome to the Semantic Kernel Winform Chat demo. This repository contains a demo project that implement a chat with semantic kernel.
 
 ## Prerequisites
 
@@ -12,6 +12,8 @@ Before running the sample, ensure you have the following installed:
 - **.NET 8**: Make sure you have the latest version of .NET installed on your machine.
 - **(Optional) Visual Studio or Visual Studio Code**: You will need an IDE or code editor capable of running .NET projects. Visual Studio or Visual Studio Code are recommended.
 - Using git, clone locally one of the available Phi-3 versions from Hugging Face. 
+
+## LLM Prerequisites
 
 - Download the **phi3-mini-4k-instruct-onnx** model to your local machine:
     ```bash
@@ -32,17 +34,13 @@ Before running the sample, ensure you have the following installed:
 
 You can learn more about [Phi-3 in Hugging Face](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct-onnx).
 
-## About the Samples
+## About the sample
 
 The main solution have several sample projects that demonstrates the capabilities of the Phi-3 models.
 
 | Project | Description | Location |
 | ------------ | ----------- | -------- |
 | LabsPhi301    | This is a sample project that uses a local phi3 model to ask a question. The project load a local ONNX Phi-3 model using the `Microsoft.ML.OnnxRuntime` libraries. | .\src\LabsPhi301\ |
-| LabsPhi302    | This is a sample project that implement a Console chat using Semantic Kernel. | .\src\LabsPhi302\ |
-| LabsPhi303 | This is a sample project that uses a local phi3 vision model to analyze images.. The project load a local ONNX Phi-3 Vision model using the `Microsoft.ML.OnnxRuntime` libraries. | .\src\LabsPhi303\ |
-| LabsPhi304 | This is a sample project that uses a local phi3 vision model to analyze images.. The project load a local ONNX Phi-3 Vision model using the `Microsoft.ML.OnnxRuntime` libraries. The project also presents a menu with different options to interacti with the user. | .\src\LabsPhi304\ |
-
 
 ## How to Run the Projects
 
@@ -87,7 +85,7 @@ To run the projects, follow these steps:
 
 Contributions, issues and feature requests are welcome!
 
-Feel free to check [issues page](https://github.com/elbruno/phi3-labs//issues).
+Feel free to check [issues page](https://github.com/elbruno/sk-chat-winform-demo/issues).
 
 ## Show your support
 
