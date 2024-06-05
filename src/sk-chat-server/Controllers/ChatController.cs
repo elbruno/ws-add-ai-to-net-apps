@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.SemanticKernel.ChatCompletion;
+using sk_chat_models;
+
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace sk_chat_server.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
     public class ChatController : ControllerBase
     {
         private readonly ILogger<ChatController> _logger;
@@ -19,13 +22,23 @@ namespace sk_chat_server.Controllers
         }
 
 
-        [HttpPost(Name = "AnswerQuestion")]
-        public async Task<string> AnswerQuestion(string question)
+        // POST api/<ChatController>
+        [HttpPost]
+        public async Task<Response> Post(Question question)
         {
-            _chatHistory.AddUserMessage(question);
+            // complete history
+            _chatHistory.AddUserMessage(question.UserQuestion);
+
+            // get response
             var result = await _chatCompletionService.GetChatMessageContentsAsync(_chatHistory);
-            var response = result[^1].Content;
-            return $"AI response: {response} // {DateTime.Now.ToString()}";
+            var response = new Response
+            {
+                Author = "Semantic Kernel",
+                QuestionResponse = result[^1].Content
+            };
+            return response;
         }
+
+
     }
 }

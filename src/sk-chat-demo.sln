@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sk-chat-winform", "sk-chat-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sk-chat-server", "sk-chat-server\sk-chat-server.csproj", "{41D74B07-2AD9-4816-BC2C-AD86FB4275DF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sk-chat-models", "sk-chat-models\sk-chat-models.csproj", "{59496A0D-D983-481B-92D2-D1D753B3FE89}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{41D74B07-2AD9-4816-BC2C-AD86FB4275DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41D74B07-2AD9-4816-BC2C-AD86FB4275DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41D74B07-2AD9-4816-BC2C-AD86FB4275DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59496A0D-D983-481B-92D2-D1D753B3FE89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59496A0D-D983-481B-92D2-D1D753B3FE89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59496A0D-D983-481B-92D2-D1D753B3FE89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59496A0D-D983-481B-92D2-D1D753B3FE89}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

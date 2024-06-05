@@ -1,17 +1,11 @@
-﻿using Microsoft.SemanticKernel.ChatCompletion;
-using Microsoft.SemanticKernel;
-using System;
+﻿using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using Microsoft.SemanticKernel.Memory;
-using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
+using sk_chat_models;
 
-#pragma warning disable SKEXP0001
-#pragma warning disable SKEXP0010
-#pragma warning disable SKEXP0020
-#pragma warning disable SKEXP0027
-#pragma warning disable SKEXP0050
 
 namespace sk_chat_winform.ChatForm
 {
@@ -21,15 +15,8 @@ namespace sk_chat_winform.ChatForm
         public OpenFileDialog fileDialog = new OpenFileDialog();
         public string initialdirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
-        // Semantic Kernel objects
-        public Kernel kernel;
-        public IChatCompletionService chat;
-        public ChatHistory history;
-
-        // cache elements
-        public bool useCache = false;
-        public SemanticTextMemory memory;
-        public string _userName = "Bruno";
+        // http client
+        public HttpClient client;
 
         public Chatbox(ChatboxInfo _chatbox_info)
         {
@@ -157,40 +144,26 @@ namespace sk_chat_winform.ChatForm
                 if (textModel != null)
                 {
                     AddMessage(textModel);
-                    chatTextbox.Text = string.Empty;
-                    history.AddUserMessage(textModel.Body);
-
+                    chatTextbox.Text = string.Empty;                    
                     var author = "Azure OpenAI";
                     var response = "";
                     string question = textModel.Body;
-                    var mustProcessQuestion = true;
 
-                    if (useCache)
+                    // make the request for the answer
+
+                    var q = new Question
                     {
-                        var searchResult = memory.SearchAsync(_userName + "_chathistory", question, limit: 1);
-                        var memResult = await searchResult.FirstOrDefaultAsync();
-                        if (memResult.Relevance > 0.9)
-                        {
-                            response = memResult.Metadata.Text;
-                        }
+                        UserQuestion = question
+                    };
 
-                        if (!String.IsNullOrEmpty(response))
-                        {
-                            author = "redis cache";
-                            history.AddUserMessage(response);
-                            mustProcessQuestion = false;
-                        }
-                    }
-
-                    if (mustProcessQuestion)
+                    HttpResponseMessage httpResponse = await client.PostAsJsonAsync("api/chat", q);
+                    if (httpResponse.IsSuccessStatusCode)
                     {
-                        var result = await chat.GetChatMessageContentsAsync(history);
-                        response = result[^1].Content;
-                        if(useCache)
-                        {
-                            await memory.SaveInformationAsync(_userName + "_chathistory", question, Guid.NewGuid().ToString(), additionalMetadata: response);
-                        }
+                        var serverResponse = await httpResponse.Content.ReadFromJsonAsync<Response>();
+                        response = serverResponse.QuestionResponse;
                     }
+                    var uriLoc = httpResponse.Headers.Location;
+
 
                     var responseTextModel = new TextChatModel()
                     {
