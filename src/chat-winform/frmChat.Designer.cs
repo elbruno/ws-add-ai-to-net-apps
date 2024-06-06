@@ -1,5 +1,5 @@
 ﻿
-namespace sk_chat_winform
+namespace chat_winform
 {
 	partial class frmChat
 	{

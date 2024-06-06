@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace sk_chat_winform.ChatForm
+namespace chat_winform.ChatForm
 {
     public interface IChatModel
     {

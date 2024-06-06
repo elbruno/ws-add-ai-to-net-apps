@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace sk_chat_winform.ChatForm
+namespace chat_winform.ChatForm
 {
 	public partial class ChatItem : UserControl
 	{

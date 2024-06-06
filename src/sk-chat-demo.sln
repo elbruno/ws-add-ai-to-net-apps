@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34928.147
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sk-chat-winform", "sk-chat-demo\sk-chat-winform.csproj", "{1A35AC6F-D84D-4179-9442-D9B1CCA04283}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "chat-winform", "chat-winform\chat-winform.csproj", "{1A35AC6F-D84D-4179-9442-D9B1CCA04283}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sk-chat-server", "sk-chat-server\sk-chat-server.csproj", "{41D74B07-2AD9-4816-BC2C-AD86FB4275DF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "chat-server", "chat-server\chat-server.csproj", "{41D74B07-2AD9-4816-BC2C-AD86FB4275DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sk-chat-models", "sk-chat-models\sk-chat-models.csproj", "{59496A0D-D983-481B-92D2-D1D753B3FE89}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "chat-models", "chat-models\chat-models.csproj", "{59496A0D-D983-481B-92D2-D1D753B3FE89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

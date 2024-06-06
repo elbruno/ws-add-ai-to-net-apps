@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.SemanticKernel.ChatCompletion;
-using sk_chat_models;
+using chat_models;
 
-namespace sk_chat_server.Controllers;
+namespace chat_server.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

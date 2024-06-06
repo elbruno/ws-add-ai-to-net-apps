@@ -1,4 +1,4 @@
-﻿namespace sk_chat_models;
+﻿namespace chat_models;
 
 public class Response
 {

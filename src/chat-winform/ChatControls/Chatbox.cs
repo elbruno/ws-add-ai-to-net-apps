@@ -4,10 +4,10 @@ using System.IO;
 using System.Windows.Forms;
 using System.Net.Http;
 using System.Net.Http.Json;
-using sk_chat_models;
+using chat_models;
 
 
-namespace sk_chat_winform.ChatForm
+namespace chat_winform.ChatForm
 {
     public partial class Chatbox : UserControl
     {

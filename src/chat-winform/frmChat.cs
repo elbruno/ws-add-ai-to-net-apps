@@ -3,7 +3,7 @@ using System.Windows.Forms;
 using System.Net.Http;
 using System.Net.Http.Headers;
 
-namespace sk_chat_winform
+namespace chat_winform
 {
     public partial class frmChat : Form
 	{
