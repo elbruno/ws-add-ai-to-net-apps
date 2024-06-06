@@ -6,6 +6,8 @@
 
 Welcome to the Semantic Kernel Winform Chat demo. This repository contains a demo project that implement a chat with semantic kernel.
 
+Snippet Generator: https://snippet-generator.app/?description=&tabtrigger=&snippet=&mode=vscode
+
 ## Prerequisites
 
 Before running the sample, ensure you have the following installed:

@@ -1,0 +1,41 @@
+{
+    "name": "sk - api manifest aspire labs",
+    "image": "mcr.microsoft.com/devcontainers/dotnet",
+    "features": {
+      "ghcr.io/devcontainers/features/dotnet:2": { "version": "8.0"},
+      "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {},
+      "ghcr.io/devcontainers/features/azure-cli:1": {},
+      "ghcr.io/devcontainers/features/docker-from-docker:1.4.5": {},
+      "ghcr.io/devcontainers/features/github-cli:1": { "version": "2" },
+      "sshd": "latest"
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.vscode-node-azure-pack",
+                "github.vscode-github-actions",
+                "ms-dotnettools.csdevkit",
+				"ms-dotnettools.vscode-dotnet-runtime",
+                "github.copilot"
+            ]
+        }
+    },
+    "forwardPorts": [
+        32000,
+        32001
+    ],
+    "postCreateCommand": "sudo dotnet workload update & sudo dotnet workload install aspire & sudo dotnet workload list",
+    "remoteUser": "vscode",
+    "hostRequirements": {
+        "memory": "8gb",
+        "cpus": 4
+    },
+    "portsAttributes": {
+        "32001": {
+            "label": "Back End"
+        },
+        "32000": {
+            "label": "Front End"
+        }
+    }
+}
