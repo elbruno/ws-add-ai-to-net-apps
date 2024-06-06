@@ -23,6 +23,8 @@ public class ChatController : ControllerBase
     [HttpPost]
     public async Task<Response> Post(Question question)
     {
+        _logger.LogInformation($"Input question: {question.ToString()}"); 
+
         // complete history
         _chatHistory.AddUserMessage(question.UserQuestion);
 
@@ -33,8 +35,8 @@ public class ChatController : ControllerBase
             Author = "Azure OpenAI", 
             QuestionResponse = result[^1].Content
         };
+
+        _logger.LogInformation($"Response: {response.ToString()}");
         return response;
     }
-
-
 }

@@ -4,8 +4,6 @@
 #pragma warning disable SKEXP0027
 #pragma warning disable SKEXP0050
 
-using HandlebarsDotNet;
-using Microsoft.Extensions.Options;
 using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
 
@@ -24,10 +22,13 @@ builder.Services.AddSingleton<IChatCompletionService>(sp =>
 
     return new AzureOpenAIChatCompletionService(chatDeploymentName, endpoint, apiKey);
 });
-builder.Services.AddSingleton<ChatHistory>(sp => 
+builder.Services.AddSingleton(sp => 
 {
     return new ChatHistory();
 });
+builder.Services.AddLogging(
+    b => b.AddConsole().SetMinimumLevel(LogLevel.Trace)
+);
 
 var app = builder.Build();
 

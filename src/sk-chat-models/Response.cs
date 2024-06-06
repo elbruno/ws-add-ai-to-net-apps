@@ -11,4 +11,9 @@ public class Response
 
     public string Author { get; set; }
     public string QuestionResponse { get; set; }
+        
+    public override string ToString()
+    {
+        return $"Author: {Author}, QuestionResponse: {QuestionResponse}";
+    }
 }
