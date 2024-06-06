@@ -25,8 +25,8 @@ namespace sk_chat_winform
 
             // chat control
             ChatForm.ChatboxInfo cbi = new ChatForm.ChatboxInfo();
-			cbi.NamePlaceholder = "Semantic Kernel - Winforms Chat";
-			cbi.PhonePlaceholder = "Azure OpenAI - GPT4o";
+			cbi.MainTitlePlaceholder = "Semantic Kernel - Winforms Chat";
+			cbi.SubtitlePlaceholder = "Azure OpenAI - GPT4o";
 
 			var chat_panel = new ChatForm.Chatbox(cbi);
 			chat_panel.Name = "chat_panel";

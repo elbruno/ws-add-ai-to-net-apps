@@ -32,8 +32,8 @@ namespace sk_chat_winform.ChatForm
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Chatbox));
             topPanel = new System.Windows.Forms.Panel();
             statusLabel = new System.Windows.Forms.Label();
-            phoneLabel = new System.Windows.Forms.Label();
-            clientnameLabel = new System.Windows.Forms.Label();
+            subtitleLabel = new System.Windows.Forms.Label();
+            maintitleLabel = new System.Windows.Forms.Label();
             bottomPanel = new System.Windows.Forms.Panel();
             chatTextbox = new System.Windows.Forms.TextBox();
             attachButton = new System.Windows.Forms.Button();
@@ -48,8 +48,8 @@ namespace sk_chat_winform.ChatForm
             // 
             topPanel.BackColor = System.Drawing.Color.RoyalBlue;
             topPanel.Controls.Add(statusLabel);
-            topPanel.Controls.Add(phoneLabel);
-            topPanel.Controls.Add(clientnameLabel);
+            topPanel.Controls.Add(subtitleLabel);
+            topPanel.Controls.Add(maintitleLabel);
             topPanel.Dock = System.Windows.Forms.DockStyle.Top;
             topPanel.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             topPanel.Location = new System.Drawing.Point(0, 0);
@@ -71,33 +71,33 @@ namespace sk_chat_winform.ChatForm
             statusLabel.Name = "statusLabel";
             statusLabel.Size = new System.Drawing.Size(85, 20);
             statusLabel.TabIndex = 2;
-            statusLabel.Text = "LastViewed";
+            statusLabel.Text = "status label";
             // 
-            // phoneLabel
+            // subtitleLabel
             // 
-            phoneLabel.AutoSize = true;
-            phoneLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            phoneLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            phoneLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            phoneLabel.Location = new System.Drawing.Point(21, 68);
-            phoneLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            phoneLabel.Name = "phoneLabel";
-            phoneLabel.Size = new System.Drawing.Size(148, 28);
-            phoneLabel.TabIndex = 1;
-            phoneLabel.Text = "(408) 262-9190";
+            subtitleLabel.AutoSize = true;
+            subtitleLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            subtitleLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            subtitleLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            subtitleLabel.Location = new System.Drawing.Point(21, 68);
+            subtitleLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            subtitleLabel.Name = "subtitleLabel";
+            subtitleLabel.Size = new System.Drawing.Size(80, 28);
+            subtitleLabel.TabIndex = 1;
+            subtitleLabel.Text = "subtitle";
             // 
-            // clientnameLabel
+            // maintitleLabel
             // 
-            clientnameLabel.AutoSize = true;
-            clientnameLabel.Dock = System.Windows.Forms.DockStyle.Top;
-            clientnameLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold);
-            clientnameLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            clientnameLabel.Location = new System.Drawing.Point(21, 23);
-            clientnameLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            clientnameLabel.Name = "clientnameLabel";
-            clientnameLabel.Size = new System.Drawing.Size(149, 32);
-            clientnameLabel.TabIndex = 0;
-            clientnameLabel.Text = "Client Name";
+            maintitleLabel.AutoSize = true;
+            maintitleLabel.Dock = System.Windows.Forms.DockStyle.Top;
+            maintitleLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold);
+            maintitleLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            maintitleLabel.Location = new System.Drawing.Point(21, 23);
+            maintitleLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            maintitleLabel.Name = "maintitleLabel";
+            maintitleLabel.Size = new System.Drawing.Size(123, 32);
+            maintitleLabel.TabIndex = 0;
+            maintitleLabel.Text = "Main Title";
             // 
             // bottomPanel
             // 
@@ -204,8 +204,8 @@ namespace sk_chat_winform.ChatForm
 
         private System.Windows.Forms.Panel topPanel;
 		private System.Windows.Forms.Label statusLabel;
-		private System.Windows.Forms.Label phoneLabel;
-		private System.Windows.Forms.Label clientnameLabel;
+		private System.Windows.Forms.Label subtitleLabel;
+		private System.Windows.Forms.Label maintitleLabel;
 		private System.Windows.Forms.Panel bottomPanel;
 		private System.Windows.Forms.Button sendButton;
 		private System.Windows.Forms.Button attachButton;

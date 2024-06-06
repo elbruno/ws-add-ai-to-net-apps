@@ -28,9 +28,9 @@ namespace sk_chat_winform.ChatForm
 
             chatbox_info = _chatbox_info;
 
-            clientnameLabel.Text = chatbox_info.NamePlaceholder;
+            maintitleLabel.Text = chatbox_info.MainTitlePlaceholder;
             statusLabel.Text = chatbox_info.StatusPlaceholder;
-            phoneLabel.Text = chatbox_info.PhonePlaceholder;
+            subtitleLabel.Text = chatbox_info.SubtitlePlaceholder;
             chatTextbox.Text = chatbox_info.ChatPlaceholder;
 
             chatTextbox.Enter += ChatEnter;
@@ -85,7 +85,7 @@ namespace sk_chat_winform.ChatForm
         //Cross-tested this with the Twilio API and the RingCentral API, and async messaging is the way to go.
         async void SendMessage(object sender, EventArgs e)
         {
-            string tonumber = phoneLabel.Text;
+            string tonumber = subtitleLabel.Text;
             string chatmessage = chatTextbox.Text;
 
             IChatModel chatModel = null;
