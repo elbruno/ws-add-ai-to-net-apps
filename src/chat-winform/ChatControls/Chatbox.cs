@@ -18,9 +18,6 @@ namespace chat_winform.ChatForm
         // http client
         public HttpClient client;
 
-        // user info
-        public string userName;
-
 
         public Chatbox(ChatboxInfo _chatbox_info)
         {
@@ -95,7 +92,7 @@ namespace chat_winform.ChatForm
             // make local QA to process
             var questionLocal = new Question
             {
-                UserName = userName
+                UserName = chatbox_info.User
             };
 
             if (chatbox_info.Attachment != null && chatbox_info.AttachmentType.Contains("image"))

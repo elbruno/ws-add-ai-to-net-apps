@@ -8,7 +8,7 @@ namespace chat_winform
     public partial class frmChat : Form
 	{
         HttpClient client;
-        string uriChatServer = @"https://localhost:7075/";
+        string uriChatServer = @"http://localhost:5259/";
 
         public frmChat()
 		{
@@ -27,6 +27,7 @@ namespace chat_winform
             ChatForm.ChatboxInfo cbi = new ChatForm.ChatboxInfo();
 			cbi.MainTitlePlaceholder = "Semantic Kernel - Winforms Chat";
 			cbi.SubtitlePlaceholder = "Azure OpenAI - GPT4o";
+            cbi.User = "Bruno";
 
 			var chat_panel = new ChatForm.Chatbox(cbi);
 			chat_panel.Name = "chat_panel";
@@ -34,7 +35,6 @@ namespace chat_winform
             
             // http client
             chat_panel.client = client;
-            chat_panel.userName = "Bruno";
 
             Controls.Add(chat_panel);
 		}

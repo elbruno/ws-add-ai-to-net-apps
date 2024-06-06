@@ -71,6 +71,26 @@
             "};",
             ""
         ],
-        "description": "sk05_chatresponse"
+        "description": "process the chat response from the chat completion service"
+    },
+    "sk06_analyzeimage": {
+        "prefix": "sk06_analyzeimage",
+        "body": [
+            "// validate if question.ImageUrl is a valid url",
+            "if (!string.IsNullOrEmpty(question.ImageUrl) && Uri.IsWellFormedUriString(question.ImageUrl, UriKind.Absolute))",
+            "{",
+            "    var collectionItems = new ChatMessageContentItemCollection",
+            "    {",
+            "        new TextContent(question.UserQuestion),",
+            "        new ImageContent(new Uri(question.ImageUrl))",
+            "    };",
+            "    _chatHistory.AddUserMessage(collectionItems);",
+            "}",
+            "else",
+            "{",
+            "    _chatHistory.AddUserMessage(question.UserQuestion);",
+            "}"
+        ],
+        "description": "process the question and the image url using the chat completion service"
     }
 }

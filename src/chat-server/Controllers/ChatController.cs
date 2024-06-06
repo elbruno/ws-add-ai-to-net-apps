@@ -19,12 +19,14 @@ public class ChatController : ControllerBase
     [HttpPost]
     public async Task<Response> Post(Question question)
     {
-        _logger.LogInformation($"Input question: {question.ToString()}");
+        _logger.LogInformation($"Input question: {question}");
 
-        Response response = new Response();
-        response.QuestionResponse = $" Your question [{question.UserQuestion}] is {question.UserQuestion.Length} chars long.";
+        var response = new Response
+        {
+            QuestionResponse = $" Your question [{question.UserQuestion}] is {question.UserQuestion.Length} chars long."
+        };
 
-        _logger.LogInformation($"Response: {response.ToString()}");
+        _logger.LogInformation($"Response: {response}");
         return response;
     }
 }
