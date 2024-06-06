@@ -88,29 +88,35 @@ namespace chat_winform.ChatForm
             string tonumber = subtitleLabel.Text;
             string chatmessage = chatTextbox.Text;
 
-            IChatModel chatModel = null;
-            TextChatModel textModel = null;
+            IChatModel genericFileMessage = null;
+            ImageChatModel imageMessage = null;
+            TextChatModel textMessage = null;
 
-            //Each IChatModel is specifically built for a single purpose. For that reason, if you want to display a text item AND and image, you'd make two IChatModels for
-            //their respective purposes. AttachmentChatModel and ImageChatModel, however, can really be used interchangeably.
+            // make local QA to process
+            var questionLocal = new Question
+            {
+                UserName = userName
+            };
+
             if (chatbox_info.Attachment != null && chatbox_info.AttachmentType.Contains("image"))
             {
-                chatModel = new ImageChatModel()
+                //Upload image to Azure Blog Storage
+                var imageUploaded = await Azure.AzureBlobContainer.UploadFileToAzureBlob(chatbox_info.AttachmentName, chatbox_info.AttachmentFileName);
+
+                imageMessage = new ImageChatModel()
                 {
                     Author = chatbox_info.User,
                     Image = Image.FromStream(new MemoryStream(chatbox_info.Attachment)),
                     ImageName = chatbox_info.AttachmentName,
+                    ImageUri = imageUploaded,
                     Inbound = false,
                     Read = true,
-                    Time = DateTime.Now,
+                    Time = DateTime.Now
                 };
-
             }
             else if (chatbox_info.Attachment != null)
             {
-                //TODO: Upload image to Azure Blog Storage
-
-                chatModel = new AttachmentChatModel()
+                genericFileMessage = new AttachmentChatModel()
                 {
                     Author = chatbox_info.User,
                     Attachment = chatbox_info.Attachment,
@@ -123,7 +129,7 @@ namespace chat_winform.ChatForm
 
             if (!string.IsNullOrWhiteSpace(chatmessage) && chatmessage != chatbox_info.ChatPlaceholder)
             {
-                textModel = new TextChatModel()
+                textMessage = new TextChatModel()
                 {
                     Author = chatbox_info.User,
                     Body = chatmessage,
@@ -135,53 +141,46 @@ namespace chat_winform.ChatForm
 
             try
             {
-                /*
 
-                    INSERT SENDING LOGIC HERE. Again, this is just a UserControl, not a complete app. For the Ringcentral API, I was able to reduce this section
-                    down to a single method.
-
-                */
-
-                if (chatModel != null)
+                if (imageMessage != null)
                 {
-                    AddMessage(chatModel);
+                    AddMessage(imageMessage);
                     CancelAttachment(null, null);
+                    questionLocal.ImageUrl = imageMessage.ImageUri;
                 }
-                if (textModel != null)
+                if (textMessage != null)
                 {
-                    AddMessage(textModel);
-                    chatTextbox.Text = string.Empty;                    
-                    string question = textModel.Body;
+                    AddMessage(textMessage);
+                    chatTextbox.Text = string.Empty;
 
                     // make local QA to process
-                    var questionLocal = new Question
-                    {
-                        UserName = userName,
-                        UserQuestion = question
-                    };
-                    var responseLocal = new Response();
-
-                    HttpResponseMessage httpResponse = await client.PostAsJsonAsync("api/chat", questionLocal);
-                    if (httpResponse.IsSuccessStatusCode)
-                    {
-                        responseLocal = await httpResponse.Content.ReadFromJsonAsync<Response>();                        
-                    }
-
-                    var responseTextModel = new TextChatModel()
-                    {
-                        Author = responseLocal.Author,
-                        Body = responseLocal.QuestionResponse,
-                        Inbound = true,
-                        Read = false,
-                        Time = DateTime.Now
-                    };
-                    AddMessage(responseTextModel);
+                    questionLocal.UserQuestion = textMessage.Body;
                 }
+
+                // get response from server
+                var responseLocal = new Response();
+                var httpResponse = await client.PostAsJsonAsync("api/chat", questionLocal);
+                if (httpResponse.IsSuccessStatusCode)
+                {
+                    responseLocal = await httpResponse.Content.ReadFromJsonAsync<Response>();
+                }
+
+                // display response in the chat history
+                var responseTextModel = new TextChatModel()
+                {
+                    Author = responseLocal.Author,
+                    Body = responseLocal.QuestionResponse,
+                    Inbound = true,
+                    Read = false,
+                    Time = DateTime.Now
+                };
+                AddMessage(responseTextModel);
+
             }
             catch (Exception exc)
             {
                 //If any exception is found, then it is printed on the screen. Feel free to change this method if you don't want people to see exceptions.
-                textModel = new TextChatModel()
+                textMessage = new TextChatModel()
                 {
                     Author = chatbox_info.User,
                     Body = "The message could not be processed. Please see the reason below.\r\n" + exc.Message,
@@ -189,7 +188,7 @@ namespace chat_winform.ChatForm
                     Read = true,
                     Time = DateTime.Now
                 };
-                AddMessage(textModel);
+                AddMessage(textMessage);
             }
         }
 
@@ -210,12 +209,13 @@ namespace chat_winform.ChatForm
                     //Limits the size of the attachment to 1.45 MB, which is less than the max possible size of an SMS attachment of 1.5 MB.
                     if (file.Length > 1450000)
                     {
-                        MessageBox.Show("The attachment provided " + fileDialog.SafeFileName + " is too big to be sent by SMS. Please select another.", "Attachment not added.");
+                        MessageBox.Show("The attachment provided " + fileDialog.SafeFileName + " is too big to be process by the chat. Please select another.", "Attachment not added.");
                         return;
                     }
                     else
                     {
                         chatbox_info.Attachment = file;
+                        chatbox_info.AttachmentFileName = selected;
                     }
                 }
                 catch (Exception)

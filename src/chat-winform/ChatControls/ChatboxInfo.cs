@@ -9,6 +9,7 @@
         public string ChatPlaceholder = "Please enter a message...";
         public byte[] Attachment { get; set; }
         public string AttachmentName { get; set; }
+        public string AttachmentFileName { get; set; }
         public string AttachmentType { get; set; }
     }
 }

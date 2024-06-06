@@ -37,6 +37,7 @@ namespace chat_winform.ChatForm
 
         public Image Image { get; set; }
         public string ImageName { get; set; }
+        public string ImageUri { get; set; }
     }
 
     public class AttachmentChatModel : IChatModel
