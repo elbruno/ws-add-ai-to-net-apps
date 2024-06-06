@@ -1,7 +1,14 @@
 ﻿namespace sk_chat_models;
 
 public class Question
-{
-    public string UserId { get; set; }
-    public string? UserQuestion { get; set; }
+{    
+    public Question()
+    {
+        UserName = "not defined";
+        UserQuestion = "not defined";
+    }
+
+    public string UserName { get; set; }
+    public string UserQuestion { get; set; }
+
 }

@@ -18,6 +18,10 @@ namespace sk_chat_winform.ChatForm
         // http client
         public HttpClient client;
 
+        // user info
+        public string userName;
+
+
         public Chatbox(ChatboxInfo _chatbox_info)
         {
             InitializeComponent();
@@ -145,30 +149,26 @@ namespace sk_chat_winform.ChatForm
                 {
                     AddMessage(textModel);
                     chatTextbox.Text = string.Empty;                    
-                    var author = "Azure OpenAI";
-                    var response = "";
                     string question = textModel.Body;
 
-                    // make the request for the answer
-
-                    var q = new Question
+                    // make local QA to process
+                    var questionLocal = new Question
                     {
+                        UserName = userName,
                         UserQuestion = question
                     };
+                    var responseLocal = new Response();
 
-                    HttpResponseMessage httpResponse = await client.PostAsJsonAsync("api/chat", q);
+                    HttpResponseMessage httpResponse = await client.PostAsJsonAsync("api/chat", questionLocal);
                     if (httpResponse.IsSuccessStatusCode)
                     {
-                        var serverResponse = await httpResponse.Content.ReadFromJsonAsync<Response>();
-                        response = serverResponse.QuestionResponse;
+                        responseLocal = await httpResponse.Content.ReadFromJsonAsync<Response>();                        
                     }
-                    var uriLoc = httpResponse.Headers.Location;
-
 
                     var responseTextModel = new TextChatModel()
                     {
-                        Author = author, 
-                        Body = response,
+                        Author = responseLocal.Author,
+                        Body = responseLocal.QuestionResponse,
                         Inbound = true,
                         Read = false,
                         Time = DateTime.Now

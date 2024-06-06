@@ -34,6 +34,7 @@ namespace sk_chat_winform
             
             // http client
             chat_panel.client = client;
+            chat_panel.userName = "Bruno";
 
             Controls.Add(chat_panel);
 		}
