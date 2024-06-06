@@ -108,6 +108,8 @@ namespace chat_winform.ChatForm
             }
             else if (chatbox_info.Attachment != null)
             {
+                //TODO: Upload image to Azure Blog Storage
+
                 chatModel = new AttachmentChatModel()
                 {
                     Author = chatbox_info.User,

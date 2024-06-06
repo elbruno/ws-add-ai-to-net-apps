@@ -101,7 +101,7 @@ namespace chat_winform.ChatForm
             // 
             // bottomPanel
             // 
-            bottomPanel.BackColor = System.Drawing.Color.RoyalBlue;
+            bottomPanel.BackColor = System.Drawing.Color.DarkViolet;
             bottomPanel.Controls.Add(chatTextbox);
             bottomPanel.Controls.Add(attachButton);
             bottomPanel.Controls.Add(removeButton);
@@ -160,7 +160,7 @@ namespace chat_winform.ChatForm
             // 
             // sendButton
             // 
-            sendButton.BackColor = System.Drawing.Color.RoyalBlue;
+            sendButton.BackColor = System.Drawing.Color.DarkViolet;
             sendButton.Dock = System.Windows.Forms.DockStyle.Right;
             sendButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             sendButton.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
