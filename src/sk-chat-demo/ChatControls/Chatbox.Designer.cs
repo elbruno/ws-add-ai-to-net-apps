@@ -46,17 +46,17 @@ namespace sk_chat_winform.ChatForm
             // 
             // topPanel
             // 
-            topPanel.BackColor = System.Drawing.Color.RoyalBlue;
+            topPanel.BackColor = System.Drawing.Color.BlueViolet;
             topPanel.Controls.Add(statusLabel);
             topPanel.Controls.Add(subtitleLabel);
             topPanel.Controls.Add(maintitleLabel);
             topPanel.Dock = System.Windows.Forms.DockStyle.Top;
             topPanel.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             topPanel.Location = new System.Drawing.Point(0, 0);
-            topPanel.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            topPanel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             topPanel.Name = "topPanel";
-            topPanel.Padding = new System.Windows.Forms.Padding(21, 23, 21, 23);
-            topPanel.Size = new System.Drawing.Size(547, 119);
+            topPanel.Padding = new System.Windows.Forms.Padding(18, 17, 18, 17);
+            topPanel.Size = new System.Drawing.Size(479, 89);
             topPanel.TabIndex = 0;
             topPanel.Paint += topPanel_Paint;
             // 
@@ -66,10 +66,10 @@ namespace sk_chat_winform.ChatForm
             statusLabel.Dock = System.Windows.Forms.DockStyle.Right;
             statusLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
             statusLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            statusLabel.Location = new System.Drawing.Point(441, 55);
-            statusLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            statusLabel.Location = new System.Drawing.Point(395, 42);
+            statusLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             statusLabel.Name = "statusLabel";
-            statusLabel.Size = new System.Drawing.Size(85, 20);
+            statusLabel.Size = new System.Drawing.Size(66, 15);
             statusLabel.TabIndex = 2;
             statusLabel.Text = "status label";
             // 
@@ -79,10 +79,10 @@ namespace sk_chat_winform.ChatForm
             subtitleLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
             subtitleLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             subtitleLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            subtitleLabel.Location = new System.Drawing.Point(21, 68);
-            subtitleLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            subtitleLabel.Location = new System.Drawing.Point(18, 51);
+            subtitleLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             subtitleLabel.Name = "subtitleLabel";
-            subtitleLabel.Size = new System.Drawing.Size(80, 28);
+            subtitleLabel.Size = new System.Drawing.Size(65, 21);
             subtitleLabel.TabIndex = 1;
             subtitleLabel.Text = "subtitle";
             // 
@@ -92,10 +92,10 @@ namespace sk_chat_winform.ChatForm
             maintitleLabel.Dock = System.Windows.Forms.DockStyle.Top;
             maintitleLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold);
             maintitleLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            maintitleLabel.Location = new System.Drawing.Point(21, 23);
-            maintitleLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            maintitleLabel.Location = new System.Drawing.Point(18, 17);
+            maintitleLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             maintitleLabel.Name = "maintitleLabel";
-            maintitleLabel.Size = new System.Drawing.Size(123, 32);
+            maintitleLabel.Size = new System.Drawing.Size(98, 25);
             maintitleLabel.TabIndex = 0;
             maintitleLabel.Text = "Main Title";
             // 
@@ -108,21 +108,21 @@ namespace sk_chat_winform.ChatForm
             bottomPanel.Controls.Add(sendButton);
             bottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
             bottomPanel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            bottomPanel.Location = new System.Drawing.Point(0, 844);
-            bottomPanel.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            bottomPanel.Location = new System.Drawing.Point(0, 633);
+            bottomPanel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             bottomPanel.Name = "bottomPanel";
-            bottomPanel.Padding = new System.Windows.Forms.Padding(21, 16, 21, 16);
-            bottomPanel.Size = new System.Drawing.Size(547, 83);
+            bottomPanel.Padding = new System.Windows.Forms.Padding(18, 12, 18, 12);
+            bottomPanel.Size = new System.Drawing.Size(479, 62);
             bottomPanel.TabIndex = 1;
             // 
             // chatTextbox
             // 
             chatTextbox.Dock = System.Windows.Forms.DockStyle.Fill;
-            chatTextbox.Location = new System.Drawing.Point(21, 16);
-            chatTextbox.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            chatTextbox.Location = new System.Drawing.Point(18, 12);
+            chatTextbox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             chatTextbox.Multiline = true;
             chatTextbox.Name = "chatTextbox";
-            chatTextbox.Size = new System.Drawing.Size(332, 51);
+            chatTextbox.Size = new System.Drawing.Size(292, 38);
             chatTextbox.TabIndex = 7;
             // 
             // attachButton
@@ -134,10 +134,10 @@ namespace sk_chat_winform.ChatForm
             attachButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             attachButton.ForeColor = System.Drawing.SystemColors.ControlText;
             attachButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            attachButton.Location = new System.Drawing.Point(353, 16);
-            attachButton.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            attachButton.Location = new System.Drawing.Point(310, 12);
+            attachButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             attachButton.Name = "attachButton";
-            attachButton.Size = new System.Drawing.Size(47, 51);
+            attachButton.Size = new System.Drawing.Size(41, 38);
             attachButton.TabIndex = 6;
             attachButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             attachButton.UseVisualStyleBackColor = false;
@@ -149,10 +149,10 @@ namespace sk_chat_winform.ChatForm
             removeButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             removeButton.Font = new System.Drawing.Font("Segoe UI Symbol", 9.75F, System.Drawing.FontStyle.Bold);
             removeButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            removeButton.Location = new System.Drawing.Point(400, 16);
-            removeButton.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            removeButton.Location = new System.Drawing.Point(351, 12);
+            removeButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             removeButton.Name = "removeButton";
-            removeButton.Size = new System.Drawing.Size(25, 51);
+            removeButton.Size = new System.Drawing.Size(22, 38);
             removeButton.TabIndex = 5;
             removeButton.Text = "X";
             removeButton.UseVisualStyleBackColor = false;
@@ -164,10 +164,10 @@ namespace sk_chat_winform.ChatForm
             sendButton.Dock = System.Windows.Forms.DockStyle.Right;
             sendButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             sendButton.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            sendButton.Location = new System.Drawing.Point(425, 16);
-            sendButton.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            sendButton.Location = new System.Drawing.Point(373, 12);
+            sendButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             sendButton.Name = "sendButton";
-            sendButton.Size = new System.Drawing.Size(101, 51);
+            sendButton.Size = new System.Drawing.Size(88, 38);
             sendButton.TabIndex = 1;
             sendButton.Text = "Send";
             sendButton.UseVisualStyleBackColor = false;
@@ -176,23 +176,23 @@ namespace sk_chat_winform.ChatForm
             // 
             itemsPanel.AutoScroll = true;
             itemsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            itemsPanel.Location = new System.Drawing.Point(0, 119);
-            itemsPanel.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            itemsPanel.Location = new System.Drawing.Point(0, 89);
+            itemsPanel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             itemsPanel.Name = "itemsPanel";
-            itemsPanel.Size = new System.Drawing.Size(547, 725);
+            itemsPanel.Size = new System.Drawing.Size(479, 544);
             itemsPanel.TabIndex = 2;
             // 
             // Chatbox
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.Color.White;
             Controls.Add(itemsPanel);
             Controls.Add(bottomPanel);
             Controls.Add(topPanel);
-            Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             Name = "Chatbox";
-            Size = new System.Drawing.Size(547, 927);
+            Size = new System.Drawing.Size(479, 695);
             topPanel.ResumeLayout(false);
             topPanel.PerformLayout();
             bottomPanel.ResumeLayout(false);

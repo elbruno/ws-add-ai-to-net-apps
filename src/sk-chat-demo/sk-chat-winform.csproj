@@ -5,7 +5,9 @@
     <TargetFramework>net8.0-windows7.0</TargetFramework>
     <RootNamespace>sk_chat_winform</RootNamespace>
     <UseWindowsForms>true</UseWindowsForms>
-    <UserSecretsId>f0ce84b4-bdc5-4452-8ea0-44a0f69ea165</UserSecretsId>
+	  <ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
+
+	  <UserSecretsId>f0ce84b4-bdc5-4452-8ea0-44a0f69ea165</UserSecretsId>
   </PropertyGroup>
 
 
