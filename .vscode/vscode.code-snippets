@@ -97,6 +97,7 @@
     "sk07_addONNXProjReferences": {
         "prefix": "sk07_addONNXProjReferences",
         "body": [
+            "<!-- Local ONNX Models References -->",
             "<PackageReference Include=\"feiyun0112.SemanticKernel.Connectors.OnnxRuntimeGenAI.CPU\" Version=\"1.0.0\" />",
             "<PackageReference Include=\"Microsoft.ML.OnnxRuntime\" Version=\"1.18.0\" />",
             "<PackageReference Include=\"Microsoft.ML.OnnxRuntimeGenAI\" Version=\"0.3.0-rc2\" />",

@@ -12,15 +12,13 @@ public class ChatController : ControllerBase
 {
     private readonly ILogger<ChatController> _logger;
 
-        private ChatHistory _chatHistory;
-        public IChatCompletionService _chatCompletionService;
-    
-        public ChatController(ILogger<ChatController> logger, ChatHistory chatHistory)
-        {
-            _logger = logger;
-            _chatHistory = chatHistory;
-        }
-    
+    private ChatHistory _chatHistory;
+
+    public ChatController(ILogger<ChatController> logger, ChatHistory chatHistory)
+    {
+        _logger = logger;
+        _chatHistory = chatHistory;
+    }
 
     // POST api/<ChatController>
     [HttpPost]
@@ -32,13 +30,13 @@ public class ChatController : ControllerBase
         _chatHistory.AddUserMessage(question.UserQuestion);
 
         // get response
-        var  stopwatch = new Stopwatch();
+        var stopwatch = new Stopwatch();
         stopwatch.Start();
         var chatResponse = $" Your question [{question.UserQuestion}] is {question.UserQuestion.Length} chars long.";
         stopwatch.Stop();
-        
+
         // return response
-         var response = new Response
+        var response = new Response
         {
             Author = "ChatBot",
             QuestionResponse = chatResponse,
