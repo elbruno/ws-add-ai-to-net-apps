@@ -28,7 +28,6 @@ namespace chat_winform.ChatForm
             chatbox_info = _chatbox_info;
 
             maintitleLabel.Text = chatbox_info.MainTitlePlaceholder;
-            statusLabel.Text = chatbox_info.StatusPlaceholder;
             subtitleContent.Text = chatbox_info.SubtitlePlaceholder;
             chatTextbox.Text = chatbox_info.ChatPlaceholder;
 

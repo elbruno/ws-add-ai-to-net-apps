@@ -34,7 +34,6 @@ namespace chat_winform.ChatForm
             panelTexts = new Panel();
             maintitleLabel = new Label();
             subtitleContent = new Label();
-            statusLabel = new Label();
             pictureBoxLogo = new PictureBox();
             bottomPanel = new Panel();
             chatTextbox = new TextBox();
@@ -65,7 +64,6 @@ namespace chat_winform.ChatForm
             // 
             panelTexts.Controls.Add(maintitleLabel);
             panelTexts.Controls.Add(subtitleContent);
-            panelTexts.Controls.Add(statusLabel);
             panelTexts.Dock = DockStyle.Fill;
             panelTexts.Location = new Point(126, 0);
             panelTexts.Name = "panelTexts";
@@ -81,36 +79,25 @@ namespace chat_winform.ChatForm
             maintitleLabel.Location = new Point(0, 0);
             maintitleLabel.Margin = new Padding(0);
             maintitleLabel.Name = "maintitleLabel";
-            maintitleLabel.Size = new Size(98, 25);
+            maintitleLabel.Padding = new Padding(5);
+            maintitleLabel.Size = new Size(108, 35);
             maintitleLabel.TabIndex = 0;
             maintitleLabel.Text = "Main Title";
             // 
             // subtitleContent
             // 
             subtitleContent.AutoSize = true;
-            subtitleContent.Dock = DockStyle.Right;
+            subtitleContent.Dock = DockStyle.Bottom;
             subtitleContent.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             subtitleContent.ForeColor = SystemColors.ControlLightLight;
-            subtitleContent.Location = new Point(280, 0);
+            subtitleContent.Location = new Point(0, 37);
             subtitleContent.Margin = new Padding(0);
             subtitleContent.Name = "subtitleContent";
-            subtitleContent.Size = new Size(73, 42);
+            subtitleContent.Padding = new Padding(5);
+            subtitleContent.Size = new Size(83, 52);
             subtitleContent.TabIndex = 1;
             subtitleContent.Text = "Content \r\nContent\r\n";
             subtitleContent.Click += subtitleLabel_Click;
-            // 
-            // statusLabel
-            // 
-            statusLabel.AutoSize = true;
-            statusLabel.Dock = DockStyle.Bottom;
-            statusLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            statusLabel.ForeColor = SystemColors.ControlLightLight;
-            statusLabel.Location = new Point(0, 74);
-            statusLabel.Margin = new Padding(0);
-            statusLabel.Name = "statusLabel";
-            statusLabel.Size = new Size(66, 15);
-            statusLabel.TabIndex = 2;
-            statusLabel.Text = "status label";
             // 
             // pictureBoxLogo
             // 
@@ -231,7 +218,6 @@ namespace chat_winform.ChatForm
         #endregion
 
         private System.Windows.Forms.Panel topPanel;
-		private System.Windows.Forms.Label statusLabel;
 		private System.Windows.Forms.Label subtitleContent;
 		private System.Windows.Forms.Label maintitleLabel;
 		private System.Windows.Forms.Panel bottomPanel;
