@@ -35,6 +35,9 @@ namespace chat_winform
             toolStripTextBoxChatServer = new ToolStripTextBox();
             chat_panel = new ChatForm.Chatbox();
             panelChatControl = new Panel();
+            toolStripSeparator1 = new ToolStripSeparator();
+            toolStripMenuItemSetUserName = new ToolStripMenuItem();
+            toolStripTextBoxUserName = new ToolStripTextBox();
             menuStrip1.SuspendLayout();
             panelChatControl.SuspendLayout();
             SuspendLayout();
@@ -50,7 +53,7 @@ namespace chat_winform
             // 
             // toolStripMenuItemServer
             // 
-            toolStripMenuItemServer.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItemSetServer, toolStripTextBoxChatServer });
+            toolStripMenuItemServer.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItemSetServer, toolStripTextBoxChatServer, toolStripSeparator1, toolStripMenuItemSetUserName, toolStripTextBoxUserName });
             toolStripMenuItemServer.Name = "toolStripMenuItemServer";
             toolStripMenuItemServer.Size = new Size(61, 20);
             toolStripMenuItemServer.Text = "Options";
@@ -86,6 +89,23 @@ namespace chat_winform
             panelChatControl.Size = new Size(800, 426);
             panelChatControl.TabIndex = 2;
             // 
+            // toolStripSeparator1
+            // 
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new Size(177, 6);
+            // 
+            // toolStripMenuItemSetUserName
+            // 
+            toolStripMenuItemSetUserName.Name = "toolStripMenuItemSetUserName";
+            toolStripMenuItemSetUserName.Size = new Size(180, 22);
+            toolStripMenuItemSetUserName.Text = "Set User Name";
+            toolStripMenuItemSetUserName.Click += toolStripMenuItemSetUserName_Click;
+            // 
+            // toolStripTextBoxUserName
+            // 
+            toolStripTextBoxUserName.Name = "toolStripTextBoxUserName";
+            toolStripTextBoxUserName.Size = new Size(100, 23);
+            // 
             // frmChat
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -112,6 +132,9 @@ namespace chat_winform
         private ToolStripTextBox toolStripTextBoxChatServer;
         private ChatForm.Chatbox chat_panel;
         private Panel panelChatControl;
+        private ToolStripSeparator toolStripSeparator1;
+        private ToolStripMenuItem toolStripMenuItemSetUserName;
+        private ToolStripTextBox toolStripTextBoxUserName;
     }
 }
 

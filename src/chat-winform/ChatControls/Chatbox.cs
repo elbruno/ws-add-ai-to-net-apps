@@ -22,14 +22,14 @@ namespace chat_winform.ChatForm
         {
             InitializeComponent();
         }
-        
+
         public void SetChatBotInfo(ChatboxInfo _chatbox_info)
         {
             chatbox_info = _chatbox_info;
 
             maintitleLabel.Text = chatbox_info.MainTitlePlaceholder;
             statusLabel.Text = chatbox_info.StatusPlaceholder;
-            subtitleLabel.Text = chatbox_info.SubtitlePlaceholder;
+            subtitleContent.Text = chatbox_info.SubtitlePlaceholder;
             chatTextbox.Text = chatbox_info.ChatPlaceholder;
 
             chatTextbox.Enter += ChatEnter;
@@ -84,7 +84,7 @@ namespace chat_winform.ChatForm
         //Cross-tested this with the Twilio API and the RingCentral API, and async messaging is the way to go.
         async void SendMessage(object sender, EventArgs e)
         {
-            string tonumber = subtitleLabel.Text;
+            string tonumber = subtitleContent.Text;
             string chatmessage = chatTextbox.Text;
 
             IChatModel genericFileMessage = null;
@@ -284,6 +284,11 @@ namespace chat_winform.ChatForm
                     (control as ChatItem).ResizeBubbles((int)(itemsPanel.Width * 0.6));
                 }
             }
+        }
+
+        private void subtitleLabel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

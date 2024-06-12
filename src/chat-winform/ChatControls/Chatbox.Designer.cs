@@ -30,127 +30,155 @@ namespace chat_winform.ChatForm
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Chatbox));
-            topPanel = new System.Windows.Forms.Panel();
-            statusLabel = new System.Windows.Forms.Label();
-            subtitleLabel = new System.Windows.Forms.Label();
-            maintitleLabel = new System.Windows.Forms.Label();
-            bottomPanel = new System.Windows.Forms.Panel();
-            chatTextbox = new System.Windows.Forms.TextBox();
-            attachButton = new System.Windows.Forms.Button();
-            removeButton = new System.Windows.Forms.Button();
-            sendButton = new System.Windows.Forms.Button();
-            itemsPanel = new System.Windows.Forms.Panel();
+            topPanel = new Panel();
+            panelTexts = new Panel();
+            maintitleLabel = new Label();
+            subtitleContent = new Label();
+            statusLabel = new Label();
+            pictureBoxLogo = new PictureBox();
+            bottomPanel = new Panel();
+            chatTextbox = new TextBox();
+            attachButton = new Button();
+            removeButton = new Button();
+            sendButton = new Button();
+            itemsPanel = new Panel();
             topPanel.SuspendLayout();
+            panelTexts.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxLogo).BeginInit();
             bottomPanel.SuspendLayout();
             SuspendLayout();
             // 
             // topPanel
             // 
-            topPanel.BackColor = System.Drawing.Color.BlueViolet;
-            topPanel.Controls.Add(statusLabel);
-            topPanel.Controls.Add(subtitleLabel);
-            topPanel.Controls.Add(maintitleLabel);
-            topPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            topPanel.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            topPanel.Location = new System.Drawing.Point(0, 0);
-            topPanel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            topPanel.BackColor = Color.BlueViolet;
+            topPanel.Controls.Add(panelTexts);
+            topPanel.Controls.Add(pictureBoxLogo);
+            topPanel.Dock = DockStyle.Top;
+            topPanel.ForeColor = SystemColors.ButtonHighlight;
+            topPanel.Location = new Point(0, 0);
+            topPanel.Margin = new Padding(0);
             topPanel.Name = "topPanel";
-            topPanel.Padding = new System.Windows.Forms.Padding(18, 17, 18, 17);
-            topPanel.Size = new System.Drawing.Size(479, 89);
+            topPanel.Size = new Size(479, 89);
             topPanel.TabIndex = 0;
             // 
-            // statusLabel
+            // panelTexts
             // 
-            statusLabel.AutoSize = true;
-            statusLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
-            statusLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            statusLabel.Location = new System.Drawing.Point(373, 57);
-            statusLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            statusLabel.Name = "statusLabel";
-            statusLabel.Size = new System.Drawing.Size(66, 15);
-            statusLabel.TabIndex = 2;
-            statusLabel.Text = "status label";
-            // 
-            // subtitleLabel
-            // 
-            subtitleLabel.AutoSize = true;
-            subtitleLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            subtitleLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            subtitleLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            subtitleLabel.Location = new System.Drawing.Point(18, 51);
-            subtitleLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            subtitleLabel.Name = "subtitleLabel";
-            subtitleLabel.Size = new System.Drawing.Size(65, 21);
-            subtitleLabel.TabIndex = 1;
-            subtitleLabel.Text = "subtitle";
+            panelTexts.Controls.Add(maintitleLabel);
+            panelTexts.Controls.Add(subtitleContent);
+            panelTexts.Controls.Add(statusLabel);
+            panelTexts.Dock = DockStyle.Fill;
+            panelTexts.Location = new Point(126, 0);
+            panelTexts.Name = "panelTexts";
+            panelTexts.Size = new Size(353, 89);
+            panelTexts.TabIndex = 4;
             // 
             // maintitleLabel
             // 
             maintitleLabel.AutoSize = true;
-            maintitleLabel.Dock = System.Windows.Forms.DockStyle.Top;
-            maintitleLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold);
-            maintitleLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            maintitleLabel.Location = new System.Drawing.Point(18, 17);
-            maintitleLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            maintitleLabel.Dock = DockStyle.Top;
+            maintitleLabel.Font = new Font("Segoe UI Semibold", 14F, FontStyle.Bold);
+            maintitleLabel.ForeColor = SystemColors.ControlLightLight;
+            maintitleLabel.Location = new Point(0, 0);
+            maintitleLabel.Margin = new Padding(0);
             maintitleLabel.Name = "maintitleLabel";
-            maintitleLabel.Size = new System.Drawing.Size(98, 25);
+            maintitleLabel.Size = new Size(98, 25);
             maintitleLabel.TabIndex = 0;
             maintitleLabel.Text = "Main Title";
             // 
+            // subtitleContent
+            // 
+            subtitleContent.AutoSize = true;
+            subtitleContent.Dock = DockStyle.Right;
+            subtitleContent.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            subtitleContent.ForeColor = SystemColors.ControlLightLight;
+            subtitleContent.Location = new Point(280, 0);
+            subtitleContent.Margin = new Padding(0);
+            subtitleContent.Name = "subtitleContent";
+            subtitleContent.Size = new Size(73, 42);
+            subtitleContent.TabIndex = 1;
+            subtitleContent.Text = "Content \r\nContent\r\n";
+            subtitleContent.Click += subtitleLabel_Click;
+            // 
+            // statusLabel
+            // 
+            statusLabel.AutoSize = true;
+            statusLabel.Dock = DockStyle.Bottom;
+            statusLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            statusLabel.ForeColor = SystemColors.ControlLightLight;
+            statusLabel.Location = new Point(0, 74);
+            statusLabel.Margin = new Padding(0);
+            statusLabel.Name = "statusLabel";
+            statusLabel.Size = new Size(66, 15);
+            statusLabel.TabIndex = 2;
+            statusLabel.Text = "status label";
+            // 
+            // pictureBoxLogo
+            // 
+            pictureBoxLogo.BackgroundImageLayout = ImageLayout.Center;
+            pictureBoxLogo.Dock = DockStyle.Left;
+            pictureBoxLogo.Image = (Image)resources.GetObject("pictureBoxLogo.Image");
+            pictureBoxLogo.Location = new Point(0, 0);
+            pictureBoxLogo.Name = "pictureBoxLogo";
+            pictureBoxLogo.Padding = new Padding(10);
+            pictureBoxLogo.Size = new Size(126, 89);
+            pictureBoxLogo.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBoxLogo.TabIndex = 3;
+            pictureBoxLogo.TabStop = false;
+            // 
             // bottomPanel
             // 
-            bottomPanel.BackColor = System.Drawing.Color.DarkViolet;
+            bottomPanel.BackColor = Color.DarkViolet;
             bottomPanel.Controls.Add(chatTextbox);
             bottomPanel.Controls.Add(attachButton);
             bottomPanel.Controls.Add(removeButton);
             bottomPanel.Controls.Add(sendButton);
-            bottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            bottomPanel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            bottomPanel.Location = new System.Drawing.Point(0, 633);
-            bottomPanel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            bottomPanel.Dock = DockStyle.Bottom;
+            bottomPanel.ForeColor = SystemColors.ControlLightLight;
+            bottomPanel.Location = new Point(0, 633);
+            bottomPanel.Margin = new Padding(4, 3, 4, 3);
             bottomPanel.Name = "bottomPanel";
-            bottomPanel.Padding = new System.Windows.Forms.Padding(18, 12, 18, 12);
-            bottomPanel.Size = new System.Drawing.Size(479, 62);
+            bottomPanel.Padding = new Padding(18, 12, 18, 12);
+            bottomPanel.Size = new Size(479, 62);
             bottomPanel.TabIndex = 1;
             // 
             // chatTextbox
             // 
-            chatTextbox.Dock = System.Windows.Forms.DockStyle.Fill;
-            chatTextbox.Location = new System.Drawing.Point(18, 12);
-            chatTextbox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            chatTextbox.Dock = DockStyle.Fill;
+            chatTextbox.Location = new Point(18, 12);
+            chatTextbox.Margin = new Padding(4, 3, 4, 3);
             chatTextbox.Multiline = true;
             chatTextbox.Name = "chatTextbox";
-            chatTextbox.Size = new System.Drawing.Size(292, 38);
+            chatTextbox.Size = new Size(292, 38);
             chatTextbox.TabIndex = 7;
             // 
             // attachButton
             // 
-            attachButton.BackColor = System.Drawing.Color.GhostWhite;
-            attachButton.BackgroundImage = (System.Drawing.Image)resources.GetObject("attachButton.BackgroundImage");
-            attachButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            attachButton.Dock = System.Windows.Forms.DockStyle.Right;
-            attachButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            attachButton.ForeColor = System.Drawing.SystemColors.ControlText;
-            attachButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            attachButton.Location = new System.Drawing.Point(310, 12);
-            attachButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            attachButton.BackColor = Color.GhostWhite;
+            attachButton.BackgroundImage = (Image)resources.GetObject("attachButton.BackgroundImage");
+            attachButton.BackgroundImageLayout = ImageLayout.Center;
+            attachButton.Dock = DockStyle.Right;
+            attachButton.FlatStyle = FlatStyle.Flat;
+            attachButton.ForeColor = SystemColors.ControlText;
+            attachButton.ImageAlign = ContentAlignment.MiddleLeft;
+            attachButton.Location = new Point(310, 12);
+            attachButton.Margin = new Padding(4, 3, 4, 3);
             attachButton.Name = "attachButton";
-            attachButton.Size = new System.Drawing.Size(41, 38);
+            attachButton.Size = new Size(41, 38);
             attachButton.TabIndex = 6;
-            attachButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            attachButton.TextAlign = ContentAlignment.MiddleRight;
             attachButton.UseVisualStyleBackColor = false;
             // 
             // removeButton
             // 
-            removeButton.BackColor = System.Drawing.Color.Red;
-            removeButton.Dock = System.Windows.Forms.DockStyle.Right;
-            removeButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            removeButton.Font = new System.Drawing.Font("Segoe UI Symbol", 9.75F, System.Drawing.FontStyle.Bold);
-            removeButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            removeButton.Location = new System.Drawing.Point(351, 12);
-            removeButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            removeButton.BackColor = Color.Red;
+            removeButton.Dock = DockStyle.Right;
+            removeButton.FlatStyle = FlatStyle.Popup;
+            removeButton.Font = new Font("Segoe UI Symbol", 9.75F, FontStyle.Bold);
+            removeButton.ForeColor = SystemColors.ControlLightLight;
+            removeButton.Location = new Point(351, 12);
+            removeButton.Margin = new Padding(4, 3, 4, 3);
             removeButton.Name = "removeButton";
-            removeButton.Size = new System.Drawing.Size(22, 38);
+            removeButton.Size = new Size(22, 38);
             removeButton.TabIndex = 5;
             removeButton.Text = "X";
             removeButton.UseVisualStyleBackColor = false;
@@ -158,14 +186,14 @@ namespace chat_winform.ChatForm
             // 
             // sendButton
             // 
-            sendButton.BackColor = System.Drawing.Color.DarkViolet;
-            sendButton.Dock = System.Windows.Forms.DockStyle.Right;
-            sendButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            sendButton.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            sendButton.Location = new System.Drawing.Point(373, 12);
-            sendButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            sendButton.BackColor = Color.DarkViolet;
+            sendButton.Dock = DockStyle.Right;
+            sendButton.FlatStyle = FlatStyle.Flat;
+            sendButton.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
+            sendButton.Location = new Point(373, 12);
+            sendButton.Margin = new Padding(4, 3, 4, 3);
             sendButton.Name = "sendButton";
-            sendButton.Size = new System.Drawing.Size(88, 38);
+            sendButton.Size = new Size(88, 38);
             sendButton.TabIndex = 1;
             sendButton.Text = "Send";
             sendButton.UseVisualStyleBackColor = false;
@@ -173,26 +201,28 @@ namespace chat_winform.ChatForm
             // itemsPanel
             // 
             itemsPanel.AutoScroll = true;
-            itemsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            itemsPanel.Location = new System.Drawing.Point(0, 89);
-            itemsPanel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            itemsPanel.Dock = DockStyle.Fill;
+            itemsPanel.Location = new Point(0, 89);
+            itemsPanel.Margin = new Padding(4, 3, 4, 3);
             itemsPanel.Name = "itemsPanel";
-            itemsPanel.Size = new System.Drawing.Size(479, 544);
+            itemsPanel.Size = new Size(479, 544);
             itemsPanel.TabIndex = 2;
             // 
             // Chatbox
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            BackColor = System.Drawing.Color.White;
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
             Controls.Add(itemsPanel);
             Controls.Add(bottomPanel);
             Controls.Add(topPanel);
-            Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            Margin = new Padding(4, 3, 4, 3);
             Name = "Chatbox";
-            Size = new System.Drawing.Size(479, 695);
+            Size = new Size(479, 695);
             topPanel.ResumeLayout(false);
-            topPanel.PerformLayout();
+            panelTexts.ResumeLayout(false);
+            panelTexts.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxLogo).EndInit();
             bottomPanel.ResumeLayout(false);
             bottomPanel.PerformLayout();
             ResumeLayout(false);
@@ -202,7 +232,7 @@ namespace chat_winform.ChatForm
 
         private System.Windows.Forms.Panel topPanel;
 		private System.Windows.Forms.Label statusLabel;
-		private System.Windows.Forms.Label subtitleLabel;
+		private System.Windows.Forms.Label subtitleContent;
 		private System.Windows.Forms.Label maintitleLabel;
 		private System.Windows.Forms.Panel bottomPanel;
 		private System.Windows.Forms.Button sendButton;
@@ -210,5 +240,7 @@ namespace chat_winform.ChatForm
 		private System.Windows.Forms.Button removeButton;
 		private System.Windows.Forms.TextBox chatTextbox;
 		private System.Windows.Forms.Panel itemsPanel;
-	}
+        private PictureBox pictureBoxLogo;
+        private Panel panelTexts;
+    }
 }
