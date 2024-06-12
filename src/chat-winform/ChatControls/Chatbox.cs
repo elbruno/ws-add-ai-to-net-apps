@@ -18,11 +18,13 @@ namespace chat_winform.ChatForm
         // http client
         public HttpClient client;
 
-
-        public Chatbox(ChatboxInfo _chatbox_info)
+        public Chatbox()
         {
             InitializeComponent();
-
+        }
+        
+        public void SetChatBotInfo(ChatboxInfo _chatbox_info)
+        {
             chatbox_info = _chatbox_info;
 
             maintitleLabel.Text = chatbox_info.MainTitlePlaceholder;
@@ -282,11 +284,6 @@ namespace chat_winform.ChatForm
                     (control as ChatItem).ResizeBubbles((int)(itemsPanel.Width * 0.6));
                 }
             }
-        }
-
-        private void topPanel_Paint(object sender, PaintEventArgs e)
-        {
-
         }
     }
 }

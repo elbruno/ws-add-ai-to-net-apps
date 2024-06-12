@@ -1,32 +1,33 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows7.0</TargetFramework>
-    <RootNamespace>chat_winform</RootNamespace>
-    <UseWindowsForms>true</UseWindowsForms>
-	  <ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
-
-	  <UserSecretsId>f0ce84b4-bdc5-4452-8ea0-44a0f69ea165</UserSecretsId>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net8.0-windows8.0</TargetFramework>
+		<RootNamespace>chat_winform</RootNamespace>
+		<UseWindowsForms>true</UseWindowsForms>
+		<ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
+		<UserSecretsId>f0ce84b4-bdc5-4452-8ea0-44a0f69ea165</UserSecretsId>
+		<UseWPF>True</UseWPF>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
 
 
 	<ItemGroup>
-		<PackageReference Include="Azure.Identity" Version="1.11.3" />
-		<PackageReference Include="Azure.Storage.Blobs" Version="12.20.0" />
-		<PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.0-preview.4.24266.19" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.0-preview.4.24266.19" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.0-preview.4.24266.19" />
+		<PackageReference Include="Azure.Identity" Version="1.12.0-beta.3" />
+		<PackageReference Include="Azure.Storage.Blobs" Version="12.21.0-beta.1" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.0-preview.5.24306.7" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.0-preview.5.24306.7" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.0-preview.5.24306.7" />
 	</ItemGroup>
 
 
 	<ItemGroup>
-	  <ProjectReference Include="..\chat-models\chat-models.csproj" />
+		<ProjectReference Include="..\chat-models\chat-models.csproj" />
 	</ItemGroup>
 
 
 	<ItemGroup>
-	  <Folder Include="Properties\" />
+		<Folder Include="Properties\" />
 	</ItemGroup>
 
 </Project>

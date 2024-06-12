@@ -29,21 +29,89 @@ namespace chat_winform
         /// </summary>
         private void InitializeComponent()
         {
+            menuStrip1 = new MenuStrip();
+            toolStripMenuItemServer = new ToolStripMenuItem();
+            toolStripMenuItemSetServer = new ToolStripMenuItem();
+            toolStripTextBoxChatServer = new ToolStripTextBox();
+            chat_panel = new ChatForm.Chatbox();
+            panelChatControl = new Panel();
+            menuStrip1.SuspendLayout();
+            panelChatControl.SuspendLayout();
             SuspendLayout();
             // 
-            // Form1
+            // menuStrip1
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(914, 600);
-            Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            Name = "Form1";
+            menuStrip1.Items.AddRange(new ToolStripItem[] { toolStripMenuItemServer });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Size = new Size(800, 24);
+            menuStrip1.TabIndex = 0;
+            menuStrip1.Text = "menuStrip1";
+            // 
+            // toolStripMenuItemServer
+            // 
+            toolStripMenuItemServer.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItemSetServer, toolStripTextBoxChatServer });
+            toolStripMenuItemServer.Name = "toolStripMenuItemServer";
+            toolStripMenuItemServer.Size = new Size(61, 20);
+            toolStripMenuItemServer.Text = "Options";
+            // 
+            // toolStripMenuItemSetServer
+            // 
+            toolStripMenuItemSetServer.Name = "toolStripMenuItemSetServer";
+            toolStripMenuItemSetServer.Size = new Size(180, 22);
+            toolStripMenuItemSetServer.Text = "Set Chat Server";
+            toolStripMenuItemSetServer.Click += toolStripMenuItemSetServer_Click;
+            // 
+            // toolStripTextBoxChatServer
+            // 
+            toolStripTextBoxChatServer.Name = "toolStripTextBoxChatServer";
+            toolStripTextBoxChatServer.Size = new Size(100, 23);
+            // 
+            // chat_panel
+            // 
+            chat_panel.BackColor = Color.White;
+            chat_panel.Dock = DockStyle.Fill;
+            chat_panel.Location = new Point(0, 0);
+            chat_panel.Margin = new Padding(4, 3, 4, 3);
+            chat_panel.Name = "chat_panel";
+            chat_panel.Size = new Size(800, 426);
+            chat_panel.TabIndex = 1;
+            // 
+            // panelChatControl
+            // 
+            panelChatControl.Controls.Add(chat_panel);
+            panelChatControl.Dock = DockStyle.Fill;
+            panelChatControl.Location = new Point(0, 24);
+            panelChatControl.Name = "panelChatControl";
+            panelChatControl.Size = new Size(800, 426);
+            panelChatControl.TabIndex = 2;
+            // 
+            // frmChat
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(800, 450);
+            Controls.Add(panelChatControl);
+            Controls.Add(menuStrip1);
+            MainMenuStrip = menuStrip1;
+            Name = "frmChat";
             Text = "Semantic Kernel - Winforms Chat";
             Load += Form1_LoadAsync;
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
+            panelChatControl.ResumeLayout(false);
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
+
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem toolStripMenuItemServer;
+        private ToolStripMenuItem toolStripMenuItemSetServer;
+        private ToolStripTextBox toolStripTextBoxChatServer;
+        private ChatForm.Chatbox chat_panel;
+        private Panel panelChatControl;
     }
 }
 

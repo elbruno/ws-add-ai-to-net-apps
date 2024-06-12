@@ -58,15 +58,13 @@ namespace chat_winform.ChatForm
             topPanel.Padding = new System.Windows.Forms.Padding(18, 17, 18, 17);
             topPanel.Size = new System.Drawing.Size(479, 89);
             topPanel.TabIndex = 0;
-            topPanel.Paint += topPanel_Paint;
             // 
             // statusLabel
             // 
             statusLabel.AutoSize = true;
-            statusLabel.Dock = System.Windows.Forms.DockStyle.Right;
             statusLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
             statusLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            statusLabel.Location = new System.Drawing.Point(395, 42);
+            statusLabel.Location = new System.Drawing.Point(373, 57);
             statusLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             statusLabel.Name = "statusLabel";
             statusLabel.Size = new System.Drawing.Size(66, 15);

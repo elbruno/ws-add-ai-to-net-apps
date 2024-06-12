@@ -6,37 +6,44 @@ using System.Net.Http.Headers;
 namespace chat_winform
 {
     public partial class frmChat : Form
-	{
+    {
         HttpClient client;
         string uriChatServer = @"http://localhost:5259/";
 
         public frmChat()
-		{
-			InitializeComponent();
+        {
+            InitializeComponent();
         }
 
         private async void Form1_LoadAsync(object sender, EventArgs e)
-		{
+        {
+
+            // chat control
+            ChatForm.ChatboxInfo cbi = new ChatForm.ChatboxInfo();
+            cbi.MainTitlePlaceholder = "Semantic Kernel - Winforms Chat";
+            cbi.SubtitlePlaceholder = "Azure OpenAI - GPT4o";
+            cbi.User = "Bruno";
+
+            chat_panel.SetChatBotInfo(cbi);
+            SetHttpClientforChatServer();
+
+        }
+
+        private void SetHttpClientforChatServer()
+        {
             // http client
             client = new HttpClient();
             client.BaseAddress = new Uri(uriChatServer);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            // chat control
-            ChatForm.ChatboxInfo cbi = new ChatForm.ChatboxInfo();
-			cbi.MainTitlePlaceholder = "Semantic Kernel - Winforms Chat";
-			cbi.SubtitlePlaceholder = "Azure OpenAI - GPT4o";
-            cbi.User = "Bruno";
-
-			var chat_panel = new ChatForm.Chatbox(cbi);
-			chat_panel.Name = "chat_panel";
-			chat_panel.Dock = DockStyle.Fill;
-            
-            // http client
+            toolStripTextBoxChatServer.Text = uriChatServer;
             chat_panel.client = client;
+        }
 
-            Controls.Add(chat_panel);
-		}
-	}
+        private void toolStripMenuItemSetServer_Click(object sender, EventArgs e)
+        {
+            uriChatServer = toolStripTextBoxChatServer.Text;
+            SetHttpClientforChatServer();
+        }
+    }
 }
