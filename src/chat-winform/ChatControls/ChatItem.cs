@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace chat_winform.ChatForm
+﻿namespace chat_winform.ChatForm
 {
 	public partial class ChatItem : UserControl
 	{
@@ -52,15 +42,18 @@ namespace chat_winform.ChatForm
                 bodyTextBox.TextAlign = HorizontalAlignment.Right;
             }
 
-            //Fills in the label. 
+            //Fills in the label.
+            var timeDesc = "";
             if (chatModel.Time > DateTime.Today)
             {
-                authorLabel.Text = $"{chatModel.Author ?? "System"}, {chatModel.Time.ToShortTimeString()}, {chatModel.ElapsedTime}";
+                timeDesc = $"{chatModel.Time.ToShortTimeString()}";
             }
             else
             {
-                authorLabel.Text = $"{chatModel.Author ?? "System"}, {chatModel.Time.ToShortDateString()}, {chatModel.ElapsedTime}";
+                timeDesc = $"{chatModel.Time.ToShortDateString()}";
             }
+            authorLabel.Text = $"{chatModel.Author ?? "System"}, {timeDesc}, {chatModel.ElapsedTime.ToString() ?? ""}";
+
 
             switch (chatModel.Type)
             {
