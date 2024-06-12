@@ -10,10 +10,16 @@ public class ChatController : ControllerBase
 {
     private readonly ILogger<ChatController> _logger;
 
-    public ChatController(ILogger<ChatController> logger)
-    {
-        _logger = logger;
-    }
+        private ChatHistory _chatHistory;
+        public IChatCompletionService _chatCompletionService;
+    
+        public ChatController(ILogger<ChatController> logger, ChatHistory chatHistory, IChatCompletionService chatCompletionService)
+        {
+            _logger = logger;
+            _chatHistory = chatHistory;
+            _chatCompletionService = chatCompletionService;
+        }
+    
 
     // POST api/<ChatController>
     [HttpPost]
@@ -21,9 +27,15 @@ public class ChatController : ControllerBase
     {
         _logger.LogInformation($"Input question: {question}");
 
+        // complete history
+        _chatHistory.AddUserMessage(question.UserQuestion);
+
+        // get response
+        var result = await _chatCompletionService.GetChatMessageContentsAsync(_chatHistory);
         var response = new Response
         {
-            QuestionResponse = $" Your question [{question.UserQuestion}] is {question.UserQuestion.Length} chars long."
+            Author = "Phi-3",
+            QuestionResponse = result[^1].Content
         };
 
         _logger.LogInformation($"Response: {response}");

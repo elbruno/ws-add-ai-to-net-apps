@@ -19,6 +19,7 @@
         "body": [
             "builder.Services.AddSingleton<IChatCompletionService>(sp =>",
             "{",
+            "    // add Azure OpenAI Chat Completion service",
             "    var config = builder.Configuration;",
             "    var chatDeploymentName = config[\"AZURE_OPENAI_MODEL\"];",
             "    var endpoint = config[\"AZURE_OPENAI_ENDPOINT\"];",
@@ -92,5 +93,20 @@
             "}"
         ],
         "description": "process the question and the image url using the chat completion service"
-    }
+    },
+    "sk07_addOllamaModelChat": {
+  "prefix": "",
+  "body": [
+    "builder.Services.AddSingleton<IChatCompletionService>(sp =>",
+    "{",
+    "    // add Phi-3 model from a ollama server",
+    "    var model = \"phi3\";",
+    "    var endpoint = \"http://cpc-bruno-83lkq-docker-desktop:11434\";",
+    "    var apiKey = \"apiKey\";",
+    "",
+    "    return new OpenAIChatCompletionService(model, new Uri(endpoint), apiKey);",
+    "});"
+  ],
+  "description": "sk07_addOllamaModelChat"
+}
 }
