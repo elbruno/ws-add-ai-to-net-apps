@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.SemanticKernel.ChatCompletion;
 using chat_models;
+using System.Diagnostics;
+using Microsoft.AspNetCore.OutputCaching;
 
 namespace chat_server.Controllers;
 
@@ -13,11 +15,10 @@ public class ChatController : ControllerBase
         private ChatHistory _chatHistory;
         public IChatCompletionService _chatCompletionService;
     
-        public ChatController(ILogger<ChatController> logger, ChatHistory chatHistory, IChatCompletionService chatCompletionService)
+        public ChatController(ILogger<ChatController> logger, ChatHistory chatHistory)
         {
             _logger = logger;
             _chatHistory = chatHistory;
-            _chatCompletionService = chatCompletionService;
         }
     
 
@@ -27,15 +28,21 @@ public class ChatController : ControllerBase
     {
         _logger.LogInformation($"Input question: {question}");
 
-        // complete history
+        // complete chat history
         _chatHistory.AddUserMessage(question.UserQuestion);
 
         // get response
-        var result = await _chatCompletionService.GetChatMessageContentsAsync(_chatHistory);
-        var response = new Response
+        var  stopwatch = new Stopwatch();
+        stopwatch.Start();
+        var chatResponse = $" Your question [{question.UserQuestion}] is {question.UserQuestion.Length} chars long.";
+        stopwatch.Stop();
+        
+        // return response
+         var response = new Response
         {
-            Author = "Phi-3",
-            QuestionResponse = result[^1].Content
+            Author = "ChatBot",
+            QuestionResponse = chatResponse,
+            ElapsedTime = stopwatch.Elapsed
         };
 
         _logger.LogInformation($"Response: {response}");

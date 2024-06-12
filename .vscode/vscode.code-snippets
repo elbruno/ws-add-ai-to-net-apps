@@ -94,19 +94,38 @@
         ],
         "description": "process the question and the image url using the chat completion service"
     },
-    "sk07_addOllamaModelChat": {
-  "prefix": "",
-  "body": [
-    "builder.Services.AddSingleton<IChatCompletionService>(sp =>",
-    "{",
-    "    // add Phi-3 model from a ollama server",
-    "    var model = \"phi3\";",
-    "    var endpoint = \"http://cpc-bruno-83lkq-docker-desktop:11434\";",
-    "    var apiKey = \"apiKey\";",
-    "",
-    "    return new OpenAIChatCompletionService(model, new Uri(endpoint), apiKey);",
-    "});"
-  ],
-  "description": "sk07_addOllamaModelChat"
-}
+    "sk07_addONNXProjReferences": {
+        "prefix": "sk07_addONNXProjReferences",
+        "body": [
+            "<PackageReference Include=\"feiyun0112.SemanticKernel.Connectors.OnnxRuntimeGenAI.CPU\" Version=\"1.0.0\" />",
+            "<PackageReference Include=\"Microsoft.ML.OnnxRuntime\" Version=\"1.18.0\" />",
+            "<PackageReference Include=\"Microsoft.ML.OnnxRuntimeGenAI\" Version=\"0.3.0-rc2\" />",
+            "<PackageReference Include=\"Microsoft.ML.OnnxRuntimeGenAI.Cuda\" Version=\"0.3.0-rc2\" />"
+        ],
+        "description": "add ONNX project references to the csproj file"
+    },
+    "sk08_addlocalONNXModel": {
+        "prefix": "sk08_addlocalONNXModel",
+        "body": [
+            "// add local Phi-3 model using ONXX",
+            "var modelPath = @\"D:\\phi3\\models\\Phi-3-mini-4k-instruct-onnx\\cpu_and_mobile\\cpu-int4-rtn-block-32\";",
+            "builder.Services.AddOnnxRuntimeGenAIChatCompletion(modelPath: modelPath);"
+        ],
+        "description": "add local onnx model to the aspnet program file"
+    },
+    "sk09_addOllamaModelChat": {
+        "prefix": "sk09_addOllamaModelChat",
+        "body": [
+            "builder.Services.AddSingleton<IChatCompletionService>(sp =>",
+            "{",
+            "    // add Phi-3 model from a ollama server",
+            "    var model = \"phi3\";",
+            "    var endpoint = \"http://cpc-bruno-83lkq-docker-desktop:11434\";",
+            "    var apiKey = \"apiKey\";",
+            "",
+            "    return new OpenAIChatCompletionService(model, new Uri(endpoint), apiKey);",
+            "});"
+        ],
+        "description": "add a new chat service that uses a remote ollama server"
+    }
 }
