@@ -33,11 +33,11 @@ namespace chat_winform
             toolStripMenuItemServer = new ToolStripMenuItem();
             toolStripMenuItemSetServer = new ToolStripMenuItem();
             toolStripTextBoxChatServer = new ToolStripTextBox();
-            chat_panel = new ChatForm.Chatbox();
-            panelChatControl = new Panel();
             toolStripSeparator1 = new ToolStripSeparator();
             toolStripMenuItemSetUserName = new ToolStripMenuItem();
             toolStripTextBoxUserName = new ToolStripTextBox();
+            panelChatControl = new Panel();
+            chatboxControl = new ChatForm.Chatbox();
             menuStrip1.SuspendLayout();
             panelChatControl.SuspendLayout();
             SuspendLayout();
@@ -61,7 +61,7 @@ namespace chat_winform
             // toolStripMenuItemSetServer
             // 
             toolStripMenuItemSetServer.Name = "toolStripMenuItemSetServer";
-            toolStripMenuItemSetServer.Size = new Size(180, 22);
+            toolStripMenuItemSetServer.Size = new Size(160, 22);
             toolStripMenuItemSetServer.Text = "Set Chat Server";
             toolStripMenuItemSetServer.Click += toolStripMenuItemSetServer_Click;
             // 
@@ -70,34 +70,15 @@ namespace chat_winform
             toolStripTextBoxChatServer.Name = "toolStripTextBoxChatServer";
             toolStripTextBoxChatServer.Size = new Size(100, 23);
             // 
-            // chat_panel
-            // 
-            chat_panel.BackColor = Color.White;
-            chat_panel.Dock = DockStyle.Fill;
-            chat_panel.Location = new Point(0, 0);
-            chat_panel.Margin = new Padding(4, 3, 4, 3);
-            chat_panel.Name = "chat_panel";
-            chat_panel.Size = new Size(800, 426);
-            chat_panel.TabIndex = 1;
-            // 
-            // panelChatControl
-            // 
-            panelChatControl.Controls.Add(chat_panel);
-            panelChatControl.Dock = DockStyle.Fill;
-            panelChatControl.Location = new Point(0, 24);
-            panelChatControl.Name = "panelChatControl";
-            panelChatControl.Size = new Size(800, 426);
-            panelChatControl.TabIndex = 2;
-            // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(177, 6);
+            toolStripSeparator1.Size = new Size(157, 6);
             // 
             // toolStripMenuItemSetUserName
             // 
             toolStripMenuItemSetUserName.Name = "toolStripMenuItemSetUserName";
-            toolStripMenuItemSetUserName.Size = new Size(180, 22);
+            toolStripMenuItemSetUserName.Size = new Size(160, 22);
             toolStripMenuItemSetUserName.Text = "Set User Name";
             toolStripMenuItemSetUserName.Click += toolStripMenuItemSetUserName_Click;
             // 
@@ -105,6 +86,25 @@ namespace chat_winform
             // 
             toolStripTextBoxUserName.Name = "toolStripTextBoxUserName";
             toolStripTextBoxUserName.Size = new Size(100, 23);
+            // 
+            // panelChatControl
+            // 
+            panelChatControl.Controls.Add(chatboxControl);
+            panelChatControl.Dock = DockStyle.Fill;
+            panelChatControl.Location = new Point(0, 24);
+            panelChatControl.Name = "panelChatControl";
+            panelChatControl.Size = new Size(800, 426);
+            panelChatControl.TabIndex = 2;
+            // 
+            // chatboxControl
+            // 
+            chatboxControl.BackColor = Color.White;
+            chatboxControl.Dock = DockStyle.Fill;
+            chatboxControl.Location = new Point(0, 0);
+            chatboxControl.Margin = new Padding(4, 3, 4, 3);
+            chatboxControl.Name = "chatboxControl";
+            chatboxControl.Size = new Size(800, 426);
+            chatboxControl.TabIndex = 0;
             // 
             // frmChat
             // 
@@ -130,11 +130,11 @@ namespace chat_winform
         private ToolStripMenuItem toolStripMenuItemServer;
         private ToolStripMenuItem toolStripMenuItemSetServer;
         private ToolStripTextBox toolStripTextBoxChatServer;
-        private ChatForm.Chatbox chat_panel;
         private Panel panelChatControl;
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripMenuItem toolStripMenuItemSetUserName;
         private ToolStripTextBox toolStripTextBoxUserName;
+        private ChatForm.Chatbox chatboxControl;
     }
 }
 

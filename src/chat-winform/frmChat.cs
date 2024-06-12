@@ -10,6 +10,7 @@ namespace chat_winform
         HttpClient client;
         string uriChatServer = @"http://localhost:5259/";
         string userName = @"Bruno";
+        ChatForm.ChatboxInfo cbi;
 
         public frmChat()
         {
@@ -19,13 +20,13 @@ namespace chat_winform
         private async void Form1_LoadAsync(object sender, EventArgs e)
         {
             // chat control
-            ChatForm.ChatboxInfo cbi = new ChatForm.ChatboxInfo();
+            cbi = new ChatForm.ChatboxInfo();
             cbi.MainTitlePlaceholder = "Semantic Kernel - Winforms Chat";
             cbi.SubtitlePlaceholder = "Azure OpenAI - GPT4o";
             cbi.User = userName;
             toolStripTextBoxUserName.Text = userName;
 
-            chat_panel.SetChatBotInfo(cbi);
+            chatboxControl.SetChatBotInfo(cbi);
             SetHttpClientforChatServer();
 
         }
@@ -38,7 +39,7 @@ namespace chat_winform
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             toolStripTextBoxChatServer.Text = uriChatServer;
-            chat_panel.client = client;
+            chatboxControl.client = client;
         }
 
         private void toolStripMenuItemSetServer_Click(object sender, EventArgs e)
@@ -50,7 +51,7 @@ namespace chat_winform
         private void toolStripMenuItemSetUserName_Click(object sender, EventArgs e)
         {
             userName = toolStripTextBoxUserName.Text;
-            chat_panel.chatbox_info.User = userName;
+            cbi.User = userName;
         }
     }
 }
