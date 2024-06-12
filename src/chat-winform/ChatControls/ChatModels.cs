@@ -14,6 +14,7 @@ namespace chat_winform.ChatForm
         DateTime Time { get; set; }
         string Author { get; set; }
         string Type { get; }
+        TimeSpan ElapsedTime { get; set; }
     }
 
     public class TextChatModel : IChatModel
@@ -25,6 +26,7 @@ namespace chat_winform.ChatForm
         public string Type { get; } = "text";
 
         public string Body { get; set; }
+        public TimeSpan ElapsedTime { get; set; }
     }
 
     public class ImageChatModel : IChatModel
@@ -38,6 +40,7 @@ namespace chat_winform.ChatForm
         public Image Image { get; set; }
         public string ImageName { get; set; }
         public string ImageUri { get; set; }
+        public TimeSpan ElapsedTime { get; set; }
     }
 
     public class AttachmentChatModel : IChatModel
@@ -50,5 +53,6 @@ namespace chat_winform.ChatForm
 
         public byte[] Attachment { get; set; }
         public string Filename { get; set; }
+        public TimeSpan ElapsedTime { get; set; }
     }
 }

@@ -55,11 +55,11 @@ namespace chat_winform.ChatForm
             //Fills in the label. 
             if (chatModel.Time > DateTime.Today)
             {
-                authorLabel.Text = $"{chatModel.Author ?? "System"}, {chatModel.Time.ToShortTimeString()}";
+                authorLabel.Text = $"{chatModel.Author ?? "System"}, {chatModel.Time.ToShortTimeString()}, {chatModel.ElapsedTime}";
             }
             else
             {
-                authorLabel.Text = $"{chatModel.Author ?? "System"}, {chatModel.Time.ToShortDateString()}";
+                authorLabel.Text = $"{chatModel.Author ?? "System"}, {chatModel.Time.ToShortDateString()}, {chatModel.ElapsedTime}";
             }
 
             switch (chatModel.Type)

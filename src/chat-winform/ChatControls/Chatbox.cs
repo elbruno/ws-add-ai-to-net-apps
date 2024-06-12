@@ -168,6 +168,7 @@ namespace chat_winform.ChatForm
                 {
                     Author = responseLocal.Author,
                     Body = responseLocal.QuestionResponse,
+                    ElapsedTime = responseLocal.ElapsedTime,
                     Inbound = true,
                     Read = false,
                     Time = DateTime.Now
