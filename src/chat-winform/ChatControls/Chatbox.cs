@@ -115,8 +115,8 @@ namespace chat_winform.ChatForm
 
             if (chatbox_info.Attachment != null && chatbox_info.AttachmentType.Contains("image"))
             {
-                //Upload image to Azure Blog Storage
-                var imageUploaded = await Azure.AzureBlobContainer.UploadFileToAzureBlob(chatbox_info.AttachmentName, chatbox_info.AttachmentFileName);
+                // upload image to Azure Blog Storage
+                var imageUploaded = await Azure.AzureBlobContainer.UploadFileToAzureBlobWinformImages(chatbox_info.AttachmentName, chatbox_info.AttachmentFileName);
 
                 imageMessage = new ImageChatModel()
                 {
@@ -131,11 +131,15 @@ namespace chat_winform.ChatForm
             }
             else if (chatbox_info.Attachment != null)
             {
+                // upload doc to Azure Blog Storage
+                var docUploaded = await Azure.AzureBlobContainer.UploadFileToAzureBlobWinformDocs(chatbox_info.AttachmentName, chatbox_info.AttachmentFileName);
+
                 genericFileMessage = new AttachmentChatModel()
                 {
                     Author = chatbox_info.User,
                     Attachment = chatbox_info.Attachment,
                     Filename = chatbox_info.AttachmentName,
+                    DocUri = docUploaded,
                     Read = true,
                     Inbound = false,
                     Time = DateTime.Now

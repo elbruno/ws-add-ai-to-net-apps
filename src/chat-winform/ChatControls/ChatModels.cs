@@ -49,6 +49,7 @@ namespace chat_winform.ChatForm
         public string Author { get; set; }
         public string Type { get; } = "attachment";
         public byte[] Attachment { get; set; }
+        public string DocUri { get; set; }
         public string Filename { get; set; }
         public TimeSpan? ElapsedTime { get; set; }
     }
