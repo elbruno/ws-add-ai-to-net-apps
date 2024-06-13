@@ -1,4 +1,5 @@
-﻿namespace chat_winform.ChatForm
+﻿
+namespace chat_winform.ChatForm
 {
 	public partial class ChatItem : UserControl
 	{

@@ -34,6 +34,10 @@ public class ChatController : ControllerBase
     {
         _logger.LogInformation($"Input question: {question}");
 
+        var response = new Response
+        {
+            Author = "ChatBot"
+        };
         // complete chat history
         _chatHistory.AddUserMessage(question.UserQuestion);
 
@@ -42,15 +46,10 @@ public class ChatController : ControllerBase
         stopwatch.Start();
         var chatResponse = $" Your question [{question.UserQuestion}] is {question.UserQuestion.Length} chars long.";
         stopwatch.Stop();
+        response.QuestionResponse = chatResponse;
+        response.ElapsedTime = stopwatch.Elapsed;
 
         // return response
-        var response = new Response
-        {
-            Author = "ChatBot",
-            QuestionResponse = chatResponse,
-            ElapsedTime = stopwatch.Elapsed
-        };
-
         _logger.LogInformation($"Response: {response}");
         return response;
     }

@@ -12,9 +12,10 @@ public class Response
     public string Author { get; set; }
     public string QuestionResponse { get; set; }
     public TimeSpan ElapsedTime { get; set; }
+    public bool FromCache { get; set; }
 
     public override string ToString()
     {
-        return $"Author: {Author}, QuestionResponse: {QuestionResponse}, ElapsedTime: {ElapsedTime}";
+        return $"Author: {Author}, QuestionResponse: {QuestionResponse}, ElapsedTime: {ElapsedTime}, FromCache: {FromCache}";        
     }
 }
