@@ -37,9 +37,26 @@ namespace chat_winform.ChatForm
             attachButton.Click += BuildAttachment;
             removeButton.Click += CancelAttachment;
 
-            chatTextbox.KeyDown += OnEnter;
+            chatTextbox.KeyUp += OnEnter;
 
             AddMessage(null);
+        }
+
+        /// <summary>
+        /// Event handler for the Enter key press in the chat textbox.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">The KeyEventArgs object containing the event data.</param>
+        async void OnEnter(object sender, KeyEventArgs e)
+        {
+            if (e.Shift && e.KeyValue == 13)
+            {
+                SendMessage(this, null);
+            }
+            else if (e.KeyValue == 13)
+            {
+                SendMessage(this, null);
+            }
         }
 
         /// <summary>
@@ -258,19 +275,6 @@ namespace chat_winform.ChatForm
             chatbox_info.AttachmentType = null;
             removeButton.Visible = false;
             attachButton.Width = 35;
-        }
-
-        //Inspired from Slack, you can press Enter or Shift + Enter to enter text.
-        async void OnEnter(object sender, KeyEventArgs e)
-        {
-            if (e.Shift && e.KeyValue == 13)
-            {
-                SendMessage(this, null);
-            }
-            else if (e.KeyValue == 13)
-            {
-                SendMessage(this, null);
-            }
         }
 
         //When the Control resizes, it will trigger the resize event for all the ChatItem object inside as well, again with a default width of 60%.
