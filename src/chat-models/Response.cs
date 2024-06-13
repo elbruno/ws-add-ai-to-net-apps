@@ -14,8 +14,10 @@ public class Response
     public TimeSpan ElapsedTime { get; set; }
     public bool FromCache { get; set; }
 
+    public List<Citation>? Citations { get; set; }
+
     public override string ToString()
     {
-        return $"Author: {Author}, QuestionResponse: {QuestionResponse}, ElapsedTime: {ElapsedTime}, FromCache: {FromCache}";        
+        return $"Author: {Author}, QuestionResponse: {QuestionResponse}, ElapsedTime: {ElapsedTime}, FromCache: {FromCache}";  
     }
 }

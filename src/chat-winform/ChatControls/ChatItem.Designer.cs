@@ -88,7 +88,7 @@ namespace chat_winform.ChatForm
             bodyTextBox.ReadOnly = true;
             bodyTextBox.Size = new Size(412, 35);
             bodyTextBox.TabIndex = 4;
-            bodyTextBox.Text = "Hello there. This is a test for the longer word usage.";
+            bodyTextBox.Text = "Hello there. This is a test for the longer word usage.\r\n\r\nHello there. This is a test for the longer word usage.\r\n\r\nHello there. This is a test for the longer word usage.\r\n\r\n";
             // 
             // ChatItem
             // 
@@ -115,5 +115,5 @@ namespace chat_winform.ChatForm
 		private System.Windows.Forms.Label authorLabel;
 		private System.Windows.Forms.Panel bodyPanel;
 		private System.Windows.Forms.TextBox bodyTextBox;
-	}
+    }
 }

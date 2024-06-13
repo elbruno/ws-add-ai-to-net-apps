@@ -41,6 +41,8 @@ namespace chat_winform.ChatForm
                 bodyPanel.Dock = DockStyle.Right;
                 authorLabel.Dock = DockStyle.Right;
                 bodyTextBox.TextAlign = HorizontalAlignment.Right;
+                bodyPanel.BackColor = Color.FromArgb(100, 101, 165);
+                bodyTextBox.BackColor = Color.FromArgb(100, 101, 165);
             }
 
             //Fills in the label.
@@ -190,6 +192,7 @@ namespace chat_winform.ChatForm
                         lines++;
                     }
                 }
+                var origBody = body;
                 if (body.Contains("\n"))
                 {
                     while (body.Contains("\r\n"))
@@ -203,6 +206,7 @@ namespace chat_winform.ChatForm
                         lines++;
                     }
                 }
+                body = origBody;
 
                 //Adjusts the height based on the number of lines.
                 Height = (lines * fontheight) + Height - bodyTextBox.Height;
