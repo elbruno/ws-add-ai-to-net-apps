@@ -31,18 +31,8 @@
         ],
         "description": "add AOAI chat to aspnet program file"
     },
-    "sk03_addChatHistory": {
-        "prefix": "sk03_addChatHistory",
-        "body": [
-            "builder.Services.AddSingleton(sp => ",
-            "{",
-            "    return new ChatHistory();",
-            "});"
-        ],
-        "description": "add chat history to aspnet program file"
-    },
-    "sk04_chatcontroller_constructor": {
-        "prefix": "sk04_chatcontroller_constructor",
+    "sk10_chatcontroller_constructor": {
+        "prefix": "sk10_chatcontroller_constructor",
         "body": [
             "    public IChatCompletionService _chatCompletionService;",
             "",
@@ -56,53 +46,56 @@
         ],
         "description": "add chat controller constructor including chat history and chat completion service"
     },
-    "sk05_chatresponse": {
-        "prefix": "sk05_AOAIchatresponse",
+    "sk11_chatresponse": {
+        "prefix": "sk11_chatAOAIresponse",
         "body": [
+            "// POST api/<ChatController>",
+            "[HttpPost]",
+            "public async Task<Response> Post(Question question)",
+            "{",
+            "    _logger.LogInformation($\"Input question: {question}\");",
             "",
-            "var result = await _chatCompletionService.GetChatMessageContentsAsync(_chatHistory);",
-            "stopwatch.Stop();",
-            "",
-            "var response = new Response",
-            "{",
-            "  Author = \"Azure OpenAI\", ",
-            "  QuestionResponse = result[^1].Content,",
-            "  ElapsedTime = stopwatch.Elapsed",
-            "};",
-            ""
-        ],
-        "description": "process the chat response from the AOAI Chat Completion service"
-    },
-    "sk06_analyzeimage": {
-        "prefix": "sk06_analyzeimage",
-        "body": [
-            "// validate if question.ImageUrl is a valid url",
-            "if (!string.IsNullOrEmpty(question.ImageUrl) && Uri.IsWellFormedUriString(question.ImageUrl, UriKind.Absolute))",
-            "{",
-            "    var collectionItems = new ChatMessageContentItemCollection",
-            "    {",
-            "        new TextContent(question.UserQuestion),",
-            "        new ImageContent(new Uri(question.ImageUrl))",
-            "    };",
-            "    _chatHistory.AddUserMessage(collectionItems);",
-            "}",
-            "else",
-            "{",
+            "    var response = new Response();",
+            "    ",
+            "    // complete chat history",
             "    _chatHistory.AddUserMessage(question.UserQuestion);",
+            "",
+            "    // get response",
+            "    var stopwatch = new Stopwatch();",
+            "    stopwatch.Start();",
+            "    var result = await _chatCompletionService.GetChatMessageContentsAsync(_chatHistory);",
+            "    stopwatch.Stop();",
+            "",
+            "    response.Author = \"Azure OpenAI\";",
+            "    response.QuestionResponse = result[^1].Content;",
+            "    response.ElapsedTime = stopwatch.Elapsed;",
+            "",
+            "    // return response",
+            "    _logger.LogInformation($\"Response: {response}\");",
+            "    return response;",
             "}"
         ],
-        "description": "process the question and the image url using the chat completion service"
+        "description": "use Azure OpenAI to answer a question"
     },
-    "sk07_addONNXProjReferences": {
-        "prefix": "sk07_addONNXProjReferences",
+    "sk12_analyzeimage": {
+        "prefix": "sk12_analyzeimage",
         "body": [
-            "<!-- Local ONNX Models References -->",
-            "<PackageReference Include=\"feiyun0112.SemanticKernel.Connectors.OnnxRuntimeGenAI.CPU\" Version=\"1.0.0\" />",
-            "<PackageReference Include=\"Microsoft.ML.OnnxRuntime\" Version=\"1.18.0\" />",
-            "<PackageReference Include=\"Microsoft.ML.OnnxRuntimeGenAI\" Version=\"0.3.0-rc2\" />",
-            "<PackageReference Include=\"Microsoft.ML.OnnxRuntimeGenAI.Cuda\" Version=\"0.3.0-rc2\" />"
+            "    // validate if question.ImageUrl is a valid url",
+            "    if (!string.IsNullOrEmpty(question.ImageUrl) && Uri.IsWellFormedUriString(question.ImageUrl, UriKind.Absolute))",
+            "    {",
+            "        var collectionItems = new ChatMessageContentItemCollection",
+            "        {",
+            "            new TextContent(question.UserQuestion),",
+            "            new ImageContent(new Uri(question.ImageUrl))",
+            "            };",
+            "        _chatHistory.AddUserMessage(collectionItems);",
+            "    }",
+            "    else",
+            "    {",
+            "        _chatHistory.AddUserMessage(question.UserQuestion);",
+            "    }",
         ],
-        "description": "add ONNX project references to the csproj file"
+        "description": "sk12_analyzeimage"
     },
     "sk08_addlocalONNXModel": {
         "prefix": "sk08_addlocalONNXModel",
