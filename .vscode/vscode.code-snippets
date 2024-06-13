@@ -44,7 +44,6 @@
     "sk04_chatcontroller_constructor": {
         "prefix": "sk04_chatcontroller_constructor",
         "body": [
-            "    private ChatHistory _chatHistory;",
             "    public IChatCompletionService _chatCompletionService;",
             "",
             "    public ChatController(ILogger<ChatController> logger, ChatHistory chatHistory, IChatCompletionService chatCompletionService)",
@@ -58,21 +57,21 @@
         "description": "add chat controller constructor including chat history and chat completion service"
     },
     "sk05_chatresponse": {
-        "prefix": "sk05_chatresponse",
+        "prefix": "sk05_AOAIchatresponse",
         "body": [
-            "// complete history",
-            "_chatHistory.AddUserMessage(question.UserQuestion);",
             "",
-            "// get response",
             "var result = await _chatCompletionService.GetChatMessageContentsAsync(_chatHistory);",
+            "stopwatch.Stop();",
+            "",
             "var response = new Response",
             "{",
             "  Author = \"Azure OpenAI\", ",
-            "  QuestionResponse = result[^1].Content",
+            "  QuestionResponse = result[^1].Content,",
+            "  ElapsedTime = stopwatch.Elapsed",
             "};",
             ""
         ],
-        "description": "process the chat response from the chat completion service"
+        "description": "process the chat response from the AOAI Chat Completion service"
     },
     "sk06_analyzeimage": {
         "prefix": "sk06_analyzeimage",
@@ -128,5 +127,25 @@
             "});"
         ],
         "description": "add a new chat service that uses a remote ollama server"
+    },
+    "sk20_addSKMemory": {
+        "prefix": "sk20_addSKMemory",
+        "body": [
+            "// add memory storage using Semantic Kernel",
+            "builder.Services.AddSingleton<ISemanticTextMemory>(sp =>",
+            "{",
+            "    var config = builder.Configuration;",
+            "    var ada002 = config[\"AZURE_OPENAI_ADA02\"];",
+            "    var endpoint = config[\"AZURE_OPENAI_ENDPOINT\"];",
+            "    var apiKey = config[\"AZURE_OPENAI_APIKEY\"];",
+            "",
+            "    var memoryBuilder = new MemoryBuilder();",
+            "    memoryBuilder.WithAzureOpenAITextEmbeddingGeneration(ada002, endpoint, apiKey);",
+            "",
+            "    ISemanticTextMemory memory = memoryBuilder.Build();",
+            "    return memory;",
+            "});"
+        ],
+        "description": "add memory to the builder services"
     }
 }

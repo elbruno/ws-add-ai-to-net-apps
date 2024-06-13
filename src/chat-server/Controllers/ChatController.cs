@@ -1,8 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿#pragma warning disable SKEXP0001
+#pragma warning disable SKEXP0010
+#pragma warning disable SKEXP0020
+#pragma warning disable SKEXP0027
+#pragma warning disable SKEXP0050
+
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.SemanticKernel.ChatCompletion;
 using chat_models;
 using System.Diagnostics;
 using Microsoft.AspNetCore.OutputCaching;
+using Microsoft.SemanticKernel.Memory;
+using Microsoft.SemanticKernel.Connectors.AzureAISearch;
 
 namespace chat_server.Controllers;
 
