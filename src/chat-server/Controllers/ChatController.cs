@@ -71,7 +71,7 @@ public class ChatController : ControllerBase
             var chatExtensionsOptions = new AzureChatExtensionsOptions { Extensions = { azureSearchExtensionConfiguration } };
             var executionSettings = new OpenAIPromptExecutionSettings { AzureChatExtensionsOptions = chatExtensionsOptions };
 
-            var resultResponse = await _chatCompletionService.GetChatMessageContentsAsync(_chatHistory, executionSettings);
+            var resultResponse = await _chatCompletionService.GetChatMessageContentsAsync(_chatHistory);
             result = resultResponse[^1].Content;
             await AddItemToMemory(question, result);
             response.FromCache = false;
@@ -99,21 +99,24 @@ public class ChatController : ControllerBase
     {
         if (resultResponse.FirstOrDefault().InnerContent is ChatResponseMessage)
         {
-            var ic = resultResponse.FirstOrDefault().InnerContent as ChatResponseMessage;
-            var aec = ic.AzureExtensionsContext;
-            var citations = aec.Citations;
-            if(aec.Citations.Count > 0)
-            { 
-                response.Citations = new List<Citation>();
-                foreach (var citation in citations)
+            var innerContent = resultResponse.FirstOrDefault().InnerContent as ChatResponseMessage;
+            if (innerContent.AzureExtensionsContext != null)
+            {
+                var aec = innerContent.AzureExtensionsContext;
+                var citations = aec.Citations;
+                if (aec.Citations.Count > 0)
                 {
-                    response.Citations.Add(
-                        new Citation()
-                        {
-                            Title = citation.Title,
-                            URL= citation.Url,
-                            FilePath = citation.Filepath
-                        });
+                    response.Citations = new List<Citation>();
+                    foreach (var citation in citations)
+                    {
+                        response.Citations.Add(
+                            new Citation()
+                            {
+                                Title = citation.Title,
+                                URL = citation.Url,
+                                FilePath = citation.Filepath
+                            });
+                    }
                 }
             }
         }

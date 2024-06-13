@@ -54,11 +54,11 @@ namespace chat_winform.ChatForm
             // 
             authorLabel.AutoSize = true;
             authorLabel.Dock = DockStyle.Left;
-            authorLabel.Font = new Font("Segoe UI Semibold", 8.25F, FontStyle.Bold);
+            authorLabel.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
             authorLabel.Location = new Point(0, 6);
             authorLabel.Margin = new Padding(4, 0, 4, 0);
             authorLabel.Name = "authorLabel";
-            authorLabel.Size = new Size(110, 13);
+            authorLabel.Size = new Size(142, 19);
             authorLabel.TabIndex = 0;
             authorLabel.Text = "System - 10/22/2020";
             // 
@@ -77,9 +77,9 @@ namespace chat_winform.ChatForm
             // bodyTextBox
             // 
             bodyTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            bodyTextBox.BackColor = Color.DarkViolet;
+            bodyTextBox.BackColor = Color.RoyalBlue;
             bodyTextBox.BorderStyle = BorderStyle.None;
-            bodyTextBox.Font = new Font("Segoe UI Emoji", 9F);
+            bodyTextBox.Font = new Font("Segoe UI", 12F);
             bodyTextBox.ForeColor = Color.White;
             bodyTextBox.Location = new Point(6, 6);
             bodyTextBox.Margin = new Padding(4, 3, 4, 3);
