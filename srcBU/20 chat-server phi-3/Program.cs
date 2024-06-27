@@ -22,23 +22,22 @@ builder.Services.AddLogging(
     b => b.AddConsole().SetMinimumLevel(LogLevel.Trace)
 );
 
-builder.Services.AddSingleton<IConfiguration>(sp => 
+builder.Services.AddSingleton<IConfiguration>(sp =>
 {
     return builder.Configuration;
 });
 
 builder.Services.AddSingleton<IChatCompletionService>(sp =>
 {
-    // add Azure OpenAI Chat Completion service
-    var config = builder.Configuration;
-    var chatDeploymentName = config["AZURE_OPENAI_MODEL"];
-    var endpoint = config["AZURE_OPENAI_ENDPOINT"];
-    var apiKey = config["AZURE_OPENAI_APIKEY"];
+    // add Phi-3 model from a ollama server
+    var model = "phi3";
+    var endpoint = "http://localhost:11434";
+    var apiKey = "apiKey";
 
-    return new AzureOpenAIChatCompletionService(chatDeploymentName, endpoint, apiKey);
+    return new OpenAIChatCompletionService(model, new Uri(endpoint), apiKey);
 });
 
-builder.Services.AddSingleton(sp => 
+builder.Services.AddSingleton(sp =>
 {
     return new ChatHistory();
 });

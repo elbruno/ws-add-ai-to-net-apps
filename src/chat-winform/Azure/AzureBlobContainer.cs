@@ -32,7 +32,7 @@ internal class AzureBlobContainer
     {
         var config = new ConfigurationBuilder().AddUserSecrets<frmChat>().Build();
         var azureBlobUri = config["AZURE_BLOB_URI"];
-
+        
         var blobServiceClient = new BlobServiceClient(new Uri(azureBlobUri), new DefaultAzureCredential());
         var containerClient = blobServiceClient.GetBlobContainerClient(containerName);
         var blobClient = containerClient.GetBlobClient(fileName);

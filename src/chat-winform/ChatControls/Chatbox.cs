@@ -115,15 +115,12 @@ namespace chat_winform.ChatForm
 
             if (chatbox_info.Attachment != null && chatbox_info.AttachmentType.Contains("image"))
             {
-                // upload image to Azure Blog Storage
-                var imageUploaded = await Azure.AzureBlobContainer.UploadFileToAzureBlobWinformImages(chatbox_info.AttachmentName, chatbox_info.AttachmentFileName);
-
                 imageMessage = new ImageChatModel()
                 {
                     Author = chatbox_info.User,
                     Image = Image.FromStream(new MemoryStream(chatbox_info.Attachment)),
                     ImageName = chatbox_info.AttachmentName,
-                    ImageUri = imageUploaded,
+                    ImageUri = chatbox_info.AttachmentName,
                     Inbound = false,
                     Read = true,
                     Time = DateTime.Now
@@ -131,15 +128,12 @@ namespace chat_winform.ChatForm
             }
             else if (chatbox_info.Attachment != null)
             {
-                // upload doc to Azure Blog Storage
-                var docUploaded = await Azure.AzureBlobContainer.UploadFileToAzureBlobWinformDocs(chatbox_info.AttachmentName, chatbox_info.AttachmentFileName);
-
                 genericFileMessage = new AttachmentChatModel()
                 {
                     Author = chatbox_info.User,
                     Attachment = chatbox_info.Attachment,
                     Filename = chatbox_info.AttachmentName,
-                    DocUri = docUploaded,
+                    DocUri = chatbox_info.AttachmentName,
                     Read = true,
                     Inbound = false,
                     Time = DateTime.Now
@@ -165,7 +159,12 @@ namespace chat_winform.ChatForm
                 {
                     AddMessage(imageMessage);
                     CancelAttachment(null, null);
-                    questionLocal.ImageUrl = imageMessage.ImageUri;
+
+                    // read all bytes from attachment name
+                    // get mime type from local file
+                    questionLocal.FileBytes = File.ReadAllBytes(chatbox_info.AttachmentFileName); ;
+                    questionLocal.ImageMimeType = ChatUtility.GetMimeType(Path.GetExtension(chatbox_info.AttachmentFileName)); ;
+                    questionLocal.IsImage = true;
                 }
                 if (textMessage != null)
                 {
