@@ -50,12 +50,14 @@ builder.Services.AddSingleton<ISemanticTextMemory>(sp =>
     var ada002 = config["AZURE_OPENAI_ADA02"];
     var endpoint = config["AZURE_OPENAI_ENDPOINT"];
     var apiKey = config["AZURE_OPENAI_APIKEY"];
+    var aiSearchEndpoint = config["AZURE_AISEARCH_ENDPOINT"];
+    var aiSearchApiKey = config["AZURE_AISEARCH_APIKEY"];
 
     var memoryBuilder = new MemoryBuilder();
     memoryBuilder.WithAzureOpenAITextEmbeddingGeneration(ada002, endpoint, apiKey);
-    memoryBuilder.WithMemoryStore(new VolatileMemoryStore());
-
-    ISemanticTextMemory memory = memoryBuilder.Build();
+    memoryBuilder.WithMemoryStore(new AzureAISearchMemoryStore(aiSearchEndpoint, aiSearchApiKey));
+    
+    var memory = memoryBuilder.Build();
     return memory;
 });
 
