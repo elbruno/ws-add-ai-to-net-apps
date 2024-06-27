@@ -29,14 +29,22 @@ public class ChatController : ControllerBase
 
     public IChatCompletionService _chatCompletionService;
 
-    public ISemanticTextMemory _memory;
+    private IConfiguration _config;
 
-    public ChatController(ILogger<ChatController> logger, ChatHistory chatHistory, IChatCompletionService chatCompletionService, ISemanticTextMemory semanticMemory)
+    private string _aiSearchEndpoint;
+    private string _aiSearchApiKey;
+    private string _aiSearchIndexName;
+
+    public ChatController(ILogger<ChatController> logger, ChatHistory chatHistory, IChatCompletionService chatCompletionService, IConfiguration config)
     {
         _logger = logger;
         _chatHistory = chatHistory;
         _chatCompletionService = chatCompletionService;
-        _memory = semanticMemory;
+        _config = config;
+
+        _aiSearchEndpoint = _config["AZURE_AISEARCH_ENDPOINT"];
+        _aiSearchApiKey = _config["AZURE_AISEARCH_APIKEY"];
+        _aiSearchIndexName = _config["AZURE_AISEARCH_INDEXNAME"];
     }
 
 // POST api/<ChatController>
@@ -47,86 +55,67 @@ public async Task<Response> Post(Question question)
 
     var response = new Response();
 
+    // validate if question.ImageUrl is a valid url
+    if (question.IsImage)
+    {
+        var collectionItems = new ChatMessageContentItemCollection
+    {
+        new TextContent(question.UserQuestion),
+        new ImageContent(question.FileBytes, question.ImageMimeType)
+        };
+        _chatHistory.AddUserMessage(collectionItems);
+    }
+    else
+    {
+        _chatHistory.AddUserMessage(question.UserQuestion);
+    }
+
     // get response
     var stopwatch = new Stopwatch();
     stopwatch.Start();
 
-    var result = await SearchResultInMemory(question);
-    if (string.IsNullOrEmpty(result))
+    var azureSearchExtensionConfiguration = new AzureSearchChatExtensionConfiguration
     {
-        // complete chat history
-        _chatHistory.AddUserMessage(question.UserQuestion);
+        SearchEndpoint = new Uri(_aiSearchEndpoint),
+        Authentication = new OnYourDataApiKeyAuthenticationOptions(_aiSearchApiKey),
+        IndexName = _aiSearchIndexName
+    };
 
-        response.Author = "Azure GPT-4o";
-        var resultResponse = await _chatCompletionService.GetChatMessageContentsAsync(_chatHistory);
-        result = resultResponse[^1].Content;
-        await AddItemToMemory(question, result);
-        response.FromCache = false;
-    }
-    else
+    var chatExtensionsOptions = new AzureChatExtensionsOptions { Extensions = { azureSearchExtensionConfiguration } };
+    var executionSettings = new OpenAIPromptExecutionSettings { AzureChatExtensionsOptions = chatExtensionsOptions };
+
+    // run the prompt
+    var result = await _chatCompletionService.GetChatMessageContentsAsync(_chatHistory, executionSettings);
+
+    if (result.FirstOrDefault().InnerContent is ChatResponseMessage)
     {
-        response.Author = "Azure GPT-4o - Cache";
-        response.FromCache = true;
-    }
-
-    response.QuestionResponse = result;
-
-    // calculate elapsed time
-    stopwatch.Stop();
-    response.ElapsedTime = stopwatch.Elapsed;
-
-    _logger.LogInformation($"Response: {response}");
-    return response;
-}
-
-async Task AddItemToMemory(Question question, string questionAnswer)
-{
-    int chunkSize = 6000;
-    List<string> chunks = new List<string>();
-    for (int i = 0; i < question.UserQuestion.Length; i += chunkSize)
-    {
-        string chunk = question.UserQuestion.Substring(i, Math.Min(chunkSize, question.UserQuestion.Length - i));
-        string key = question.UserQuestion + "-" + i;
-
-        // process key to only contain letters, digits, underscore (_), dash (-), or equal sign (=)
-        key = new string(key.Where(c => char.IsLetterOrDigit(c) || c == '_' || c == '-' || c == '=').ToArray());
-
-        await _memory.SaveInformationAsync(
-            collection: GetMemoryCollectionName(question),
-            text: chunk,
-            id: key,
-            description: questionAnswer);
-
-        _logger.LogInformation($"Saved chunk: {key} - {chunk}");
-    }
-}
-
-async Task<string> SearchResultInMemory(Question question)
-{
-    var returnValue = string.Empty;
-
-    var collectionName = GetMemoryCollectionName(question);
-
-    // search in memory
-    var response = await _memory.SearchAsync(
-        collectionName,
-        question.UserQuestion,
-        withEmbeddings: true,
-        limit: 1).FirstOrDefaultAsync();
-    if (response != null)
-    {
-        _logger.LogInformation($"{question.UserQuestion} >> ID: {response?.Metadata.Id} - Description: {response?.Metadata.Description} - Relevance: {response.Relevance} - Is Reference: {response?.Metadata.IsReference}");
-        if (response.Relevance > 0.9)
+        response.Citations = new List<Citation>();
+        var ic = result.FirstOrDefault().InnerContent as ChatResponseMessage;
+        var aec = ic.AzureExtensionsContext;
+        var citations = aec.Citations;
+        int count = 0;
+        foreach (var citation in citations)
         {
-            returnValue = response?.Metadata.Description;
+            if (count >= 3) break;
+            count++;
+            var newC = new Citation();
+            newC.Title = citation.Title;
+            newC.URL = citation.Url;
+            newC.FilePath = citation.Filepath;
+            newC.Content = citation.Content;
+            response.Citations.Add(newC);
         }
     }
-    return returnValue;
-}
 
-string GetMemoryCollectionName(Question question)
-{
-    return $"user-{question.UserName}-chat";
+    stopwatch.Stop();
+
+    response.Author = "Azure OpenAI";
+    response.QuestionResponse = result[^1].Content;
+    response.ElapsedTime = stopwatch.Elapsed;
+
+    // return response
+    _logger.LogInformation($"Response: {response}");
+    return response;
 }
 
 }

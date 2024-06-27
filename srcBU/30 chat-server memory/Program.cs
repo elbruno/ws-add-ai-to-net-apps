@@ -43,6 +43,24 @@ builder.Services.AddSingleton(sp =>
     return new ChatHistory();
 });
 
+// add memory storage using Semantic Kernel
+builder.Services.AddSingleton<ISemanticTextMemory>(sp =>
+{
+    var config = builder.Configuration;
+    var ada002 = config["AZURE_OPENAI_ADA02"];
+    var endpoint = config["AZURE_OPENAI_ENDPOINT"];
+    var apiKey = config["AZURE_OPENAI_APIKEY"];
+    var aiSearchEndpoint = config["AZURE_AISEARCH_ENDPOINT"];
+    var aiSearchApiKey = config["AZURE_AISEARCH_APIKEY"];
+
+    var memoryBuilder = new MemoryBuilder();
+    memoryBuilder.WithAzureOpenAITextEmbeddingGeneration(ada002, endpoint, apiKey);
+    memoryBuilder.WithMemoryStore(new AzureAISearchMemoryStore(aiSearchEndpoint, aiSearchApiKey));
+    
+    var memory = memoryBuilder.Build();
+    return memory;
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -24,6 +24,8 @@ public class ChatController : ControllerBase
 
     private readonly ILogger<ChatController> _logger;
 
+    private IConfiguration _config;
+
     private ChatHistory _chatHistory;
 
     public ChatController(ILogger<ChatController> logger, ChatHistory chatHistory)
