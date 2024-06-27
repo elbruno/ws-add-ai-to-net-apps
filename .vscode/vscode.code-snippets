@@ -157,7 +157,7 @@
         ],
         "description": "add memory to the chat controller constructor"
     },
-    "sk22_ControllerChatWithMemory": {
+    "sk32_ControllerChatWithMemory": {
         "prefix": "sk32_ControllerChatWithMemory",
         "body": [
             "// POST api/<ChatController>",
@@ -168,9 +168,6 @@
             "",
             "    var response = new Response();",
             "",
-            "    // complete chat history",
-            "    _chatHistory.AddUserMessage(question.UserQuestion);",
-            "",
             "    // get response",
             "    var stopwatch = new Stopwatch();",
             "    stopwatch.Start();",
@@ -178,6 +175,9 @@
             "    var result = await SearchResultInMemory(question);",
             "    if (string.IsNullOrEmpty(result))",
             "    {",
+            "        // complete chat history",
+            "        _chatHistory.AddUserMessage(question.UserQuestion);",
+            "",
             "        response.Author = \"Azure GPT-4o\";",
             "        var resultResponse = await _chatCompletionService.GetChatMessageContentsAsync(_chatHistory);",
             "        result = resultResponse[^1].Content;",
@@ -226,16 +226,18 @@
             "{",
             "    var returnValue = string.Empty;",
             "",
+            "    var collectionName = GetMemoryCollectionName(question);",
+            "",
             "    // search in memory",
             "    var response = await _memory.SearchAsync(",
-            "        GetMemoryCollectionName(question),",
+            "        collectionName,",
             "        question.UserQuestion,",
             "        withEmbeddings: true,",
             "        limit: 1).FirstOrDefaultAsync();",
             "    if (response != null)",
             "    {",
             "        _logger.LogInformation($\"{question.UserQuestion} >> ID: {response?.Metadata.Id} - Description: {response?.Metadata.Description} - Relevance: {response.Relevance} - Is Reference: {response?.Metadata.IsReference}\");",
-            "        if (response.Relevance > 0.8)",
+            "        if (response.Relevance > 0.9)",
             "        {",
             "            returnValue = response?.Metadata.Description;",
             "        }",
@@ -248,9 +250,9 @@
             "    return $\"user-{question.UserName}-chat\";",
             "}"
         ],
-        "description": "sk22_ControllerChatWithMemory"
+        "description": "sk32_ControllerChatWithMemory"
     },
-    "sk23_addMemomoryAISearch": {
+    "sk33_addSemanticMemoryAISearch": {
         "prefix": "sk33_addSemanticMemoryAISearch",
         "body": [
             "// add memory storage using Semantic Kernel",
