@@ -4,7 +4,7 @@
 [![Twitter: elbruno](https://img.shields.io/twitter/follow/elbruno.svg?style=social)](https://twitter.com/elbruno)
 ![GitHub: elbruno](https://img.shields.io/github/followers/elbruno?style=social)
 
-Welcome to the Semantic Kernel Winform Chat demo. This repository contains a demo project that implement a chat with semantic kernel.
+Welcome to the Semantic Kernel Winform Chat demo. This repository contains a Winform Chat Demo project. Following the tutorial steps we will add 
 
 Snippet Generator: https://snippet-generator.app/?description=&tabtrigger=&snippet=&mode=vscode
 

@@ -9,18 +9,18 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.4" />
+		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.6" />
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0-preview.4.24271.3" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.0-preview.5.24306.7" />
 		<PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.0-preview.5.24306.7" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.0-preview.5.24306.7" />
-		<PackageReference Include="Microsoft.SemanticKernel" Version="1.14.1" />
+		<PackageReference Include="Microsoft.SemanticKernel" Version="1.15.0" />
 		<PackageReference Include="Microsoft.SemanticKernel.Connectors.Redis" Version="1.14.1-alpha" />
 		<PackageReference Include="Microsoft.SemanticKernel.Plugins.Core" Version="1.14.1-alpha" />
 		<PackageReference Include="Microsoft.SemanticKernel.Plugins.Memory" Version="1.14.1-alpha" />
-		<PackageReference Include="Microsoft.SemanticKernel.PromptTemplates.Handlebars" Version="1.14.1" />
-		<PackageReference Include="StackExchange.Redis" Version="2.7.33" />
+		<PackageReference Include="Microsoft.SemanticKernel.PromptTemplates.Handlebars" Version="1.15.0" />
+		<PackageReference Include="StackExchange.Redis" Version="2.8.0" />
 		<PackageReference Include="System.Linq.Async" Version="6.0.1" />
 		
 		<!-- Semantic Kernel Memory -->
@@ -31,8 +31,8 @@
 		<!-- Local ONNX Models References -->
 		<PackageReference Include="feiyun0112.SemanticKernel.Connectors.OnnxRuntimeGenAI.CPU" Version="1.0.0" />
 		<PackageReference Include="Microsoft.ML.OnnxRuntime" Version="1.18.0" />
-		<PackageReference Include="Microsoft.ML.OnnxRuntimeGenAI" Version="0.3.0-rc2" />
-		<PackageReference Include="Microsoft.ML.OnnxRuntimeGenAI.Cuda" Version="0.3.0-rc2" />
+		<PackageReference Include="Microsoft.ML.OnnxRuntimeGenAI" Version="0.3.0" />
+		<PackageReference Include="Microsoft.ML.OnnxRuntimeGenAI.Cuda" Version="0.3.0" />
 	</ItemGroup>
 
 	<ItemGroup>
