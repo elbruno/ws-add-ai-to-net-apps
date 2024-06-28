@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +15,19 @@ namespace chat_winform
 		[STAThread]
 		static void Main()
 		{
-			Application.SetHighDpiMode(HighDpiMode.SystemAware);
+            var builder = Host.CreateApplicationBuilder();
+            builder.AddAppDefaults();
+
+            var app = builder.Build();
+            Services = app.Services;
+            app.Start();
+
+            Application.SetHighDpiMode(HighDpiMode.SystemAware);
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			Application.Run(new frmChat());
 		}
-	}
+
+        public static IServiceProvider Services { get; private set; } = default!;
+    }
 }

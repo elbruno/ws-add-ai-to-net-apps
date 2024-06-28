@@ -10,6 +10,7 @@ using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
 using Microsoft.SemanticKernel.Memory;
 using Microsoft.SemanticKernel.Connectors.AzureAISearch;
+using OpenTelemetry.Logs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,16 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddLogging(
     b => b.AddConsole().SetMinimumLevel(LogLevel.Trace)
 );
+
+builder.Logging.AddOpenTelemetry(logging =>
+{
+    var config = builder.Configuration;
+    var otlpEndPoint = config["OTLP_ENDPOINT"];
+    logging.AddOtlpExporter(configure => configure.Endpoint = new Uri(otlpEndPoint));
+    logging.IncludeFormattedMessage = true;
+    logging.IncludeScopes = true;
+});
+
 
 builder.Services.AddSingleton<IConfiguration>(sp => 
 {

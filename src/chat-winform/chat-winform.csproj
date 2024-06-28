@@ -15,6 +15,8 @@
 	<ItemGroup>
 		<PackageReference Include="Azure.Identity" Version="1.12.0" />
 		<PackageReference Include="Azure.Storage.Blobs" Version="12.21.0-beta.1" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0-preview.5.24306.7" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.0-preview.5.24306.7" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.0-preview.5.24306.7" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.0-preview.5.24306.7" />
@@ -23,6 +25,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\chat-models\chat-models.csproj" />
+		<ProjectReference Include="..\ClientAppsIntegration.AppDefaults\ClientAppsIntegration.AppDefaults.csproj" />
 	</ItemGroup>
 
 

@@ -372,5 +372,19 @@
             "}"
         ],
         "description": "add search including an index of Azure AI Search"
-    }
+    },
+"sk50_AddOTLPEndpoint": {
+  "prefix": "sk50_AddOTLPEndpoint",
+  "body": [
+    "builder.Logging.AddOpenTelemetry(logging =>",
+    "{",
+    "    var config = builder.Configuration;",
+    "    var otlpEndPoint = config[\"OTLP_ENDPOINT\"];",
+    "    logging.AddOtlpExporter(configure => configure.Endpoint = new Uri(otlpEndPoint));",
+    "    logging.IncludeFormattedMessage = true;",
+    "    logging.IncludeScopes = true;",
+    "});"
+  ],
+  "description": "sk50_AddOTLPEndpoint"
+}    
 }

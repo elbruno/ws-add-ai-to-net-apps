@@ -5,9 +5,13 @@ VisualStudioVersion = 17.10.34928.147
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "chat-winform", "chat-winform\chat-winform.csproj", "{1A35AC6F-D84D-4179-9442-D9B1CCA04283}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "chat-server", "chat-server\chat-server.csproj", "{41D74B07-2AD9-4816-BC2C-AD86FB4275DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "chat-server", "chat-server\chat-server.csproj", "{41D74B07-2AD9-4816-BC2C-AD86FB4275DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "chat-models", "chat-models\chat-models.csproj", "{59496A0D-D983-481B-92D2-D1D753B3FE89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "chat-models", "chat-models\chat-models.csproj", "{59496A0D-D983-481B-92D2-D1D753B3FE89}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Aspire", "Aspire", "{B5B1F36F-E5BB-4636-B48C-6C75033D28AD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientAppsIntegration.AppDefaults", "ClientAppsIntegration.AppDefaults\ClientAppsIntegration.AppDefaults.csproj", "{7C0099AB-23AD-4CB8-A0DA-AE8115F0588C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,9 +31,16 @@ Global
 		{59496A0D-D983-481B-92D2-D1D753B3FE89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59496A0D-D983-481B-92D2-D1D753B3FE89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59496A0D-D983-481B-92D2-D1D753B3FE89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C0099AB-23AD-4CB8-A0DA-AE8115F0588C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C0099AB-23AD-4CB8-A0DA-AE8115F0588C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C0099AB-23AD-4CB8-A0DA-AE8115F0588C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C0099AB-23AD-4CB8-A0DA-AE8115F0588C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7C0099AB-23AD-4CB8-A0DA-AE8115F0588C} = {B5B1F36F-E5BB-4636-B48C-6C75033D28AD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3F82BBBD-C0D8-49E6-AAC1-25BD6EB823F6}
