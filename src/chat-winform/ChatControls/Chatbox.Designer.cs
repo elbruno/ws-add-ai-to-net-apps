@@ -97,7 +97,6 @@ namespace chat_winform.ChatForm
             subtitleContent.Size = new Size(83, 52);
             subtitleContent.TabIndex = 1;
             subtitleContent.Text = "Content \r\nContent\r\n";
-            subtitleContent.Click += subtitleLabel_Click;
             // 
             // pictureBoxLogo
             // 

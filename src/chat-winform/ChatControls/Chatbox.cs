@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.Net.Http;
 using System.Net.Http.Json;
 using chat_models;
+using Microsoft.Extensions.Logging;
 
 
 namespace chat_winform.ChatForm
@@ -15,8 +16,8 @@ namespace chat_winform.ChatForm
         public OpenFileDialog fileDialog = new OpenFileDialog();
         public string initialdirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
-        // http client
-        public HttpClient client;
+        public HttpClient _client { get; set; }
+        public ILogger _logger { get; set; }
 
         public Chatbox()
         {
@@ -51,10 +52,20 @@ namespace chat_winform.ChatForm
         {
             if (e.Shift && e.KeyValue == 13)
             {
+                // validate if the last character is a new line, and remove it
+                if (chatTextbox.Text.EndsWith(Environment.NewLine))
+                {
+                    chatTextbox.Text = chatTextbox.Text.Remove(chatTextbox.Text.Length - Environment.NewLine.Length);
+                }
                 SendMessage(this, null);
             }
             else if (e.KeyValue == 13)
             {
+                // validate if the last character is a new line, and remove it
+                if (chatTextbox.Text.EndsWith(Environment.NewLine))
+                {
+                    chatTextbox.Text = chatTextbox.Text.Remove(chatTextbox.Text.Length - Environment.NewLine.Length);
+                }
                 SendMessage(this, null);
             }
         }
@@ -97,7 +108,6 @@ namespace chat_winform.ChatForm
             }
         }
 
-        //Cross-tested this with the Twilio API and the RingCentral API, and async messaging is the way to go.
         async void SendMessage(object sender, EventArgs e)
         {
             string tonumber = subtitleContent.Text;
@@ -177,7 +187,7 @@ namespace chat_winform.ChatForm
 
                 // get response from server
                 var responseLocal = new Response();
-                var httpResponse = await client.PostAsJsonAsync("api/chat", questionLocal);
+                var httpResponse = await _client.PostAsJsonAsync("api/chat", questionLocal);
                 if (httpResponse.IsSuccessStatusCode)
                 {
                     responseLocal = await httpResponse.Content.ReadFromJsonAsync<Response>();
@@ -198,6 +208,8 @@ namespace chat_winform.ChatForm
             }
             catch (Exception exc)
             {
+                _logger.LogError(exc, "Error loading weather");
+
                 //If any exception is found, then it is printed on the screen. Feel free to change this method if you don't want people to see exceptions.
                 textMessage = new TextChatModel()
                 {
@@ -236,9 +248,11 @@ namespace chat_winform.ChatForm
                         chatbox_info.Attachment = file;
                         chatbox_info.AttachmentFileName = selected;
                     }
+                    _logger.LogInformation($"Attachment file: [{selected}] loaded successfully");
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    _logger.LogError(ex, "Error loading file");
                     MessageBox.Show("There was an issue with retrieving the file.", "File Operation Error");
                 }
             }
@@ -291,11 +305,6 @@ namespace chat_winform.ChatForm
                     (control as ChatItem).ResizeBubbles((int)(itemsPanel.Width * 0.6));
                 }
             }
-        }
-
-        private void subtitleLabel_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

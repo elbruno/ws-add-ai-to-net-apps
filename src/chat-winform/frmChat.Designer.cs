@@ -63,7 +63,6 @@ namespace chat_winform
             toolStripMenuItemSetServer.Name = "toolStripMenuItemSetServer";
             toolStripMenuItemSetServer.Size = new Size(160, 22);
             toolStripMenuItemSetServer.Text = "Set Chat Server";
-            toolStripMenuItemSetServer.Click += toolStripMenuItemSetServer_Click;
             // 
             // toolStripTextBoxChatServer
             // 
