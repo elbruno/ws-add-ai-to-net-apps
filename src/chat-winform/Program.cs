@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -21,11 +22,10 @@ namespace chat_winform
             var builder = Host.CreateApplicationBuilder();
             builder.AddAppDefaults();
 
-            var scheme = builder.Environment.IsDevelopment() ? "http" : "https";
             builder.Services.AddSingleton<HttpClient>(sp =>
-                {
+                {                    
                     var client = new HttpClient();
-                    client.BaseAddress = new Uri($"http://localhost:5259/");
+                    client.BaseAddress = new Uri(builder.Configuration["CHAT_SERVER"]);
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     return client;

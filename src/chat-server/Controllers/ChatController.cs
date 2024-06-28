@@ -14,7 +14,6 @@ using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Memory;
 using Microsoft.SemanticKernel.Connectors.AzureAISearch;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
-using System.Net;
 namespace chat_server.Controllers;
 
 [Route("api/[controller]")]
@@ -24,6 +23,8 @@ public class ChatController : ControllerBase
     private bool _useCache = false;
 
     private readonly ILogger<ChatController> _logger;
+
+    private IConfiguration _config;
 
     private ChatHistory _chatHistory;
 
@@ -36,42 +37,30 @@ public class ChatController : ControllerBase
         _chatCompletionService = chatCompletionService;
     }
 
-    // POST api/<ChatController>
-    [HttpPost]
-    public async Task<Response> Post(Question question)
-    {
-        _logger.LogInformation($"Input question: {question}");
 
-        var response = new Response();
+// POST api/<ChatController>
+[HttpPost]
+public async Task<Response> Post(Question question)
+{
+    _logger.LogInformation($"Input question: {question}");
 
-        // validate if question.ImageUrl is a valid url
-        if (question.IsImage)
-        {
-            var collectionItems = new ChatMessageContentItemCollection
-            {
-                new TextContent(question.UserQuestion),
-                new ImageContent(question.FileBytes, question.ImageMimeType)
-                };
-            _chatHistory.AddUserMessage(collectionItems);
-        }
-        else
-        {
-            _chatHistory.AddUserMessage(question.UserQuestion);
-        }
+    var response = new Response();
+    
+    // complete chat history
+    _chatHistory.AddUserMessage(question.UserQuestion);
 
-        // get response
-        var stopwatch = new Stopwatch();
-        stopwatch.Start();
-        var result = await _chatCompletionService.GetChatMessageContentsAsync(_chatHistory);
-        stopwatch.Stop();
+    // get response
+    var stopwatch = new Stopwatch();
+    stopwatch.Start();
+    var result = await _chatCompletionService.GetChatMessageContentsAsync(_chatHistory);
+    stopwatch.Stop();
 
-        response.Author = "Azure OpenAI";
-        response.QuestionResponse = result[^1].Content;
-        response.ElapsedTime = stopwatch.Elapsed;
+    response.Author = "Azure OpenAI";
+    response.QuestionResponse = result[^1].Content;
+    response.ElapsedTime = stopwatch.Elapsed;
 
-        // return response
-        _logger.LogInformation($"Response: {response}");
-        return response;
-    }
-
+    // return response
+    _logger.LogInformation($"Response: {response}");
+    return response;
+}
 }

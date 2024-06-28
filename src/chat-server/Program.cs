@@ -10,7 +10,6 @@ using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
 using Microsoft.SemanticKernel.Memory;
 using Microsoft.SemanticKernel.Connectors.AzureAISearch;
-using OpenTelemetry.Logs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,35 +22,24 @@ builder.Services.AddLogging(
     b => b.AddConsole().SetMinimumLevel(LogLevel.Trace)
 );
 
-builder.Logging.AddOpenTelemetry(logging =>
-{
-    var config = builder.Configuration;
-    var otlpEndPoint = config["OTLP_ENDPOINT"];
-    logging.AddOtlpExporter(configure => configure.Endpoint = new Uri(otlpEndPoint));
-    logging.IncludeFormattedMessage = true;
-    logging.IncludeScopes = true;
-});
-
-
 builder.Services.AddSingleton<IConfiguration>(sp => 
 {
     return builder.Configuration;
 });
 
-builder.Services.AddSingleton<IChatCompletionService>(sp =>
-{
-    // add Azure OpenAI Chat Completion service
-    var config = builder.Configuration;
-    var chatDeploymentName = config["AZURE_OPENAI_MODEL"];
-    var endpoint = config["AZURE_OPENAI_ENDPOINT"];
-    var apiKey = config["AZURE_OPENAI_APIKEY"];
-
-    return new AzureOpenAIChatCompletionService(chatDeploymentName, endpoint, apiKey);
-});
-
 builder.Services.AddSingleton(sp => 
 {
     return new ChatHistory();
+});
+
+builder.Services.AddSingleton<IChatCompletionService>(sp =>
+{
+    // add Phi-3 model from a ollama server
+    var model = "phi3";
+    var endpoint = "http://local:11434";
+    var apiKey = "apiKey";
+
+    return new OpenAIChatCompletionService(model, new Uri(endpoint), apiKey);
 });
 
 var app = builder.Build();
