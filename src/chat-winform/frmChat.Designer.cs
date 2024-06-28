@@ -29,10 +29,10 @@ namespace chat_winform
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmChat));
             menuStrip1 = new MenuStrip();
             toolStripMenuItemServer = new ToolStripMenuItem();
-            toolStripMenuItemSetServer = new ToolStripMenuItem();
-            toolStripTextBoxChatServer = new ToolStripTextBox();
+            toolStripMenuItemShowServer = new ToolStripMenuItem();
             toolStripSeparator1 = new ToolStripSeparator();
             toolStripMenuItemSetUserName = new ToolStripMenuItem();
             toolStripTextBoxUserName = new ToolStripTextBox();
@@ -53,31 +53,26 @@ namespace chat_winform
             // 
             // toolStripMenuItemServer
             // 
-            toolStripMenuItemServer.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItemSetServer, toolStripTextBoxChatServer, toolStripSeparator1, toolStripMenuItemSetUserName, toolStripTextBoxUserName });
+            toolStripMenuItemServer.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItemShowServer, toolStripSeparator1, toolStripMenuItemSetUserName, toolStripTextBoxUserName });
             toolStripMenuItemServer.Name = "toolStripMenuItemServer";
             toolStripMenuItemServer.Size = new Size(61, 20);
             toolStripMenuItemServer.Text = "Options";
             // 
-            // toolStripMenuItemSetServer
+            // toolStripMenuItemShowServer
             // 
-            toolStripMenuItemSetServer.Name = "toolStripMenuItemSetServer";
-            toolStripMenuItemSetServer.Size = new Size(160, 22);
-            toolStripMenuItemSetServer.Text = "Set Chat Server";
-            // 
-            // toolStripTextBoxChatServer
-            // 
-            toolStripTextBoxChatServer.Name = "toolStripTextBoxChatServer";
-            toolStripTextBoxChatServer.Size = new Size(100, 23);
+            toolStripMenuItemShowServer.Name = "toolStripMenuItemShowServer";
+            toolStripMenuItemShowServer.Size = new Size(180, 22);
+            toolStripMenuItemShowServer.Text = "Chat Server";
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(157, 6);
+            toolStripSeparator1.Size = new Size(177, 6);
             // 
             // toolStripMenuItemSetUserName
             // 
             toolStripMenuItemSetUserName.Name = "toolStripMenuItemSetUserName";
-            toolStripMenuItemSetUserName.Size = new Size(160, 22);
+            toolStripMenuItemSetUserName.Size = new Size(180, 22);
             toolStripMenuItemSetUserName.Text = "Set User Name";
             toolStripMenuItemSetUserName.Click += toolStripMenuItemSetUserName_Click;
             // 
@@ -97,6 +92,8 @@ namespace chat_winform
             // 
             // chatboxControl
             // 
+            chatboxControl._client = null;
+            chatboxControl._logger = null;
             chatboxControl.BackColor = Color.White;
             chatboxControl.Dock = DockStyle.Fill;
             chatboxControl.Location = new Point(0, 0);
@@ -112,6 +109,7 @@ namespace chat_winform
             ClientSize = new Size(800, 450);
             Controls.Add(panelChatControl);
             Controls.Add(menuStrip1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
             Name = "frmChat";
             Text = "Semantic Kernel - Winforms Chat";
@@ -127,8 +125,7 @@ namespace chat_winform
 
         private MenuStrip menuStrip1;
         private ToolStripMenuItem toolStripMenuItemServer;
-        private ToolStripMenuItem toolStripMenuItemSetServer;
-        private ToolStripTextBox toolStripTextBoxChatServer;
+        private ToolStripMenuItem toolStripMenuItemShowServer;
         private Panel panelChatControl;
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripMenuItem toolStripMenuItemSetUserName;

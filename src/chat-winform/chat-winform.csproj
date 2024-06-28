@@ -9,7 +9,12 @@
 		<UserSecretsId>f0ce84b4-bdc5-4452-8ea0-44a0f69ea165</UserSecretsId>
 		<UseWPF>True</UseWPF>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<ApplicationIcon>dotnet-icon-256x256-ozvjws7o.ico</ApplicationIcon>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <Content Include="dotnet-icon-256x256-ozvjws7o.ico" />
+	</ItemGroup>
 
 
 	<ItemGroup>

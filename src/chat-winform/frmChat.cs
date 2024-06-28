@@ -33,6 +33,9 @@ namespace chat_winform
             chatboxControl._client = _client;
             chatboxControl._logger = _logger;
             chatboxControl.SetChatBotInfo(cbi);
+
+            // display chat server
+            toolStripMenuItemShowServer.Text = $"Chat Server: {_client.BaseAddress.ToString()}";
         }
 
         private void toolStripMenuItemSetUserName_Click(object sender, EventArgs e)
