@@ -4,14 +4,14 @@
 [![Twitter: elbruno](https://img.shields.io/twitter/follow/elbruno.svg?style=social)](https://twitter.com/elbruno)
 ![GitHub: elbruno](https://img.shields.io/github/followers/elbruno?style=social)
 
-Welcome to the Adding AI to Your Existing .NET Apps Workshop. This repository contains a set of .NET projects to demostrate how to add AI to a common .NET scenario: Winform as front end app, and an WebAPI as backend.. 
+Welcome to the Adding AI to Your Existing .NET Apps Workshop. This repository contains a set of .NET projects to demostrate how to add AI to a common .NET scenario: Winform as front end app, and an WebAPI as backend.
 
 ## Prerequisites
 
 Before running the sample, ensure you have the following installed:
-- **.NET 8**: Make sure you have the latest version of .NET installed on your machine.
+- **[.NET 8](https://dotnet.microsoft.com/en-us/download)**: Make sure you have the latest version of .NET installed on your machine.
 
-- **Visual Studio or Visual Studio Code**: You will need an IDE or code editor capable of running .NET projects. Visual Studio or Visual Studio Code are recommended.
+- **[Visual Studio or Visual Studio Code](https://visualstudio.microsoft.com/downloads/)**: You will need an IDE or code editor capable of running .NET projects. Visual Studio or Visual Studio Code are recommended.
 
 - **[Azure OpenAI Services](https://learn.microsoft.com/azure/ai-services/openai/overview)**: To GPT-4o as the model to support the chat, you need to have access to Azure OpenAI Services and create and deploy a GPT-4o model. .
 
@@ -54,8 +54,13 @@ These are the different steps included in the workshop:
 9. Add RAG using Azure AI Search
 Add Aspire Dashboard using OTLP endpoint
 
+## Live Demo
+
+Coming soon ...
+
 ## Resources
 
+- [Aspire Dashboard](https://www.aspiredashboard.com/)
 - [Snippet Generator](https://snippet-generator.app/?description=&tabtrigger=&snippet=&mode=vscode)
 
 ## Author
@@ -71,7 +76,7 @@ Add Aspire Dashboard using OTLP endpoint
 
 Contributions, issues and feature requests are welcome!
 
-Feel free to check [issues page](https://github.com/elbruno/sk-chat-winform-demo/issues).
+Feel free to check [issues page](./issues).
 
 ## Show your support
 
