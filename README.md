@@ -1,21 +1,27 @@
-# Semantic Kernel Winform Chat
+# Adding AI to Your Existing .NET Apps - Workshop
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](/LICENSE)
 [![Twitter: elbruno](https://img.shields.io/twitter/follow/elbruno.svg?style=social)](https://twitter.com/elbruno)
 ![GitHub: elbruno](https://img.shields.io/github/followers/elbruno?style=social)
 
-Welcome to the Semantic Kernel Winform Chat demo. This repository contains a Winform Chat Demo project. Following the tutorial steps we will add 
-
-Snippet Generator: https://snippet-generator.app/?description=&tabtrigger=&snippet=&mode=vscode
+Welcome to the Adding AI to Your Existing .NET Apps Workshop. This repository contains a set of .NET projects to demostrate how to add AI to a common .NET scenario: Winform as front end app, and an WebAPI as backend.. 
 
 ## Prerequisites
 
 Before running the sample, ensure you have the following installed:
 - **.NET 8**: Make sure you have the latest version of .NET installed on your machine.
-- **(Optional) Visual Studio or Visual Studio Code**: You will need an IDE or code editor capable of running .NET projects. Visual Studio or Visual Studio Code are recommended.
-- Using git, clone locally one of the available Phi-3 versions from Hugging Face. 
 
-## LLM Prerequisites
+- **Visual Studio or Visual Studio Code**: You will need an IDE or code editor capable of running .NET projects. Visual Studio or Visual Studio Code are recommended.
+
+- **[Azure OpenAI Services](https://learn.microsoft.com/azure/ai-services/openai/overview)**: To GPT-4o as the model to support the chat, you need to have access to Azure OpenAI Services and create and deploy a GPT-4o model. .
+
+- **[Ollama](https://ollama.com/download)**: To use Phi-3 as local model with Ollama, you need to have ollama installed. 
+
+- **[Docker Desktop](https://www.docker.com/products/docker-desktop/)**: To use Phi-3 as local model with Ollama, you need to have ollama installed. 
+
+### Local LLM install
+
+- Create a local folder to store the Phi-3 local model. In example: `C:\phi3\models`.
 
 - Download the **phi3-mini-4k-instruct-onnx** model to your local machine:
     ```bash
@@ -32,47 +38,25 @@ Before running the sample, ensure you have the following installed:
     git clone https://huggingface.co/microsoft/Phi-3-vision-128k-instruct-onnx-cpu
     ```
     ***Important:** The current demos are designed to use the ONNX versions of the model. The previous steps clone the following models.*
-    ![Download only ONNX models](./img/10DownloadOnnx.png)
 
-You can learn more about [Phi-3 in Hugging Face](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct-onnx).
+## Workshop Steps
 
-## About the sample
+These are the different steps included in the workshop:
 
-The main solution have several sample projects that demonstrates the capabilities of the Phi-3 models.
+1. Standard Winform + API NET Chat App
+2. Add Azure OpenAI GPT-4o to support chat (text)
+3. Add Azure OpenAI GPT-4o to support chat + image (text)
+4. Add Phi-3 to support chat using ONNX (text)
+5. Add Phi-3 to support chat + image using ONNX (text)
+6. Add Phi-3 to support chat using Ollama in docker(text)
+7. Add Cache using Semantic Memory, local in Memory
+8. Add Cache using Semantic Memory, store in Azure AI Search
+9. Add RAG using Azure AI Search
+Add Aspire Dashboard using OTLP endpoint
 
-| Project | Description | Location |
-| ------------ | ----------- | -------- |
-| LabsPhi301    | This is a sample project that uses a local phi3 model to ask a question. The project load a local ONNX Phi-3 model using the `Microsoft.ML.OnnxRuntime` libraries. | .\src\LabsPhi301\ |
+## Resources
 
-## How to Run the Projects
-
-To run the projects, follow these steps:
-1. Clone the repository to your local machine.
-
-1. Open a terminal and navigate to the desired project. In example, let's run `LabsPhi301`.
-    ```bash
-    cd .\src\LabsPhi301\
-    ```
-
-1. Run the project with the command
-    ```bash
-    dotnet run
-    ```
-
-1.  The sample project ask for a user input and replies using the local mode. 
-
-    The running demo is similar to this one:
-
-    ![Chat running demo](./img/20SampleConsole.gif)
-
-    ***Note:** there is a typo in the 1st question, Phi-3 is cool enough to share the correct answer!*
-
-1.  The project `LabsPhi304` ask for the user to select different options, and then process the request. In example, analyzing a local image.
-
-    The running demo is similar to this one:
-
-    ![Image Analysis running demo](./img/30SampleVisionConsole.gif)
-    
+- [Snippet Generator](https://snippet-generator.app/?description=&tabtrigger=&snippet=&mode=vscode)
 
 ## Author
 
