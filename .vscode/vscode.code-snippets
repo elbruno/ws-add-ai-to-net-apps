@@ -113,7 +113,7 @@
             "{",
             "    // add Phi-3 model from a ollama server",
             "    var model = \"phi3\";",
-            "    var endpoint = \"http://local:11434\";",
+            "    var endpoint = \"http://localhost:11434\";",
             "    var apiKey = \"apiKey\";",
             "",
             "    return new OpenAIChatCompletionService(model, new Uri(endpoint), apiKey);",

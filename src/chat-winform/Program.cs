@@ -20,7 +20,7 @@ namespace chat_winform
         static void Main()
         {
             var builder = Host.CreateApplicationBuilder();
-            builder.AddAppDefaults();
+            //builder.AddAppDefaults();
 
             builder.Services.AddSingleton<HttpClient>(sp =>
                 {                    
@@ -38,9 +38,9 @@ namespace chat_winform
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new frmChat());
             ApplicationConfiguration.Initialize();
             Application.Run(ActivatorUtilities.CreateInstance<frmChat>(app.Services));
+            //Application.Run(new frmChat());
         }
 
         public static IServiceProvider Services { get; private set; } = default!;

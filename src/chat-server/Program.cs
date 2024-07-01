@@ -27,19 +27,20 @@ builder.Services.AddSingleton<IConfiguration>(sp =>
     return builder.Configuration;
 });
 
+builder.Services.AddSingleton<IChatCompletionService>(sp =>
+{
+    // add Azure OpenAI Chat Completion service
+    var config = builder.Configuration;
+    var chatDeploymentName = config["AZURE_OPENAI_MODEL"];
+    var endpoint = config["AZURE_OPENAI_ENDPOINT"];
+    var apiKey = config["AZURE_OPENAI_APIKEY"];
+
+    return new AzureOpenAIChatCompletionService(chatDeploymentName, endpoint, apiKey);
+});
+
 builder.Services.AddSingleton(sp => 
 {
     return new ChatHistory();
-});
-
-builder.Services.AddSingleton<IChatCompletionService>(sp =>
-{
-    // add Phi-3 model from a ollama server
-    var model = "phi3";
-    var endpoint = "http://local:11434";
-    var apiKey = "apiKey";
-
-    return new OpenAIChatCompletionService(model, new Uri(endpoint), apiKey);
 });
 
 var app = builder.Build();

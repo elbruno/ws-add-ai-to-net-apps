@@ -25,7 +25,7 @@ namespace chat_winform
         {
             // chat control
             cbi = new ChatForm.ChatboxInfo();
-            cbi.MainTitlePlaceholder = "Semantic Kernel - Winforms Chat";
+            cbi.MainTitlePlaceholder = "Adding AI to a Winforms Chat";
             cbi.SubtitlePlaceholder = "Azure OpenAI - GPT4o";
             cbi.User = userName;
             toolStripTextBoxUserName.Text = userName;
