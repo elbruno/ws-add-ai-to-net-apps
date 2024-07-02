@@ -14,7 +14,6 @@ using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Memory;
 using Microsoft.SemanticKernel.Connectors.AzureAISearch;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
-using System.Net;
 namespace chat_server.Controllers;
 
 [Route("api/[controller]")]
@@ -25,15 +24,14 @@ public class ChatController : ControllerBase
 
     private readonly ILogger<ChatController> _logger;
 
+    private IConfiguration _config;
+
     private ChatHistory _chatHistory;
 
-    public IChatCompletionService _chatCompletionService;
-
-    public ChatController(ILogger<ChatController> logger, ChatHistory chatHistory, IChatCompletionService chatCompletionService)
+    public ChatController(ILogger<ChatController> logger, ChatHistory chatHistory)
     {
         _logger = logger;
         _chatHistory = chatHistory;
-        _chatCompletionService = chatCompletionService;
     }
 
     // POST api/<ChatController>
@@ -42,36 +40,23 @@ public class ChatController : ControllerBase
     {
         _logger.LogInformation($"Input question: {question}");
 
-        var response = new Response();
-
-        // validate if question.ImageUrl is a valid url
-        if (question.IsImage)
+        var response = new Response
         {
-            var collectionItems = new ChatMessageContentItemCollection
-            {
-                new TextContent(question.UserQuestion),
-                new ImageContent(question.FileBytes, question.ImageMimeType)
-                };
-            _chatHistory.AddUserMessage(collectionItems);
-        }
-        else
-        {
-            _chatHistory.AddUserMessage(question.UserQuestion);
-        }
+            Author = "ChatBot"
+        };
+        // complete chat history
+        _chatHistory.AddUserMessage(question.UserQuestion);
 
         // get response
         var stopwatch = new Stopwatch();
         stopwatch.Start();
-        var result = await _chatCompletionService.GetChatMessageContentsAsync(_chatHistory);
+        var chatResponse = $" Your question [{question.UserQuestion}] is {question.UserQuestion.Length} chars long.";
         stopwatch.Stop();
-
-        response.Author = "Azure OpenAI";
-        response.QuestionResponse = result[^1].Content;
+        response.QuestionResponse = chatResponse;
         response.ElapsedTime = stopwatch.Elapsed;
 
         // return response
         _logger.LogInformation($"Response: {response}");
         return response;
     }
-
 }

@@ -10,7 +10,6 @@ using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
 using Microsoft.SemanticKernel.Memory;
 using Microsoft.SemanticKernel.Connectors.AzureAISearch;
-using OpenTelemetry.Logs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,28 +22,9 @@ builder.Services.AddLogging(
     b => b.AddConsole().SetMinimumLevel(LogLevel.Trace)
 );
 
-builder.Logging.AddOpenTelemetry(logging =>
-{
-    var config = builder.Configuration;
-    var otlpEndPoint = "https://probable-dollop-ppppr5gx6v37p7p-4317.app.github.dev";
-    logging.AddOtlpExporter(configure => configure.Endpoint = new Uri(otlpEndPoint));
-    logging.IncludeFormattedMessage = true;
-    logging.IncludeScopes = true;
-});
-
 builder.Services.AddSingleton<IConfiguration>(sp => 
 {
     return builder.Configuration;
-});
-
-builder.Services.AddSingleton<IChatCompletionService>(sp =>
-{
-    // add Phi-3 model from a ollama server
-    var model = "phi3";
-    var endpoint = "https://probable-dollop-ppppr5gx6v37p7p-11434.app.github.dev";
-    var apiKey = "apiKey";
-
-    return new OpenAIChatCompletionService(model, new Uri(endpoint), apiKey);
 });
 
 builder.Services.AddSingleton(sp => 
