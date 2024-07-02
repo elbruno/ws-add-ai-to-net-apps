@@ -26,7 +26,7 @@ builder.Services.AddLogging(
 builder.Logging.AddOpenTelemetry(logging =>
 {
     var config = builder.Configuration;
-    var otlpEndPoint = "https://automatic-adventure-xvvvwg9g9rf9795-4317.app.github.dev";
+    var otlpEndPoint = "https://verbose-carnival-4www7pgprj3vrw-4317.app.github.dev";
     logging.AddOtlpExporter(configure => configure.Endpoint = new Uri(otlpEndPoint));
     logging.IncludeFormattedMessage = true;
     logging.IncludeScopes = true;
@@ -41,7 +41,7 @@ builder.Services.AddSingleton<IChatCompletionService>(sp =>
 {
     // add Phi-3 model from a ollama server
     var model = "phi3";
-    var endpoint = "https://automatic-adventure-xvvvwg9g9rf9795-11434.app.github.dev";
+    var endpoint = "https://verbose-carnival-4www7pgprj3vrw-11434.app.github.dev";
     var apiKey = "apiKey";
 
     return new OpenAIChatCompletionService(model, new Uri(endpoint), apiKey);
