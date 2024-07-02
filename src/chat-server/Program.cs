@@ -10,6 +10,7 @@ using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
 using Microsoft.SemanticKernel.Memory;
 using Microsoft.SemanticKernel.Connectors.AzureAISearch;
+using OpenTelemetry.Logs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,10 +23,34 @@ builder.Services.AddLogging(
     b => b.AddConsole().SetMinimumLevel(LogLevel.Trace)
 );
 
+builder.Logging.AddOpenTelemetry(logging =>
+{
+    var config = builder.Configuration;
+    var otlpEndPoint = config["OTLP_ENDPOINT"];
+    logging.AddOtlpExporter(configure => configure.Endpoint = new Uri(otlpEndPoint));
+    logging.IncludeFormattedMessage = true;
+    logging.IncludeScopes = true;
+});
+
 builder.Services.AddSingleton<IConfiguration>(sp => 
 {
     return builder.Configuration;
 });
+
+builder.Services.AddSingleton(sp => 
+{
+    return new ChatHistory();
+});
+
+// builder.Services.AddSingleton<IChatCompletionService>(sp =>
+// {
+//     // add Phi-3 model from a ollama server
+//     var model = "phi3";
+//     var endpoint = "http://localhost:11434";
+//     var apiKey = "apiKey";
+
+//     return new OpenAIChatCompletionService(model, new Uri(endpoint), apiKey);
+// });
 
 builder.Services.AddSingleton<IChatCompletionService>(sp =>
 {
@@ -38,9 +63,22 @@ builder.Services.AddSingleton<IChatCompletionService>(sp =>
     return new AzureOpenAIChatCompletionService(chatDeploymentName, endpoint, apiKey);
 });
 
-builder.Services.AddSingleton(sp => 
+// add memory storage using Semantic Kernel
+builder.Services.AddSingleton<ISemanticTextMemory>(sp =>
 {
-    return new ChatHistory();
+    var config = builder.Configuration;
+    var ada002 = config["AZURE_OPENAI_ADA02"];
+    var endpoint = config["AZURE_OPENAI_ENDPOINT"];
+    var apiKey = config["AZURE_OPENAI_APIKEY"];
+    var aiSearchEndpoint = config["AZURE_AISEARCH_ENDPOINT"];
+    var aiSearchApiKey = config["AZURE_AISEARCH_APIKEY"];
+
+    var memoryBuilder = new MemoryBuilder();
+    memoryBuilder.WithAzureOpenAITextEmbeddingGeneration(ada002, endpoint, apiKey);
+    memoryBuilder.WithMemoryStore(new AzureAISearchMemoryStore(aiSearchEndpoint, aiSearchApiKey));
+    
+    var memory = memoryBuilder.Build();
+    return memory;
 });
 
 var app = builder.Build();
