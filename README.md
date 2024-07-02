@@ -4,24 +4,44 @@
 [![Twitter: elbruno](https://img.shields.io/twitter/follow/elbruno.svg?style=social)](https://twitter.com/elbruno)
 ![GitHub: elbruno](https://img.shields.io/github/followers/elbruno?style=social)
 
-Welcome to the Adding AI to Your Existing .NET Apps Workshop. This repository contains a set of .NET projects to demostrate how to add AI to a common .NET scenario: Winform as front end app, and an WebAPI as backend.
+Welcome to the Adding AI to Your Existing .NET Apps Workshop. This repository contains a set of .NET projects to demostrate how to add AI to a common .NET scenario: **Winform as front end app, and an WebAPI as backend**.
+
+These are the different steps included in the workshop:
+
+1. Standard Winform + API NET Chat App
+2. Add Azure OpenAI GPT-4o to support chat (text)
+3. Add Azure OpenAI GPT-4o to support chat + image (text)
+4. Add Phi-3 to support chat using ONNX (text)
+5. Add Phi-3 to support chat + image using ONNX (text)
+6. Add Phi-3 to support chat using Ollama in docker(text)
+7. Add Cache using Semantic Memory, local in Memory
+8. Add Cache using Semantic Memory, store in Azure AI Search
+9. Add RAG using Azure AI Search
+10. Add Aspire Dashboard using OTLP endpoint
 
 ## Prerequisites
 
 Before running the sample, ensure you have the following installed:
+
 - **[.NET 8](https://dotnet.microsoft.com/en-us/download)**: Make sure you have the latest version of .NET installed on your machine.
 
 - **[Visual Studio or Visual Studio Code](https://visualstudio.microsoft.com/downloads/)**: You will need an IDE or code editor capable of running .NET projects. Visual Studio or Visual Studio Code are recommended.
 
-- **[Azure OpenAI Services](https://learn.microsoft.com/azure/ai-services/openai/overview)**: To GPT-4o as the model to support the chat, you need to have access to Azure OpenAI Services and create and deploy a GPT-4o model. .
+- **[Azure OpenAI Services](https://learn.microsoft.com/azure/ai-services/openai/overview)**: To GPT-4o as the model to support the chat, you need to have access to Azure OpenAI Services and create and deploy a GPT-4o model.
 
-- **[Ollama](https://ollama.com/download)**: To use Phi-3 as local model with Ollama, you need to have ollama installed. 
+- **[Ollama](https://ollama.com/download)**: To use Phi-3 as local model with Ollama, you need to have ollama installed.
 
-- **[Docker Desktop](https://www.docker.com/products/docker-desktop/)**: To use Phi-3 as local model with Ollama, you need to have ollama installed.
+- **[Docker Desktop](https://www.docker.com/products/docker-desktop/)**: To use Phi-3 as local model with Ollama, you need to have docker installed.
+
+    - **[Ollama in Docker](https://ollama.com/blog/ollama-is-now-available-as-an-official-docker-image)**. Follow the link steps to install ollama in Docker.
+
+    - **[Aspire Dashboard in Docker](https://www.aspiredashboard.com/)**. Follow the link steps to install the Aspire Dashboard in Docker.
 
 ### Project Secrets
 
-The `chat-server` project uses .NET User Secrets to access remote resources like Azure OpenAI Services or Azure AI Search. Follow these steps to add the secrets to the project.
+The `chat-server` project uses .NET User Secrets to access remote resources like Azure OpenAI Services or Azure AI Search. 
+
+Follow these steps to add the secrets to the project.
 
 1. Open a terminal and navigate to the `chat-server` project. 
 
@@ -31,19 +51,19 @@ The `chat-server` project uses .NET User Secrets to access remote resources like
 
 1. Run the following command with the correct values
 
-```bash
-dotnet user-secrets init
-dotnet user-secrets set "AZURE_OPENAI_MODEL" "< Azure OpenAI Model, ie: gpt-4o >"
-dotnet user-secrets set "AZURE_OPENAI_ENDPOINT" "< Azure OpenAI Endpoint >"
-dotnet user-secrets set "AZURE_OPENAI_APIKEY" "< Azure OpenAI Key >"
-dotnet user-secrets set "AZURE_OPENAI_ADA02" "< Azure OpenAI Embeddings model, ie: text-embedding-ada-002 >"
-dotnet user-secrets set "AZURE_AISEARCH_ENDPOINT" "< Azure AI Search Endpoint >"
-dotnet user-secrets set "AZURE_AISEARCH_APIKEY" "< Azure AI Search ApiKey >"
-dotnet user-secrets set "AZURE_AISEARCH_INDEXNAME" "< Azure AI Search IndexName for RAG >"
-dotnet user-secrets set "OTLP_ENDPOINT" "< OTLP ENDPOINT, ie: http://localhost:4317 >"
-```
+    ```bash
+    dotnet user-secrets init
+    dotnet user-secrets set "AZURE_OPENAI_MODEL" "< Azure OpenAI Model, ie: gpt-4o >"
+    dotnet user-secrets set "AZURE_OPENAI_ENDPOINT" "< Azure OpenAI Endpoint >"
+    dotnet user-secrets set "AZURE_OPENAI_APIKEY" "< Azure OpenAI Key >"
+    dotnet user-secrets set "AZURE_OPENAI_ADA02" "< Azure OpenAI Embeddings model, ie: text-embedding-ada-002 >"
+    dotnet user-secrets set "AZURE_AISEARCH_ENDPOINT" "< Azure AI Search Endpoint >"
+    dotnet user-secrets set "AZURE_AISEARCH_APIKEY" "< Azure AI Search ApiKey >"
+    dotnet user-secrets set "AZURE_AISEARCH_INDEXNAME" "< Azure AI Search IndexName for RAG >"
+    dotnet user-secrets set "OTLP_ENDPOINT" "< OTLP ENDPOINT, ie: http://localhost:4317 >"
+    ```
 
-### Install Phi-3 locally
+### Install Phi-3 locally, to be used in the ONNX scenarios
 
 - Create a local folder to store the Phi-3 local model. In example: `C:\phi3\models`.
 
@@ -63,22 +83,7 @@ dotnet user-secrets set "OTLP_ENDPOINT" "< OTLP ENDPOINT, ie: http://localhost:4
     ```
     ***Important:** The current demos are designed to use the ONNX versions of the model. The previous steps clone the following models.*
 
-## Workshop Steps
-
-These are the different steps included in the workshop:
-
-1. Standard Winform + API NET Chat App
-2. Add Azure OpenAI GPT-4o to support chat (text)
-3. Add Azure OpenAI GPT-4o to support chat + image (text)
-4. Add Phi-3 to support chat using ONNX (text)
-5. Add Phi-3 to support chat + image using ONNX (text)
-6. Add Phi-3 to support chat using Ollama in docker(text)
-7. Add Cache using Semantic Memory, local in Memory
-8. Add Cache using Semantic Memory, store in Azure AI Search
-9. Add RAG using Azure AI Search
-Add Aspire Dashboard using OTLP endpoint
-
-## Live Demo
+## Live Demo Recording
 
 Coming soon ...
 
