@@ -6,6 +6,10 @@
 
 Welcome to the Adding AI to Your Existing .NET Apps Workshop. This repository contains a set of .NET projects to demostrate how to add AI to a common .NET scenario: **Winform as front end app, and an WebAPI as backend**.
 
+The following image shows the WinForm Chat App interacting with an GPT-4o model in Azure OpenAI, and metrics traced using Aspire Dashboard.
+
+![](./img/06ChatSampleWithAspire.png)
+
 These are the different steps included in the workshop:
 
 1. Standard Winform + API NET Chat App
@@ -33,9 +37,9 @@ Before running the sample, ensure you have the following installed:
 
 - **[Docker Desktop](https://www.docker.com/products/docker-desktop/)**: To use Phi-3 as local model with Ollama, you need to have docker installed.
 
-    - **[Ollama in Docker](https://ollama.com/blog/ollama-is-now-available-as-an-official-docker-image)**. Follow the link steps to install ollama in Docker.
+  - **[Ollama in Docker](https://ollama.com/blog/ollama-is-now-available-as-an-official-docker-image)**. Follow the link steps to install ollama in Docker.
 
-    - **[Aspire Dashboard in Docker](https://www.aspiredashboard.com/)**. Follow the link steps to install the Aspire Dashboard in Docker.
+  - **[Aspire Dashboard in Docker](https://www.aspiredashboard.com/)**. Follow the link steps to install the Aspire Dashboard in Docker.
 
 ### Project Secrets
 
