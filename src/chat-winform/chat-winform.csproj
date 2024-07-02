@@ -10,6 +10,7 @@
 		<UseWPF>True</UseWPF>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<ApplicationIcon>dotnet-icon-256x256-ozvjws7o.ico</ApplicationIcon>
+		<EnableWindowsTargeting>true</EnableWindowsTargeting>
 	</PropertyGroup>
 
 	<ItemGroup>
