@@ -33,11 +33,11 @@
         "cpus": 4
     },
     "portsAttributes": {
-        "32001": {
-            "label": "Back End"
+        "11434": {
+            "label": "Ollama"
         },
-        "32000": {
-            "label": "Front End"
+        "4317": {
+            "label": "Aspire Dashboard Endpoint"
         }
     }
 }
