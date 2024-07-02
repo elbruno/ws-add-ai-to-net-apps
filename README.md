@@ -17,9 +17,33 @@ Before running the sample, ensure you have the following installed:
 
 - **[Ollama](https://ollama.com/download)**: To use Phi-3 as local model with Ollama, you need to have ollama installed. 
 
-- **[Docker Desktop](https://www.docker.com/products/docker-desktop/)**: To use Phi-3 as local model with Ollama, you need to have ollama installed. 
+- **[Docker Desktop](https://www.docker.com/products/docker-desktop/)**: To use Phi-3 as local model with Ollama, you need to have ollama installed.
 
-### Local LLM install
+### Project Secrets
+
+The `chat-server` project uses .NET User Secrets to access remote resources like Azure OpenAI Services or Azure AI Search. Follow these steps to add the secrets to the project.
+
+1. Open a terminal and navigate to the `chat-server` project. 
+
+    ```bash
+    cd .\src\chat-server\
+    ```
+
+1. Run the following command with the correct values
+
+```bash
+dotnet user-secrets init
+dotnet user-secrets set "AZURE_OPENAI_MODEL" "< Azure OpenAI Model, ie: gpt-4o >"
+dotnet user-secrets set "AZURE_OPENAI_ENDPOINT" "< Azure OpenAI Endpoint >"
+dotnet user-secrets set "AZURE_OPENAI_APIKEY" "< Azure OpenAI Key >"
+dotnet user-secrets set "AZURE_OPENAI_ADA02" "< Azure OpenAI Embeddings model, ie: text-embedding-ada-002 >"
+dotnet user-secrets set "AZURE_AISEARCH_ENDPOINT" "< Azure AI Search Endpoint >"
+dotnet user-secrets set "AZURE_AISEARCH_APIKEY" "< Azure AI Search ApiKey >"
+dotnet user-secrets set "AZURE_AISEARCH_INDEXNAME" "< Azure AI Search IndexName for RAG >"
+dotnet user-secrets set "OTLP_ENDPOINT" "< OTLP ENDPOINT, ie: http://localhost:4317 >"
+```
+
+### Install Phi-3 locally
 
 - Create a local folder to store the Phi-3 local model. In example: `C:\phi3\models`.
 
@@ -60,6 +84,12 @@ Coming soon ...
 
 ## Resources
 
+- [Phi-3 Microsoft Blog](https://aka.ms/phi3blog-april)
+- [Phi-3 Technical Report](https://aka.ms/phi3-tech-report)
+- [Phi-3 Cookbook](https://aka.ms/Phi-3CookBook)
+- [Generative AI for beginners](https://github.com/microsoft/generative-ai-for-beginners)
+- [Semantic Kernel main repository](https://github.com/microsoft/semantic-kernel)
+- [Smart Components - Local Embeddings](https://github.com/dotnet-smartcomponents/smartcomponents/blob/main/docs/local-embeddings.md)
 - [Aspire Dashboard](https://www.aspiredashboard.com/)
 - [Snippet Generator](https://snippet-generator.app/?description=&tabtrigger=&snippet=&mode=vscode)
 
