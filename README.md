@@ -96,11 +96,13 @@ Coming soon ...
 - [Phi-3 Microsoft Blog](https://aka.ms/phi3blog-april)
 - [Phi-3 Technical Report](https://aka.ms/phi3-tech-report)
 - [Phi-3 Cookbook](https://aka.ms/Phi-3CookBook)
+- [Using Phi-3 & C# with ONNX for text and vision samples](https://devblogs.microsoft.com/dotnet/using-phi3-csharp-with-onnx-for-text-and-vision-samples-md/)
 - [Generative AI for beginners](https://github.com/microsoft/generative-ai-for-beginners)
 - [Semantic Kernel main repository](https://github.com/microsoft/semantic-kernel)
 - [Smart Components - Local Embeddings](https://github.com/dotnet-smartcomponents/smartcomponents/blob/main/docs/local-embeddings.md)
 - [Aspire Dashboard](https://www.aspiredashboard.com/)
 - [Snippet Generator](https://snippet-generator.app/?description=&tabtrigger=&snippet=&mode=vscode)
+- [WinForm Chat - inspirational project](https://github.com/agreentejada/winforms-chat)
 
 ## Author
 

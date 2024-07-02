@@ -20,7 +20,7 @@ namespace chat_winform
         static void Main()
         {
             var builder = Host.CreateApplicationBuilder();
-            //builder.AddAppDefaults();
+            builder.AddAppDefaults();
 
             builder.Services.AddSingleton<HttpClient>(sp =>
                 {                    
