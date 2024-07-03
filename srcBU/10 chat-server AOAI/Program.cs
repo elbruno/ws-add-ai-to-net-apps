@@ -39,9 +39,11 @@ builder.Services.AddSingleton<IChatCompletionService>(sp =>
     return new AzureOpenAIChatCompletionService(chatDeploymentName, endpoint, apiKey);
 });
 
-builder.Services.AddSingleton(sp => 
+builder.Services.AddSingleton(sp =>
 {
-    return new ChatHistory();
+    var chatHistory = new ChatHistory();
+    chatHistory.AddSystemMessage("You are a usefull assistant. You always reply with a short and funny message. If you don't know an answer, you say 'I don't know that.'");
+    return chatHistory;
 });
 
 var app = builder.Build();
