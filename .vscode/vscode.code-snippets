@@ -104,10 +104,20 @@
             "// add local Phi-3 model using ONXX",
             "var modelPath = @\"D:\\phi3\\models\\Phi-3-mini-4k-instruct-onnx\\cpu_and_mobile\\cpu-int4-rtn-block-32\";",
             "builder.Services.AddOnnxRuntimeGenAIChatCompletion(modelPath: modelPath);",
-            "builder.Configuration[\"author\"]= \"Phi-3 ONNX\";"
+            "builder.Configuration[\"author\"]= \"Phi-3 mini ONNX\";"
         ],
         "description": "load a local ONNX model to chat service"
     },
+    "sk21_addlocalONNXVisionModel": {
+        "prefix": "sk21_addlocalONNXVisionModel",
+        "body": [
+            "// add local Phi-3 Vision model using ONXX",
+            "var modelPath = @\"D:\\phi3\\models\\Phi-3-vision-128k-instruct-onnx-cpu\\cpu-int4-rtn-block-32-acc-level-4\";",
+            "builder.Services.AddOnnxRuntimeGenAIChatCompletion(modelPath: modelPath);",
+            "builder.Configuration[\"author\"]= \"Phi-3 Vision ONNX\";"
+        ],
+        "description": "load a local ONNX model to chat service"
+    },    
     "sk09_addOllamaModelChat": {
         "prefix": "sk21_addOllamaModelChat",
         "body": [

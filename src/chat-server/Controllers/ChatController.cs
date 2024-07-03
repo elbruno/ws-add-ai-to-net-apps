@@ -28,11 +28,14 @@ public class ChatController : ControllerBase
 
     private ChatHistory _chatHistory;
 
-    public ChatController(ILogger<ChatController> logger, IConfiguration config, ChatHistory chatHistory)
+    public IChatCompletionService _chatCompletionService;
+
+    public ChatController(ILogger<ChatController> logger, IConfiguration config, ChatHistory chatHistory, IChatCompletionService chatCompletionService)
     {
         _logger = logger;
-        _chatHistory = chatHistory;
         _config = config;
+        _chatHistory = chatHistory;
+        _chatCompletionService = chatCompletionService;
     }
 
     // POST api/<ChatController>
@@ -43,17 +46,31 @@ public class ChatController : ControllerBase
 
         var response = new Response
         {
-            Author = string.IsNullOrEmpty(_config["Author"]) ? "chatbot" : _config["Author"]
+            Author = _config["Author"]
         };
-        // complete chat history
-        _chatHistory.AddUserMessage(question.UserQuestion);
+
+        // validate if question.ImageUrl is a valid url
+        if (question.IsImage)
+        {
+            var collectionItems = new ChatMessageContentItemCollection
+    {
+        new TextContent(question.UserQuestion),
+        new ImageContent(question.FileBytes, question.ImageMimeType)
+    };
+            _chatHistory.AddUserMessage(collectionItems);
+        }
+        else
+        {
+            _chatHistory.AddUserMessage(question.UserQuestion);
+        }
 
         // get response
         var stopwatch = new Stopwatch();
         stopwatch.Start();
-        var chatResponse = $" Your question [{question.UserQuestion}] is {question.UserQuestion.Length} chars long.";
+        var result = await _chatCompletionService.GetChatMessageContentsAsync(_chatHistory);
         stopwatch.Stop();
-        response.QuestionResponse = chatResponse;
+
+        response.QuestionResponse = result[^1].Content;
         response.ElapsedTime = stopwatch.Elapsed;
 
         // return response
