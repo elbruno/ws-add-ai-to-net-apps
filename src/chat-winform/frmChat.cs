@@ -26,7 +26,7 @@ namespace chat_winform
             // chat control
             cbi = new ChatForm.ChatboxInfo();
             cbi.MainTitlePlaceholder = "Adding AI to a Winforms Chat";
-            cbi.SubtitlePlaceholder = "Azure OpenAI - GPT4o";
+            cbi.SubtitlePlaceholder = "No LLM";
             cbi.User = userName;
             toolStripTextBoxUserName.Text = userName;
 

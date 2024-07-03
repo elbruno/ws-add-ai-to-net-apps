@@ -27,10 +27,7 @@ namespace chat_winform.ChatForm
         public void SetChatBotInfo(ChatboxInfo _chatbox_info)
         {
             chatbox_info = _chatbox_info;
-
-            maintitleLabel.Text = chatbox_info.MainTitlePlaceholder;
-            subtitleContent.Text = chatbox_info.SubtitlePlaceholder;
-            chatTextbox.Text = chatbox_info.ChatPlaceholder;
+            DisplayChatInfo();
 
             chatTextbox.Enter += ChatEnter;
             chatTextbox.Leave += ChatLeave;
@@ -41,6 +38,12 @@ namespace chat_winform.ChatForm
             chatTextbox.KeyUp += OnEnter;
 
             AddMessage(null);
+        }
+
+        void DisplayChatInfo()
+        {
+            maintitleLabel.Text = chatbox_info.MainTitlePlaceholder;
+            subtitleContent.Text = chatbox_info.SubtitlePlaceholder;
         }
 
         /// <summary>
@@ -203,6 +206,9 @@ namespace chat_winform.ChatForm
                     Read = false,
                     Time = DateTime.Now
                 };
+
+                chatbox_info.SubtitlePlaceholder = responseLocal.Author;
+                DisplayChatInfo();
                 AddMessage(responseTextModel);
 
             }
