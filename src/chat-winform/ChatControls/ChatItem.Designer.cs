@@ -32,7 +32,7 @@ namespace chat_winform.ChatForm
             authorPanel = new Panel();
             authorLabel = new Label();
             bodyPanel = new Panel();
-            bodyTextBox = new TextBox();
+            bodyTextBox = new RichTextBox();
             authorPanel.SuspendLayout();
             bodyPanel.SuspendLayout();
             SuspendLayout();
@@ -83,12 +83,12 @@ namespace chat_winform.ChatForm
             bodyTextBox.ForeColor = Color.White;
             bodyTextBox.Location = new Point(6, 6);
             bodyTextBox.Margin = new Padding(4, 3, 4, 3);
-            bodyTextBox.Multiline = true;
             bodyTextBox.Name = "bodyTextBox";
             bodyTextBox.ReadOnly = true;
+            bodyTextBox.ScrollBars = RichTextBoxScrollBars.None;
             bodyTextBox.Size = new Size(412, 35);
             bodyTextBox.TabIndex = 4;
-            bodyTextBox.Text = "Hello there. This is a test for the longer word usage.\r\n\r\nHello there. This is a test for the longer word usage.\r\n\r\nHello there. This is a test for the longer word usage.\r\n\r\n";
+            bodyTextBox.Text = "Hello there. This is a test for the longer word usage.\n\nHello there. This is a test for the longer word usage.\n\nHello there. This is a test for the longer word usage.\n\n";
             // 
             // ChatItem
             // 
@@ -105,7 +105,6 @@ namespace chat_winform.ChatForm
             authorPanel.ResumeLayout(false);
             authorPanel.PerformLayout();
             bodyPanel.ResumeLayout(false);
-            bodyPanel.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -114,6 +113,6 @@ namespace chat_winform.ChatForm
         private System.Windows.Forms.Panel authorPanel;
 		private System.Windows.Forms.Label authorLabel;
 		private System.Windows.Forms.Panel bodyPanel;
-		private System.Windows.Forms.TextBox bodyTextBox;
+		private System.Windows.Forms.RichTextBox bodyTextBox;
     }
 }

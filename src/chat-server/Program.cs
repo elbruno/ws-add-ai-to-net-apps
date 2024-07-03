@@ -48,6 +48,7 @@ builder.Services.AddSingleton<IChatCompletionService>(sp =>
     return new AzureOpenAIChatCompletionService(chatDeploymentName, endpoint, apiKey);
 });
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

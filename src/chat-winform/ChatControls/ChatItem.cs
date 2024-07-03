@@ -21,7 +21,7 @@ namespace chat_winform.ChatForm
                 chatModel = new TextChatModel()
                 {
                     Author = "System",
-                    Body = "Welcome to Semantic Kernel Chat!",
+                    Body = "Welcome to the Chat!",
                     Inbound = true,
                     Time = DateTime.Now
                 };
@@ -40,7 +40,8 @@ namespace chat_winform.ChatForm
             {
                 bodyPanel.Dock = DockStyle.Right;
                 authorLabel.Dock = DockStyle.Right;
-                bodyTextBox.TextAlign = HorizontalAlignment.Right;
+                //bodyTextBox.TextAlign = HorizontalAlignment.Right;
+                bodyTextBox.SelectionAlignment = HorizontalAlignment.Right;
                 bodyPanel.BackColor = Color.FromArgb(100, 101, 165);
                 bodyTextBox.BackColor = Color.FromArgb(100, 101, 165);
             }
@@ -210,6 +211,12 @@ namespace chat_winform.ChatForm
 
                 //Adjusts the height based on the number of lines.
                 Height = (lines * fontheight) + Height - bodyTextBox.Height;
+
+                double stringHeight = gfx.MeasureString(body, bodyTextBox.Font).Height;
+                if(stringHeight > Height)
+                {
+                    bodyTextBox.ScrollBars = RichTextBoxScrollBars.Vertical;
+                }
             }
         }
 
