@@ -35,38 +35,6 @@ builder.Services.AddSingleton(sp =>
     return chatHistory;
 });
 
-builder.Services.AddSingleton<IChatCompletionService>(sp =>
-{
-    // add Azure OpenAI Chat Completion service
-    var config = builder.Configuration;
-    var chatDeploymentName = config["AZURE_OPENAI_MODEL"];
-    var endpoint = config["AZURE_OPENAI_ENDPOINT"];
-    var apiKey = config["AZURE_OPENAI_APIKEY"];
-    // set author
-    config["author"]= "Azure OpenAI - GPT-4o";
-
-    return new AzureOpenAIChatCompletionService(chatDeploymentName, endpoint, apiKey);
-});
-
-// add memory storage using Semantic Kernel
-builder.Services.AddSingleton<ISemanticTextMemory>(sp =>
-{
-    var config = builder.Configuration;
-    var ada002 = config["AZURE_OPENAI_ADA02"];
-    var endpoint = config["AZURE_OPENAI_ENDPOINT"];
-    var apiKey = config["AZURE_OPENAI_APIKEY"];
-    var aiSearchEndpoint = config["AZURE_AISEARCH_ENDPOINT"];
-    var aiSearchApiKey = config["AZURE_AISEARCH_APIKEY"];
-
-    var memoryBuilder = new MemoryBuilder();
-    memoryBuilder.WithAzureOpenAITextEmbeddingGeneration(ada002, endpoint, apiKey);
-    memoryBuilder.WithMemoryStore(new AzureAISearchMemoryStore(aiSearchEndpoint, aiSearchApiKey));
-    
-    var memory = memoryBuilder.Build();
-    return memory;
-});
-
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
