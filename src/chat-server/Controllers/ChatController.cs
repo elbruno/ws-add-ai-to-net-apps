@@ -28,10 +28,11 @@ public class ChatController : ControllerBase
 
     private ChatHistory _chatHistory;
 
-    public ChatController(ILogger<ChatController> logger, ChatHistory chatHistory)
+    public ChatController(ILogger<ChatController> logger, IConfiguration config, ChatHistory chatHistory)
     {
         _logger = logger;
         _chatHistory = chatHistory;
+        _config = config;
     }
 
     // POST api/<ChatController>
@@ -42,7 +43,7 @@ public class ChatController : ControllerBase
 
         var response = new Response
         {
-            Author = "ChatBot"
+            Author = string.IsNullOrEmpty(_config["Author"]) ? "chatbot" : _config["Author"]
         };
         // complete chat history
         _chatHistory.AddUserMessage(question.UserQuestion);

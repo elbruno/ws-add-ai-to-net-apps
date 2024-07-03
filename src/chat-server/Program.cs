@@ -23,7 +23,7 @@ builder.Services.AddLogging(
     b => b.AddConsole().SetMinimumLevel(LogLevel.Trace)
 );
 
-builder.Services.AddSingleton<IConfiguration>(sp =>
+builder.Services.AddSingleton<IConfiguration>(sp => 
 {
     return builder.Configuration;
 });
