@@ -55,7 +55,10 @@ public class ChatController : ControllerBase
     {
         _logger.LogInformation($"Input question: {question}");
 
-        var response = new Response();
+        var response = new Response
+        {
+            Author = _config["Author"]
+        };
 
         // validate if question.ImageUrl is a valid url
         if (question.IsImage)
@@ -111,7 +114,6 @@ public class ChatController : ControllerBase
 
         stopwatch.Stop();
 
-        response.Author = "Azure OpenAI";
         response.QuestionResponse = result[^1].Content;
         response.ElapsedTime = stopwatch.Elapsed;
 

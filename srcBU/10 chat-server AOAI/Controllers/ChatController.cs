@@ -14,7 +14,6 @@ using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Memory;
 using Microsoft.SemanticKernel.Connectors.AzureAISearch;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
-using System.Net;
 namespace chat_server.Controllers;
 
 [Route("api/[controller]")]
@@ -25,13 +24,16 @@ public class ChatController : ControllerBase
 
     private readonly ILogger<ChatController> _logger;
 
+    private IConfiguration _config;
+
     private ChatHistory _chatHistory;
 
     public IChatCompletionService _chatCompletionService;
 
-    public ChatController(ILogger<ChatController> logger, ChatHistory chatHistory, IChatCompletionService chatCompletionService)
+    public ChatController(ILogger<ChatController> logger, IConfiguration config, ChatHistory chatHistory, IChatCompletionService chatCompletionService)
     {
         _logger = logger;
+        _config = config;
         _chatHistory = chatHistory;
         _chatCompletionService = chatCompletionService;
     }
@@ -42,16 +44,19 @@ public class ChatController : ControllerBase
     {
         _logger.LogInformation($"Input question: {question}");
 
-        var response = new Response();
+        var response = new Response
+        {
+            Author = _config["Author"]
+        };
 
         // validate if question.ImageUrl is a valid url
         if (question.IsImage)
         {
             var collectionItems = new ChatMessageContentItemCollection
-            {
-                new TextContent(question.UserQuestion),
-                new ImageContent(question.FileBytes, question.ImageMimeType)
-                };
+    {
+        new TextContent(question.UserQuestion),
+        new ImageContent(question.FileBytes, question.ImageMimeType)
+    };
             _chatHistory.AddUserMessage(collectionItems);
         }
         else
@@ -65,7 +70,6 @@ public class ChatController : ControllerBase
         var result = await _chatCompletionService.GetChatMessageContentsAsync(_chatHistory);
         stopwatch.Stop();
 
-        response.Author = "Azure OpenAI";
         response.QuestionResponse = result[^1].Content;
         response.ElapsedTime = stopwatch.Elapsed;
 
@@ -73,5 +77,4 @@ public class ChatController : ControllerBase
         _logger.LogInformation($"Response: {response}");
         return response;
     }
-
 }

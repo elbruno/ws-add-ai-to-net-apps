@@ -24,29 +24,28 @@
             "    var chatDeploymentName = config[\"AZURE_OPENAI_MODEL\"];",
             "    var endpoint = config[\"AZURE_OPENAI_ENDPOINT\"];",
             "    var apiKey = config[\"AZURE_OPENAI_APIKEY\"];",
+            "    // set author",
+            "    config[\"author\"]= \"Azure OpenAI - GPT-4o\";",
             "",
             "    return new AzureOpenAIChatCompletionService(chatDeploymentName, endpoint, apiKey);",
-            "});",
-            ""
+            "});"
         ],
-        "description": "add AOAI chat to aspnet program file"
+        "description": "add Azure OpenAI Chat Completion service to aspnet program file"
     },
     "sk10_chatcontroller_constructor": {
         "prefix": "sk10_chatcontroller_constructor",
         "body": [
-            "    public IChatCompletionService _chatCompletionService;",
-            "",
-            "    public ChatController(ILogger<ChatController> logger, ChatHistory chatHistory, IChatCompletionService chatCompletionService)",
-            "    {",
-            "        _logger = logger;",
-            "        _chatHistory = chatHistory;",
-            "        _chatCompletionService = chatCompletionService;",
-            "    }",
-            ""
+            "public ChatController(ILogger<ChatController> logger, IConfiguration config, ChatHistory chatHistory, IChatCompletionService chatCompletionService)",
+            "{",
+            "    _logger = logger;",
+            "    _config = config;",
+            "    _chatHistory = chatHistory;",
+            "    _chatCompletionService = chatCompletionService;",
+            "}"
         ],
-        "description": "add chat controller constructor including chat history and chat completion service"
+        "description": "sk10_chatcontroller_constructor"
     },
-    "sk11_chatresponse": {
+    "sk11_chatAOAIresponse": {
         "prefix": "sk11_chatAOAIresponse",
         "body": [
             "// POST api/<ChatController>",
@@ -55,8 +54,11 @@
             "{",
             "    _logger.LogInformation($\"Input question: {question}\");",
             "",
-            "    var response = new Response();",
-            "    ",
+            "    var response = new Response",
+            "    {",
+            "        Author = _config[\"Author\"]",
+            "    };",
+            "",
             "    // complete chat history",
             "    _chatHistory.AddUserMessage(question.UserQuestion);",
             "",
@@ -66,7 +68,6 @@
             "    var result = await _chatCompletionService.GetChatMessageContentsAsync(_chatHistory);",
             "    stopwatch.Stop();",
             "",
-            "    response.Author = \"Azure OpenAI\";",
             "    response.QuestionResponse = result[^1].Content;",
             "    response.ElapsedTime = stopwatch.Elapsed;",
             "",
@@ -75,7 +76,7 @@
             "    return response;",
             "}"
         ],
-        "description": "use Azure OpenAI to answer a question"
+        "description": "Post API that use AOAI to answer a question"
     },
     "sk12_analyzeimage": {
         "prefix": "sk12_analyzeimage",
@@ -97,14 +98,15 @@
         ],
         "description": "analyze image and add to chat history"
     },
-    "sk08_addlocalONNXModel": {
+    "sk20_addlocalONNXModel": {
         "prefix": "sk20_addlocalONNXModel",
         "body": [
             "// add local Phi-3 model using ONXX",
             "var modelPath = @\"D:\\phi3\\models\\Phi-3-mini-4k-instruct-onnx\\cpu_and_mobile\\cpu-int4-rtn-block-32\";",
-            "builder.Services.AddOnnxRuntimeGenAIChatCompletion(modelPath: modelPath);"
+            "builder.Services.AddOnnxRuntimeGenAIChatCompletion(modelPath: modelPath);",
+            "builder.Configuration[\"author\"]= \"Phi-3 ONNX\";"
         ],
-        "description": "add local onnx model to the aspnet program file"
+        "description": "load a local ONNX model to chat service"
     },
     "sk09_addOllamaModelChat": {
         "prefix": "sk21_addOllamaModelChat",
@@ -115,6 +117,7 @@
             "    var model = \"phi3\";",
             "    var endpoint = \"http://localhost:11434\";",
             "    var apiKey = \"apiKey\";",
+            "    builder.Configuration[\"author\"]= \"Phi-3 Ollama Docker\";",
             "",
             "    return new OpenAIChatCompletionService(model, new Uri(endpoint), apiKey);",
             "});"
@@ -142,20 +145,19 @@
         ],
         "description": "add memory to the builder services"
     },
-    "sk21_controllerCtorWithMemory": {
+    "sk31_controllerCtorWithMemory": {
         "prefix": "sk31_controllerCtorWithMemory",
         "body": [
-            "public ISemanticTextMemory _memory;",
-            "",
-            "public ChatController(ILogger<ChatController> logger, ChatHistory chatHistory, IChatCompletionService chatCompletionService, ISemanticTextMemory semanticMemory)",
+            "public ChatController(ILogger<ChatController> logger, IConfiguration config, ChatHistory chatHistory, IChatCompletionService chatCompletionService, ISemanticTextMemory semanticMemory)",
             "{",
-            "_logger = logger;",
-            "_chatHistory = chatHistory;",
-            "_chatCompletionService = chatCompletionService;",
-            "_memory = semanticMemory;",
+            "    _logger = logger;",
+            "    _config = config;",
+            "    _chatHistory = chatHistory;",
+            "    _chatCompletionService = chatCompletionService;",
+            "    _memory = semanticMemory;",
             "}"
         ],
-        "description": "add memory to the chat controller constructor"
+        "description": "sk31_controllerCtorWithMemory"
     },
     "sk32_ControllerChatWithMemory": {
         "prefix": "sk32_ControllerChatWithMemory",
@@ -166,7 +168,10 @@
             "{",
             "    _logger.LogInformation($\"Input question: {question}\");",
             "",
-            "    var response = new Response();",
+            "    var response = new Response",
+            "    {",
+            "        Author = _config[\"Author\"]",
+            "    };",
             "",
             "    // get response",
             "    var stopwatch = new Stopwatch();",
@@ -186,7 +191,7 @@
             "    }",
             "    else",
             "    {",
-            "        response.Author = \"Azure GPT-4o - Cache\";",
+            "        response.Author += \" [Cache]\";",
             "        response.FromCache = true;",
             "    }",
             "",
@@ -283,12 +288,12 @@
             "private string _aiSearchApiKey;",
             "private string _aiSearchIndexName;",
             "",
-            "public ChatController(ILogger<ChatController> logger, ChatHistory chatHistory, IChatCompletionService chatCompletionService, IConfiguration config)",
+            "public ChatController(ILogger<ChatController> logger, IConfiguration config, ChatHistory chatHistory, IChatCompletionService chatCompletionService)",
             "{",
             "    _logger = logger;",
+            "    _config = config;",            
             "    _chatHistory = chatHistory;",
             "    _chatCompletionService = chatCompletionService;",
-            "    _config = config;",
             "",
             "    _aiSearchEndpoint = _config[\"AZURE_AISEARCH_ENDPOINT\"];",
             "    _aiSearchApiKey = _config[\"AZURE_AISEARCH_APIKEY\"];",
@@ -306,7 +311,10 @@
             "{",
             "    _logger.LogInformation($\"Input question: {question}\");",
             "",
-            "    var response = new Response();",
+            "    var response = new Response",
+            "    {",
+            "        Author = _config[\"Author\"]",
+            "    };",
             "",
             "    // validate if question.ImageUrl is a valid url",
             "    if (question.IsImage)",
@@ -362,7 +370,6 @@
             "",
             "    stopwatch.Stop();",
             "",
-            "    response.Author = \"Azure OpenAI\";",
             "    response.QuestionResponse = result[^1].Content;",
             "    response.ElapsedTime = stopwatch.Elapsed;",
             "",

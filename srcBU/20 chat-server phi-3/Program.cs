@@ -10,6 +10,7 @@ using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
 using Microsoft.SemanticKernel.Memory;
 using Microsoft.SemanticKernel.Connectors.AzureAISearch;
+using OpenTelemetry.Logs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,19 +23,9 @@ builder.Services.AddLogging(
     b => b.AddConsole().SetMinimumLevel(LogLevel.Trace)
 );
 
-builder.Services.AddSingleton<IConfiguration>(sp =>
+builder.Services.AddSingleton<IConfiguration>(sp => 
 {
     return builder.Configuration;
-});
-
-builder.Services.AddSingleton<IChatCompletionService>(sp =>
-{
-    // add Phi-3 model from a ollama server
-    var model = "phi3";
-    var endpoint = "http://localhost:11434";
-    var apiKey = "apiKey";
-
-    return new OpenAIChatCompletionService(model, new Uri(endpoint), apiKey);
 });
 
 builder.Services.AddSingleton(sp =>
@@ -43,6 +34,18 @@ builder.Services.AddSingleton(sp =>
     chatHistory.AddSystemMessage("You are a usefull assistant. You always reply with a short and funny message. If you don't know an answer, you say 'I don't know that.'");
     return chatHistory;
 });
+
+builder.Services.AddSingleton<IChatCompletionService>(sp =>
+{
+    // add Phi-3 model from a ollama server
+    var model = "phi3";
+    var endpoint = "http://localhost:11434";
+    var apiKey = "apiKey";
+    builder.Configuration["author"]= "Phi-3 Ollama Docker";
+
+    return new OpenAIChatCompletionService(model, new Uri(endpoint), apiKey);
+});
+
 
 var app = builder.Build();
 

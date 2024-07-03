@@ -28,6 +28,13 @@ builder.Services.AddSingleton<IConfiguration>(sp =>
     return builder.Configuration;
 });
 
+builder.Services.AddSingleton(sp =>
+{
+    var chatHistory = new ChatHistory();
+    chatHistory.AddSystemMessage("You are a usefull assistant. You always reply with a short and funny message. If you don't know an answer, you say 'I don't know that.'");
+    return chatHistory;
+});
+
 builder.Services.AddSingleton<IChatCompletionService>(sp =>
 {
     // add Azure OpenAI Chat Completion service
@@ -35,16 +42,12 @@ builder.Services.AddSingleton<IChatCompletionService>(sp =>
     var chatDeploymentName = config["AZURE_OPENAI_MODEL"];
     var endpoint = config["AZURE_OPENAI_ENDPOINT"];
     var apiKey = config["AZURE_OPENAI_APIKEY"];
+    // set author
+    config["author"]= "Azure OpenAI - GPT-4o";
 
     return new AzureOpenAIChatCompletionService(chatDeploymentName, endpoint, apiKey);
 });
 
-builder.Services.AddSingleton(sp =>
-{
-    var chatHistory = new ChatHistory();
-    chatHistory.AddSystemMessage("You are a usefull assistant. You always reply with a short and funny message. If you don't know an answer, you say 'I don't know that.'");
-    return chatHistory;
-});
 
 var app = builder.Build();
 
