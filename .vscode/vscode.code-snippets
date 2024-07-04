@@ -117,7 +117,7 @@
             "builder.Configuration[\"author\"]= \"Phi-3 Vision ONNX\";"
         ],
         "description": "load a local ONNX model to chat service"
-    },    
+    },
     "sk09_addOllamaModelChat": {
         "prefix": "sk21_addOllamaModelChat",
         "body": [
@@ -301,7 +301,7 @@
             "public ChatController(ILogger<ChatController> logger, IConfiguration config, ChatHistory chatHistory, IChatCompletionService chatCompletionService)",
             "{",
             "    _logger = logger;",
-            "    _config = config;",            
+            "    _config = config;",
             "    _chatHistory = chatHistory;",
             "    _chatCompletionService = chatCompletionService;",
             "",
@@ -391,17 +391,88 @@
         "description": "add search including an index of Azure AI Search"
     },
     "sk50_AddOTLPEndpoint": {
-        "prefix": "sk50_AddOTLPEndpoint",
+        "prefix": "sk50_ChatSrvAddTelemetry",
         "body": [
-            "builder.Logging.AddOpenTelemetry(logging =>",
-            "{",
+            "// add telemetry",
+            "builder.AddAppDefaults();"
+        ],
+        "description": "sk50_ChatSrvAddTelemetry"
+    },
+    "sk60_programAddSKInstance": {
+        "prefix": "sk60_programAddSKInstance",
+        "body": [
+            "builder.Services.AddSingleton<Kernel>(sp =>",
+            "{    ",
+            "    // new hero info ",
             "    var config = builder.Configuration;",
-            "    var otlpEndPoint = config[\"OTLP_ENDPOINT\"];",
-            "    logging.AddOtlpExporter(configure => configure.Endpoint = new Uri(otlpEndPoint));",
-            "    logging.IncludeFormattedMessage = true;",
-            "    logging.IncludeScopes = true;",
+            "    var heroInfo = new HeroInfo(config[\"SUPERHERO_APIKEY\"]);",
+            "",
+            "    // return a Semantic Kernel instance",
+            "    var builderSK = Kernel.CreateBuilder();",
+            "    builderSK.Plugins.AddFromObject(heroInfo, \"HeroInfo\");",
+            "    return builderSK.Build();",
             "});"
         ],
-        "description": "sk50_AddOTLPEndpoint"
+        "description": "sk60_programAddSKInstance"
+    },
+    "sk61_chatCtrollerWithSKKernel": {
+        "prefix": "sk61_chatCtrollerWithSKKernel",
+        "body": [
+            "    public ChatController(ILogger<ChatController> logger, IConfiguration config, ChatHistory chatHistory, IChatCompletionService chatCompletionService, Kernel kernel)",
+            "    {",
+            "        _logger = logger;",
+            "        _config = config;",
+            "        _chatHistory = chatHistory;",
+            "        _chatCompletionService = chatCompletionService;",
+            "        _kernel = kernel;",
+            "    }",
+            "",
+            "    // POST api/<ChatController>",
+            "    [HttpPost]",
+            "    public async Task<Response> Post(Question question)",
+            "    {",
+            "        _logger.LogInformation($\"Input question: {question}\");",
+            "",
+            "        var response = new Response",
+            "        {",
+            "            Author = _config[\"Author\"]",
+            "        };",
+            "",
+            "        // validate if question.ImageUrl is a valid url",
+            "        if (question.IsImage)",
+            "        {",
+            "            var collectionItems = new ChatMessageContentItemCollection",
+            "    {",
+            "        new TextContent(question.UserQuestion),",
+            "        new ImageContent(question.FileBytes, question.ImageMimeType)",
+            "    };",
+            "            _chatHistory.AddUserMessage(collectionItems);",
+            "        }",
+            "        else",
+            "        {",
+            "            _chatHistory.AddUserMessage(question.UserQuestion);",
+            "        }",
+            "",
+            "        // get response",
+            "        var stopwatch = new Stopwatch();",
+            "        stopwatch.Start();",
+            "",
+            "        OpenAIPromptExecutionSettings settings = new()",
+            "        {",
+            "            ToolCallBehavior = ToolCallBehavior.AutoInvokeKernelFunctions,",
+            "        };",
+            "",
+            "        var result = await _chatCompletionService.GetChatMessageContentsAsync(_chatHistory, settings, _kernel);",
+            "        stopwatch.Stop();",
+            "",
+            "        response.QuestionResponse = result[^1].Content;",
+            "        response.ElapsedTime = stopwatch.Elapsed;",
+            "",
+            "        // return response",
+            "        _logger.LogInformation($\"Response: {response}\");",
+            "        return response;",
+            "    }"
+        ],
+        "description": "sk61_chatCtrollerWithSKKernel"
     }
 }

@@ -14,6 +14,9 @@ using OpenTelemetry.Logs;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// add telemetry
+builder.AddAppDefaults();
+
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -42,12 +45,21 @@ builder.Services.AddSingleton<IChatCompletionService>(sp =>
     var chatDeploymentName = config["AZURE_OPENAI_MODEL"];
     var endpoint = config["AZURE_OPENAI_ENDPOINT"];
     var apiKey = config["AZURE_OPENAI_APIKEY"];
-    // set author
-    config["author"]= "Azure OpenAI - GPT-4o";
 
     return new AzureOpenAIChatCompletionService(chatDeploymentName, endpoint, apiKey);
 });
 
+builder.Services.AddSingleton<Kernel>(sp =>
+{    
+    // new hero info 
+    var config = builder.Configuration;
+    var heroInfo = new HeroInfo(config["SUPERHERO_APIKEY"]);
+
+    // return a Semantic Kernel instance
+    var builderSK = Kernel.CreateBuilder();
+    builderSK.Plugins.AddFromObject(heroInfo, "HeroInfo");
+    return builderSK.Build();
+});
 
 var app = builder.Build();
 

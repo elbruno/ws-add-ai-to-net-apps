@@ -21,21 +21,19 @@ namespace chat_server.Controllers;
 public class ChatController : ControllerBase
 {
     private bool _useCache = false;
-
     private readonly ILogger<ChatController> _logger;
-
     private IConfiguration _config;
-
     private ChatHistory _chatHistory;
-
     public IChatCompletionService _chatCompletionService;
+    public Kernel _kernel;
 
-    public ChatController(ILogger<ChatController> logger, IConfiguration config, ChatHistory chatHistory, IChatCompletionService chatCompletionService)
+    public ChatController(ILogger<ChatController> logger, IConfiguration config, ChatHistory chatHistory, IChatCompletionService chatCompletionService, Kernel kernel)
     {
         _logger = logger;
         _config = config;
         _chatHistory = chatHistory;
         _chatCompletionService = chatCompletionService;
+        _kernel = kernel;
     }
 
     // POST api/<ChatController>
@@ -67,7 +65,13 @@ public class ChatController : ControllerBase
         // get response
         var stopwatch = new Stopwatch();
         stopwatch.Start();
-        var result = await _chatCompletionService.GetChatMessageContentsAsync(_chatHistory);
+
+        OpenAIPromptExecutionSettings settings = new()
+        {
+            ToolCallBehavior = ToolCallBehavior.AutoInvokeKernelFunctions,
+        };
+
+        var result = await _chatCompletionService.GetChatMessageContentsAsync(_chatHistory, settings, _kernel);
         stopwatch.Stop();
 
         response.QuestionResponse = result[^1].Content;

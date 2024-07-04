@@ -22,6 +22,7 @@ These are the different steps included in the workshop:
 8. Add Cache using Semantic Memory, store in Azure AI Search
 9. Add RAG using Azure AI Search
 10. Add Aspire Dashboard using OTLP endpoint
+11. Use an external API using native functions
 
 ## Prerequisites
 
@@ -40,6 +41,8 @@ Before running the sample, ensure you have the following installed:
   - **[Ollama in Docker](https://ollama.com/blog/ollama-is-now-available-as-an-official-docker-image)**. Follow the link steps to install ollama in Docker.
 
   - **[Aspire Dashboard in Docker](https://www.aspiredashboard.com/)**. Follow the link steps to install the Aspire Dashboard in Docker.
+
+- **[Super Hero API](https://superheroapi.com)**: To use the native functions demo, get a free key for the SuperHero API.
 
 ### Project Secrets
 
@@ -65,6 +68,7 @@ Follow these steps to add the secrets to the project.
     dotnet user-secrets set "AZURE_AISEARCH_APIKEY" "< Azure AI Search ApiKey >"
     dotnet user-secrets set "AZURE_AISEARCH_INDEXNAME" "< Azure AI Search IndexName for RAG >"
     dotnet user-secrets set "OTLP_ENDPOINT" "< OTLP ENDPOINT, ie: http://localhost:4317 >"
+    dotnet user-secrets set "SUPERHERO_APIKEY" "< super hero api key >"
     ```
 
 ### Install Phi-3 locally, to be used in the ONNX scenarios
