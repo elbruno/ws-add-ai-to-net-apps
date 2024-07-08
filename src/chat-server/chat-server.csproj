@@ -42,7 +42,6 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\chat-models\chat-models.csproj" />
-	  <ProjectReference Include="..\ClientAppsIntegration.AppDefaults\ClientAppsIntegration.AppDefaults.csproj" />
 	  <ProjectReference Include="..\SemanticKernel.Connectors.OnnxRuntimeGenAI\Connectors.OnnxRuntimeGenAI.csproj" />
 	  <ProjectReference Include="..\ServiceDefaults\ServiceDefaults.csproj" />
 	</ItemGroup>

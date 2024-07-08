@@ -14,20 +14,12 @@ using OpenTelemetry.Logs;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// add service defaults to the app
 builder.AddServiceDefaults();
-
-// add telemetry
-//builder.AddAppDefaults();
 
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-//builder.Services.AddLogging(
-//    b => b.AddConsole().SetMinimumLevel(LogLevel.Trace)
-//);
 
 builder.Services.AddSingleton<IConfiguration>(sp => 
 {
@@ -41,32 +33,8 @@ builder.Services.AddSingleton(sp =>
     return chatHistory;
 });
 
-builder.Services.AddSingleton<IChatCompletionService>(sp =>
-{
-    // add Azure OpenAI Chat Completion service
-    var config = builder.Configuration;
-    var chatDeploymentName = config["AZURE_OPENAI_MODEL"];
-    var endpoint = config["AZURE_OPENAI_ENDPOINT"];
-    var apiKey = config["AZURE_OPENAI_APIKEY"];
-
-    return new AzureOpenAIChatCompletionService(chatDeploymentName, endpoint, apiKey);
-});
-
-builder.Services.AddSingleton<Kernel>(sp =>
-{    
-    // new hero info 
-    var config = builder.Configuration;
-    var heroInfo = new HeroInfo(config["SUPERHERO_APIKEY"]);
-
-    // return a Semantic Kernel instance
-    var builderSK = Kernel.CreateBuilder();
-    builderSK.Plugins.AddFromObject(heroInfo, "HeroInfo");
-    return builderSK.Build();
-});
-
 var app = builder.Build();
 
-// add service defaults to the app
 app.MapDefaultEndpoints();
 
 // Configure the HTTP request pipeline.

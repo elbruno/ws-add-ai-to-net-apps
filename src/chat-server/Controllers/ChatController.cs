@@ -21,19 +21,18 @@ namespace chat_server.Controllers;
 public class ChatController : ControllerBase
 {
     private bool _useCache = false;
-    private readonly ILogger<ChatController> _logger;
-    private IConfiguration _config;
-    private ChatHistory _chatHistory;
-    public IChatCompletionService _chatCompletionService;
-    public Kernel _kernel;
 
-    public ChatController(ILogger<ChatController> logger, IConfiguration config, ChatHistory chatHistory, IChatCompletionService chatCompletionService, Kernel kernel)
+    private readonly ILogger<ChatController> _logger;
+
+    private IConfiguration _config;
+
+    private ChatHistory _chatHistory;
+
+    public ChatController(ILogger<ChatController> logger, IConfiguration config, ChatHistory chatHistory)
     {
         _logger = logger;
-        _config = config;
         _chatHistory = chatHistory;
-        _chatCompletionService = chatCompletionService;
-        _kernel = kernel;
+        _config = config;
     }
 
     // POST api/<ChatController>
@@ -44,37 +43,17 @@ public class ChatController : ControllerBase
 
         var response = new Response
         {
-            Author = _config["Author"]
+            Author = string.IsNullOrEmpty(_config["Author"]) ? "chatbot" : _config["Author"]
         };
-
-        // validate if question.ImageUrl is a valid url
-        if (question.IsImage)
-        {
-            var collectionItems = new ChatMessageContentItemCollection
-    {
-        new TextContent(question.UserQuestion),
-        new ImageContent(question.FileBytes, question.ImageMimeType)
-    };
-            _chatHistory.AddUserMessage(collectionItems);
-        }
-        else
-        {
-            _chatHistory.AddUserMessage(question.UserQuestion);
-        }
+        // complete chat history
+        _chatHistory.AddUserMessage(question.UserQuestion);
 
         // get response
         var stopwatch = new Stopwatch();
         stopwatch.Start();
-
-        OpenAIPromptExecutionSettings settings = new()
-        {
-            ToolCallBehavior = ToolCallBehavior.AutoInvokeKernelFunctions,
-        };
-
-        var result = await _chatCompletionService.GetChatMessageContentsAsync(_chatHistory, settings, _kernel);
+        var chatResponse = $" Your question [{question.UserQuestion}] is {question.UserQuestion.Length} chars long.";
         stopwatch.Stop();
-
-        response.QuestionResponse = result[^1].Content;
+        response.QuestionResponse = chatResponse;
         response.ElapsedTime = stopwatch.Elapsed;
 
         // return response

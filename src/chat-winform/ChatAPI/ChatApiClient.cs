@@ -10,14 +10,12 @@ public class ChatApiClient(HttpClient httpClient)
     {
 
         var responseLocal = new Response();
-        var httpResponse = await httpClient.PostAsJsonAsync("api/chat", question);
+        var httpResponse = await httpClient.PostAsJsonAsync("api/chat", question, cancellationToken: cancellationToken);
         if (httpResponse.IsSuccessStatusCode)
         {
-            responseLocal = await httpResponse.Content.ReadFromJsonAsync<Response>();
+            responseLocal = await httpResponse.Content.ReadFromJsonAsync<Response>(cancellationToken: cancellationToken);
         }
-
         return responseLocal;
-
     }
 
     public string BaseAddress => httpClient.BaseAddress.ToString();

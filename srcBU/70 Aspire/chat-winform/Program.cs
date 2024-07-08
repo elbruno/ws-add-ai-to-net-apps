@@ -22,8 +22,9 @@ namespace chat_winform
             var builder = Host.CreateApplicationBuilder();
             builder.AddServiceDefaults();
 
+            var scheme = builder.Environment.IsDevelopment() ? "http" : "https";
             builder.Services.AddHttpClient<ChatApiClient>(
-                client => client.BaseAddress = new(builder.Configuration["CHAT_SERVER"]));
+                client => client.BaseAddress = new($"{scheme}://chatapi"));
             var app = builder.Build();
 
             Services = app.Services;
