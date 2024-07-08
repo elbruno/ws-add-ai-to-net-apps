@@ -16,11 +16,8 @@ namespace chat_winform.ChatForm
         public OpenFileDialog fileDialog = new OpenFileDialog();
         public string initialdirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
-        public ChatApiClient _chatApiClient;
+        public HttpClient _client { get; set; }
         public ILogger _logger { get; set; }
-
-        public event EventHandler MessageSent;
-        public event EventHandler MessageReceived;
 
         public Chatbox()
         {
@@ -191,11 +188,13 @@ namespace chat_winform.ChatForm
                     questionLocal.UserQuestion = textMessage.Body;
                 }
 
-                var responseLocal = await _chatApiClient.CallApiChat(questionLocal);
-
-                // trigger event MessageSent
-                MessageSent?.Invoke(this, e);
-
+                // get response from server
+                var responseLocal = new Response();
+                var httpResponse = await _client.PostAsJsonAsync("api/chat", questionLocal);
+                if (httpResponse.IsSuccessStatusCode)
+                {
+                    responseLocal = await httpResponse.Content.ReadFromJsonAsync<Response>();
+                }
 
                 // display response in the chat history
                 var responseTextModel = new TextChatModel()
@@ -312,6 +311,6 @@ namespace chat_winform.ChatForm
                     (control as ChatItem).ResizeBubbles((int)(itemsPanel.Width * 0.6));
                 }
             }
-        }        
+        }
     }
 }

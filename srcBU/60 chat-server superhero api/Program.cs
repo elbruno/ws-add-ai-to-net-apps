@@ -14,20 +14,17 @@ using OpenTelemetry.Logs;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// add service defaults to the app
-builder.AddServiceDefaults();
-
 // add telemetry
-//builder.AddAppDefaults();
+builder.AddAppDefaults();
 
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//builder.Services.AddLogging(
-//    b => b.AddConsole().SetMinimumLevel(LogLevel.Trace)
-//);
+builder.Services.AddLogging(
+    b => b.AddConsole().SetMinimumLevel(LogLevel.Trace)
+);
 
 builder.Services.AddSingleton<IConfiguration>(sp => 
 {
@@ -65,9 +62,6 @@ builder.Services.AddSingleton<Kernel>(sp =>
 });
 
 var app = builder.Build();
-
-// add service defaults to the app
-app.MapDefaultEndpoints();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

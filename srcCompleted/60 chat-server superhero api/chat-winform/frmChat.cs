@@ -1,39 +1,41 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System;
+using System.Windows.Forms;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using Microsoft.Extensions.Logging;
 
 namespace chat_winform
 {
     public partial class frmChat : Form
     {
-        ChatApiClient _chatApiClient;
+        HttpClient _client;
         private readonly ILogger _logger;
 
         string userName = @"Bruno";
         ChatForm.ChatboxInfo cbi;
 
-        public frmChat(ILogger<frmChat> logger, ChatApiClient chatApiClient)
+        public frmChat(ILogger<frmChat> logger, HttpClient client)
         {
             _logger = logger;
-            _chatApiClient = chatApiClient;
+            _client = client;
             InitializeComponent();
         }
 
         private async void Form1_LoadAsync(object sender, EventArgs e)
         {
             // chat control
-            cbi = new ChatForm.ChatboxInfo
-            {
-                MainTitlePlaceholder = "Adding AI to a Winforms Chat",
-                SubtitlePlaceholder = "No LLM",
-                User = userName
-            };
+            cbi = new ChatForm.ChatboxInfo();
+            cbi.MainTitlePlaceholder = "Adding AI to a Winforms Chat";
+            cbi.SubtitlePlaceholder = "No LLM";
+            cbi.User = userName;
             toolStripTextBoxUserName.Text = userName;
 
-            chatboxControl._chatApiClient = _chatApiClient;
+            chatboxControl._client = _client;
             chatboxControl._logger = _logger;
             chatboxControl.SetChatBotInfo(cbi);
 
             // display chat server
-            toolStripMenuItemShowServer.Text = $"Chat Server: {_chatApiClient.BaseAddress}";
+            toolStripMenuItemShowServer.Text = $"Chat Server: {_client.BaseAddress.ToString()}";
         }
 
         private void toolStripMenuItemSetUserName_Click(object sender, EventArgs e)

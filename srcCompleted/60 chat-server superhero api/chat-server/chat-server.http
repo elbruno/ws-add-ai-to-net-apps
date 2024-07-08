@@ -1,0 +1,6 @@
+@chat_server_HostAddress = http://localhost:5259
+
+POST {{chat_server_HostAddress}}/chat/
+Accept: application/json
+
+###

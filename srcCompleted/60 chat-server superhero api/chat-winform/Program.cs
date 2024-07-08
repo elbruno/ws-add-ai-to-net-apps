@@ -20,13 +20,18 @@ namespace chat_winform
         static void Main()
         {
             var builder = Host.CreateApplicationBuilder();
-            builder.AddServiceDefaults();
+            builder.AddAppDefaults();
 
-            var scheme = builder.Environment.IsDevelopment() ? "http" : "https";
-            builder.Services.AddHttpClient<ChatApiClient>(
-                client => client.BaseAddress = new($"{scheme}://chatapi"));
+            builder.Services.AddSingleton<HttpClient>(sp =>
+                {                    
+                    var client = new HttpClient();
+                    client.BaseAddress = new Uri(builder.Configuration["CHAT_SERVER"]);
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    return client;
+                });
+
             var app = builder.Build();
-
             Services = app.Services;
             app.Start();
 

@@ -10,7 +10,7 @@ public class HeroInfo
         apiKey = superHeroApiKey;
     }
 
-    [KernelFunction, Description("Get the alter ego of a superhero. Get the real name of a super hero.")]
+    [KernelFunction, Description("Get the alter ego of a superhero")]
     public static string GetAlterEgo(string input)
     {
         // Call the API

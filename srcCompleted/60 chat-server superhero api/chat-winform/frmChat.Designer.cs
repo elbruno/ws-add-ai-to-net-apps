@@ -92,6 +92,7 @@ namespace chat_winform
             // 
             // chatboxControl
             // 
+            chatboxControl._client = null;
             chatboxControl._logger = null;
             chatboxControl.BackColor = Color.White;
             chatboxControl.Dock = DockStyle.Fill;

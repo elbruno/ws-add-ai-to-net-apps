@@ -19,7 +19,7 @@
 
 	<ItemGroup>
 	  <Content Include="appsettings.json">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
 	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
 	  </Content>
@@ -35,14 +35,12 @@
 		<PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.0-preview.5.24306.7" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.0-preview.5.24306.7" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.0-preview.5.24306.7" />
-		<PackageReference Include="Microsoft.Extensions.ServiceDiscovery" Version="8.0.2" />
 	</ItemGroup>
 
 
 	<ItemGroup>
 		<ProjectReference Include="..\chat-models\chat-models.csproj" />
 		<ProjectReference Include="..\ClientAppsIntegration.AppDefaults\ClientAppsIntegration.AppDefaults.csproj" />
-		<ProjectReference Include="..\ServiceDefaults\ServiceDefaults.csproj" />
 	</ItemGroup>
 
 
