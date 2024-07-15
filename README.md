@@ -91,6 +91,21 @@ Follow these steps to add the secrets to the project.
     ```
     ***Important:** The current demos are designed to use the ONNX versions of the model. The previous steps clone the following models.*
 
+## Docker Support Commands
+
+Run this command to get the Aspire dashboard up and running in docker:
+
+```bash
+docker run --rm -it -p 18888:18888 -p 4317:18889 -d --name aspire-dashboard mcr.microsoft.com/dotnet/aspire-dashboard:8.0.0
+```
+
+Run this command to host ollama in Docker:
+
+```bash
+docker run -d -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
+```
+
+
 ## Live Demo Recording
 
 Coming soon ...
