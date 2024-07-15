@@ -20,10 +20,11 @@ namespace chat_winform
         static void Main()
         {
             var builder = Host.CreateApplicationBuilder();
+            //builder.AddAppDefaults();
             builder.AddServiceDefaults();
 
             builder.Services.AddHttpClient<ChatApiClient>(
-                client => client.BaseAddress = new(builder.Configuration["CHAT_SERVER"]));
+                client => client.BaseAddress = new($"{builder.Configuration["CHAT_SERVER"]}"));
             var app = builder.Build();
 
             Services = app.Services;

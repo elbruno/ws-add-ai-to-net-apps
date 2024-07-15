@@ -23,15 +23,8 @@ namespace chat_winform
             //builder.AddAppDefaults();
             builder.AddServiceDefaults();
 
-            builder.Services.AddSingleton<HttpClient>(sp =>
-                {                    
-                    var client = new HttpClient();
-                    client.BaseAddress = new Uri(builder.Configuration["CHAT_SERVER"]);
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    return client;
-                });
-
+            builder.Services.AddHttpClient<ChatApiClient>(
+                client => client.BaseAddress = new($"{builder.Configuration["CHAT_SERVER"]}"));
             var app = builder.Build();
 
             Services = app.Services;
