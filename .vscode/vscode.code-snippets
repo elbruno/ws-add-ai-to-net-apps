@@ -35,6 +35,7 @@
     "sk10_chatcontroller_constructor": {
         "prefix": "sk10_chatcontroller_constructor",
         "body": [
+            "private IChatCompletionService _chatCompletionService;",
             "public ChatController(ILogger<ChatController> logger, IConfiguration config, ChatHistory chatHistory, IChatCompletionService chatCompletionService)",
             "{",
             "    _logger = logger;",
@@ -158,6 +159,7 @@
     "sk31_controllerCtorWithMemory": {
         "prefix": "sk31_controllerCtorWithMemory",
         "body": [
+            "private ISemanticTextMemory _memory;",
             "public ChatController(ILogger<ChatController> logger, IConfiguration config, ChatHistory chatHistory, IChatCompletionService chatCompletionService, ISemanticTextMemory semanticMemory)",
             "{",
             "    _logger = logger;",
