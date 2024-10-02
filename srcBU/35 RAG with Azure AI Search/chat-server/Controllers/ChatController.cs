@@ -14,6 +14,8 @@ using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Memory;
 using Microsoft.SemanticKernel.Connectors.AzureAISearch;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
+using Microsoft.SemanticKernel.Connectors.AzureOpenAI;
+using Azure.AI.OpenAI.Chat;
 namespace chat_server.Controllers;
 
 [Route("api/[controller]")]
@@ -28,17 +30,23 @@ public class ChatController : ControllerBase
 
     private ChatHistory _chatHistory;
 
-    public IChatCompletionService _chatCompletionService;
+    private IChatCompletionService _chatCompletionService;
 
-    public ISemanticTextMemory _memory;
+    private string _aiSearchEndpoint;
+    private string _aiSearchApiKey;
+    private string _aiSearchIndexName;
 
-    public ChatController(ILogger<ChatController> logger, IConfiguration config, ChatHistory chatHistory, IChatCompletionService chatCompletionService, ISemanticTextMemory semanticMemory)
+
+    public ChatController(ILogger<ChatController> logger, IConfiguration config, ChatHistory chatHistory, IChatCompletionService chatCompletionService)
     {
         _logger = logger;
         _config = config;
         _chatHistory = chatHistory;
         _chatCompletionService = chatCompletionService;
-        _memory = semanticMemory;
+
+        _aiSearchEndpoint = _config["AZURE_AISEARCH_ENDPOINT"];
+        _aiSearchApiKey = _config["AZURE_AISEARCH_APIKEY"];
+        _aiSearchIndexName = _config["AZURE_AISEARCH_INDEXNAME"];
     }
 
     // POST api/<ChatController>
@@ -46,65 +54,81 @@ public class ChatController : ControllerBase
     public async Task<Response> Post(Question question)
     {
         _logger.LogInformation($"Input question: {question}");
-
+    
         var response = new Response
         {
             Author = _config["Author"]
         };
-
-        // get response
-        var stopwatch = new Stopwatch();
-        stopwatch.Start();
-
-        var result = await SearchResultInMemory(question);
-        if (string.IsNullOrEmpty(result))
+    
+        // validate if question.ImageUrl is a valid url
+        if (question.IsImage)
         {
-            // complete chat history
-            _chatHistory.AddUserMessage(question.UserQuestion);
-
-            response.Author = "Azure GPT-4o";
-            var resultResponse = await _chatCompletionService.GetChatMessageContentsAsync(_chatHistory);
-            result = resultResponse[^1].Content;
-            //await AddItemToMemory(question, result);
-            response.FromCache = false;
+            var collectionItems = new ChatMessageContentItemCollection
+        {
+            new TextContent(question.UserQuestion),
+            new ImageContent(question.FileBytes, question.ImageMimeType)
+            };
+            _chatHistory.AddUserMessage(collectionItems);
         }
         else
         {
-            response.Author += " [Azure AI Search]";
-            response.FromCache = true;
+            _chatHistory.AddUserMessage(question.UserQuestion);
+        }
+    
+        // get response
+        var stopwatch = new Stopwatch();
+        stopwatch.Start();
+    
+        var acds = new AzureSearchChatDataSource
+        {
+            Endpoint = new Uri(_aiSearchEndpoint),
+            IndexName = _aiSearchIndexName,
+            Authentication = DataSourceAuthentication.FromApiKey(_aiSearchApiKey),
+            QueryType = DataSourceQueryType.VectorSemanticHybrid,
+            MaxSearchQueries = 3,
+            VectorizationSource = DataSourceVectorizer.FromEndpoint(
+                new Uri(_aiSearchEndpoint), DataSourceAuthentication.FromApiKey(_aiSearchApiKey))
+        };
+        var executionSettings = new AzureOpenAIPromptExecutionSettings
+        {
+            AzureChatDataSource = acds
+        };
+
+        // run the prompt
+        var result = await _chatCompletionService.GetChatMessageContentsAsync(_chatHistory, executionSettings);
+
+        if (result.FirstOrDefault().InnerContent is OpenAI.Chat.ChatCompletion)
+        {
+
+            var ic = result.FirstOrDefault().InnerContent as OpenAI.Chat.ChatCompletion;
+
+            response.Citations = new List<Citation>();
+
+            //    var ic = result.FirstOrDefault().InnerContent as ChatResponseMessage;
+            //    var aec = ic.AzureExtensionsContext;
+            //    var citations = aec.Citations;
+            //    int count = 0;
+            //    foreach (var citation in citations)
+            //    {
+            //        if (count >= 3) break;
+            //        count++;
+            //        var newC = new Citation();
+            //        newC.Title = citation.Title;
+            //        newC.URL = citation.Url;
+            //        newC.FilePath = citation.Filepath;
+            //        newC.Content = citation.Content;
+            //        response.Citations.Add(newC);
+            //    }
         }
 
-        response.QuestionResponse = result;
-
-        // calculate elapsed time
         stopwatch.Stop();
+    
+        response.QuestionResponse = result[^1].Content;
         response.ElapsedTime = stopwatch.Elapsed;
-
+    
+        // return response
         _logger.LogInformation($"Response: {response}");
         return response;
-    }
-
-    string collectionName = "contoso-products-index-01";
-
-    async Task<string> SearchResultInMemory(Question question)
-    {
-        var returnValue = string.Empty;
-
-        // search in memory
-        var response = await _memory.SearchAsync(
-            collectionName,
-            question.UserQuestion,
-            withEmbeddings: true,
-            limit: 1).FirstOrDefaultAsync();
-        if (response != null)
-        {
-            _logger.LogInformation($"{question.UserQuestion} >> ID: {response?.Metadata.Id} - Description: {response?.Metadata.Description} - Relevance: {response.Relevance} - Is Reference: {response?.Metadata.IsReference}");
-            if (response.Relevance > 0.9)
-            {
-                returnValue = response?.Metadata.Description;
-            }
-        }
-        return returnValue;
     }
 
 }
