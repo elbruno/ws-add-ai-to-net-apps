@@ -28,8 +28,7 @@ public class ChatController : ControllerBase
 
     private ChatHistory _chatHistory;
 
-    public IChatCompletionService _chatCompletionService;
-
+    private IChatCompletionService _chatCompletionService;
     public ChatController(ILogger<ChatController> logger, IConfiguration config, ChatHistory chatHistory, IChatCompletionService chatCompletionService)
     {
         _logger = logger;
@@ -49,6 +48,7 @@ public class ChatController : ControllerBase
             Author = _config["Author"]
         };
 
+        // complete chat history
         // validate if question.ImageUrl is a valid url
         if (question.IsImage)
         {
@@ -64,6 +64,7 @@ public class ChatController : ControllerBase
             _chatHistory.AddUserMessage(question.UserQuestion);
         }
 
+
         // get response
         var stopwatch = new Stopwatch();
         stopwatch.Start();
@@ -77,4 +78,6 @@ public class ChatController : ControllerBase
         _logger.LogInformation($"Response: {response}");
         return response;
     }
+
+
 }

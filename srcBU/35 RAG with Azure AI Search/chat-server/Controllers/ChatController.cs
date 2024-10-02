@@ -84,7 +84,7 @@ public class ChatController : ControllerBase
         return response;
     }
 
-    string collectionName = "contoso-products-index-02";
+    string collectionName = "contoso-products-index-01";
 
     async Task<string> SearchResultInMemory(Question question)
     {
