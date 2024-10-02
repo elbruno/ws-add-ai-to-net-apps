@@ -94,9 +94,9 @@ public class ChatController : ControllerBase
         return response;
     }
 
-    public List<string> VideoFrames(byte[] videoArray) {
-
-        List<string> videoFrames = new List<string>();
+    public List<string> VideoFrames(byte[] videoArray, int numberOfFrames = 14)
+    {
+        List<string> videoFrames = [];
 
         // Create or clear the "data" folder
         string dataFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "data");
@@ -106,10 +106,9 @@ public class ChatController : ControllerBase
         }
         Directory.CreateDirectory(dataFolderPath);
 
-
-        string videoFile = Path.Combine(Directory.GetCurrentDirectory(), "data/insurance_v3.mp4");
-        int numberOfFrames = 5;
-
+        // generate a temp name for the video file
+        string tempVideoFile = Path.GetRandomFileName() + ".mp4";
+        string videoFile = Path.Combine(Directory.GetCurrentDirectory(), $"data/{tempVideoFile}");
         SaveVideo(videoArray, videoFile);
 
         // Create the directory to store the frames
@@ -123,6 +122,8 @@ public class ChatController : ControllerBase
             var frame = new Mat();
             if (!video.Read(frame) || frame.Empty())
                 break;
+            // resize the frame to half of its size
+            Cv2.Resize(frame, frame, new Size(frame.Width / 2, frame.Height / 2));
             frames.Add(frame);
         }
         video.Release();

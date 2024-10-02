@@ -30,6 +30,19 @@ builder.Services.AddSingleton<IConfiguration>(sp =>
     return builder.Configuration;
 });
 
+builder.Services.AddSingleton<IChatCompletionService>(sp =>
+{
+    // add Azure OpenAI Chat Completion service
+    var config = builder.Configuration;
+    var chatDeploymentName = config["AZURE_OPENAI_MODEL"];
+    var endpoint = config["AZURE_OPENAI_ENDPOINT"];
+    var apiKey = config["AZURE_OPENAI_APIKEY"];
+    // set author
+    config["author"]= "Azure OpenAI - GPT-4o";
+
+    return new AzureOpenAIChatCompletionService(chatDeploymentName, endpoint, apiKey);
+});
+
 builder.Services.AddSingleton(sp =>
 {
     var chatHistory = new ChatHistory();
