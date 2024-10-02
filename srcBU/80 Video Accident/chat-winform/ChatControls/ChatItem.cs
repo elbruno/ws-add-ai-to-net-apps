@@ -72,6 +72,13 @@ namespace chat_winform.ChatForm
                     bodyPanel.BackColor = Color.GhostWhite;
                     bodyPanel.BackgroundImageLayout = ImageLayout.Stretch;
                     break;
+                case "video":
+                    var videomodel = chatModel as VideoChatModel;
+                    bodyTextBox.Visible = false;
+                    bodyPanel.BackgroundImage = videomodel.FirstFrame;
+                    bodyPanel.BackColor = Color.GhostWhite;
+                    bodyPanel.BackgroundImageLayout = ImageLayout.Stretch;
+                    break;
                 case "attachment":
                     var attachmentmodel = chatModel as AttachmentChatModel;
                     bodyPanel.BackColor = Color.OrangeRed;

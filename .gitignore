@@ -397,3 +397,7 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Temp data
+srcBU/80 Video Accident/chat-server/data/**
+

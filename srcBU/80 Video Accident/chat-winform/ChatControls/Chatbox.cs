@@ -153,10 +153,10 @@ namespace chat_winform.ChatForm
                     VideoUri = chatbox_info.AttachmentName,
                     Inbound = false,
                     Read = true,
-                    Time = DateTime.Now
+                    Time = DateTime.Now,
+                    FirstFrame = ChatUtility.GetFirstFrameFromVideo(chatbox_info.Attachment)
                 };
             }
-
             else if (chatbox_info.Attachment != null)
             {
                 genericFileMessage = new AttachmentChatModel()

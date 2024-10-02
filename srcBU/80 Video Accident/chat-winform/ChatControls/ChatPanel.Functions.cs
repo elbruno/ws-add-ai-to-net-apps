@@ -1,5 +1,7 @@
-﻿using System;
+﻿using OpenCvSharp;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -592,6 +594,38 @@ namespace chat_winform.ChatForm
             string mime;
 
             return _mappings.TryGetValue(extension, out mime) ? mime : "application/octet-stream";
+        }
+
+        public static Image GetFirstFrameFromVideo(byte[] videoArray)
+        {
+            // Create or clear the "data" folder
+            string dataFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "data");
+            if (Directory.Exists(dataFolderPath))
+            {
+                Directory.Delete(dataFolderPath, true);
+            }
+            Directory.CreateDirectory(dataFolderPath);
+
+            // load the video using openCV and extract and return the first frame
+            string tempVideoFile = Path.GetRandomFileName() + ".mp4";
+            string videoFile = Path.Combine(Directory.GetCurrentDirectory(), $"data/{tempVideoFile}");
+            using (var fileStream = new FileStream(videoFile, FileMode.Create))
+            {
+                fileStream.Write(videoArray, 0, videoArray.Length);
+            }
+
+            // Create the directory to store the frames
+            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "data/frames"));
+
+            // Extract the first frame from the video
+            var video = new VideoCapture(videoFile);
+            var frame = new Mat();
+            video.Read(frame);
+            string framePath = Path.Combine(Directory.GetCurrentDirectory(), $"data/frames/frame.jpg");
+            Cv2.ImWrite(framePath, frame);
+            video.Release();
+
+            return Image.FromFile(framePath);
         }
     }
 }

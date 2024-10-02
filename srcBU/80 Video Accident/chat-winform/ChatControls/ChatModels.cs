@@ -49,6 +49,7 @@ namespace chat_winform.ChatForm
         public string Author { get; set; }
         public string Type { get; } = "video";
         public byte[] Video { get; set; }
+        public Image FirstFrame { get; set; }
         public string VideoName { get; set; }
         public string VideoUri { get; set; }
         public TimeSpan? ElapsedTime { get; set; }
