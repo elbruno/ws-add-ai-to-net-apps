@@ -64,7 +64,6 @@ public class ChatController : ControllerBase
             _chatHistory.AddUserMessage(question.UserQuestion);
         }
 
-
         // get response
         var stopwatch = new Stopwatch();
         stopwatch.Start();
@@ -78,6 +77,5 @@ public class ChatController : ControllerBase
         _logger.LogInformation($"Response: {response}");
         return response;
     }
-
 
 }

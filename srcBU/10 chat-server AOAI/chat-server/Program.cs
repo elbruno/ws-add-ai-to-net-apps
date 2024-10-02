@@ -11,8 +11,11 @@ using Microsoft.SemanticKernel.Connectors.OpenAI;
 using Microsoft.SemanticKernel.Memory;
 using Microsoft.SemanticKernel.Connectors.AzureAISearch;
 using OpenTelemetry.Logs;
+using Microsoft.SemanticKernel.Connectors.AzureOpenAI;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.AddServiceDefaults();
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -36,7 +39,7 @@ builder.Services.AddSingleton<IChatCompletionService>(sp =>
     var endpoint = config["AZURE_OPENAI_ENDPOINT"];
     var apiKey = config["AZURE_OPENAI_APIKEY"];
     // set author
-    config["author"]= "Azure OpenAI - GPT-4o";
+    config["author"]= "Azure OpenAI - GPT-4o";    
 
     return new AzureOpenAIChatCompletionService(chatDeploymentName, endpoint, apiKey);
 });
@@ -49,6 +52,8 @@ builder.Services.AddSingleton(sp =>
 });
 
 var app = builder.Build();
+
+app.MapDefaultEndpoints();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
