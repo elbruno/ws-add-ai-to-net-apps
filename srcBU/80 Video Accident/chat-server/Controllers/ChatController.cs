@@ -50,27 +50,26 @@ public class ChatController : ControllerBase
         };
 
         // complete chat history
-        // validate if question.ImageUrl is a valid url
         if (question.IsImage)
         {
             var collectionItems = new ChatMessageContentItemCollection
-    {
-        new TextContent(question.UserQuestion),
-        new ImageContent(question.FileBytes, question.ImageMimeType)
-    };
+            {
+                new TextContent(question.UserQuestion),
+                new ImageContent(question.FileBytes, question.ImageMimeType)
+            };
             _chatHistory.AddUserMessage(collectionItems);
         }
         if (question.IsVideo)
         {
             var collectionItems = new ChatMessageContentItemCollection
-    {
-        new TextContent(question.UserQuestion)
-    };
-            var videoFrames = VideoFrames(question.FileBytes);
+            {
+                new TextContent(question.UserQuestion)
+            };
+            
+            var videoFrames = SaveAndGetVideoFramesByteArrayList(question.FileBytes);
             foreach (var frame in videoFrames)
             {
-                var bytes = System.IO.File.ReadAllBytes(frame);
-                collectionItems.Add(new ImageContent(bytes, "image/jpeg"));
+                collectionItems.Add(new ImageContent(frame, "image/jpeg"));
             }
 
             _chatHistory.AddUserMessage(collectionItems);
@@ -94,9 +93,9 @@ public class ChatController : ControllerBase
         return response;
     }
 
-    public List<string> VideoFrames(byte[] videoArray, int numberOfFrames = 14)
+    public List<byte[]> SaveAndGetVideoFramesByteArrayList(byte[] videoArray, int numberOfFrames = 14)
     {
-        List<string> videoFrames = [];
+        List<byte[]> videoFrames = [];
 
         // Create or clear the "data" folder
         string dataFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "data");
@@ -122,23 +121,29 @@ public class ChatController : ControllerBase
             var frame = new Mat();
             if (!video.Read(frame) || frame.Empty())
                 break;
-            // resize the frame to half of its size
-            Cv2.Resize(frame, frame, new Size(frame.Width / 2, frame.Height / 2));
+            // resize the frame to half of its size if the with is greater than 800
+            if (frame.Width > 800)
+            {
+                Cv2.Resize(frame, frame, new Size(frame.Width / 2, frame.Height / 2));
+            }
             frames.Add(frame);
         }
         video.Release();
+
+        System.IO.File.Delete(videoFile);
 
         // Save the frames
         int step = (int)Math.Ceiling((double)frames.Count / numberOfFrames);
         for (int i = 0; i < frames.Count; i += step)
         {
-            string filePath = Path.Combine(Directory.GetCurrentDirectory(), $"data/frames/frame_{i / step}.jpg");
-            Cv2.ImWrite(filePath, frames[i]);
-            videoFrames.Add(filePath);
+            // convert the frame to byte array
+            Cv2.ImEncode(".jpg", frames[i], out var frameBytes);
+            videoFrames.Add(frameBytes);
         }
 
         return videoFrames;
     }
+
     public void SaveVideo(byte[] video, string filePath)
     {
         using (var fileStream = new FileStream(filePath, FileMode.Create))
